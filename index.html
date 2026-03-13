@@ -561,6 +561,9 @@
   span[data-lang] { display: none; }
   .lang-en span[data-lang="en"] { display: inline; }
   .lang-fr span[data-lang="fr"] { display: inline; }
+  li span[data-lang] { display: none; }
+  .lang-en li span[data-lang="en"] { display: inline; }
+  .lang-fr li span[data-lang="fr"] { display: inline; }
 
   @media (max-width: 768px) {
     nav { padding: 1rem 1.5rem; }
@@ -577,7 +580,7 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">S&IT<span>.</span></div>
+  <div class="nav-logo">SITT<span>.</span></div>
   <div class="nav-right">
     <div class="lang-toggle">
       <button class="lang-btn active" onclick="setLang('en')">EN</button>
@@ -592,14 +595,14 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-badge">
-    <span></span>
-    <span data-lang="en">Now with Gemini Vision AI</span>
-    <span data-lang="fr">Désormais avec Gemini Vision IA</span>
-  </div>
-
   <h1 data-lang="en">Extract text from <em>any image,</em> instantly.</h1>
   <h1 data-lang="fr">Extrayez le texte de <em>n'importe quelle image,</em> instantanément.</h1>
+
+  <div class="hero-badge" style="margin-bottom:1.5rem; margin-top:0.5rem; white-space:nowrap;">
+    <span></span>
+    <span data-lang="en">Now powered by Gemini Vision AI</span>
+    <span data-lang="fr">Désormais propulsé par Gemini Vision IA</span>
+  </div>
 
   <p data-lang="en">A Chrome extension that reads manga, PDFs, screenshots, photos and more — with AI-powered precision.</p>
   <p data-lang="fr">Une extension Chrome qui lit les mangas, PDFs, captures d'écran, photos et plus — avec une précision dopée à l'IA.</p>
@@ -785,19 +788,13 @@
         <div class="pricing-note" data-lang="fr">Gratuit pour toujours</div>
         <hr class="pricing-divider">
         <ul class="pricing-features">
-          <li data-lang="en">Tesseract OCR engine</li>
-          <li data-lang="fr">Moteur OCR Tesseract</li>
-          <li data-lang="en">All 6 document modes</li>
-          <li data-lang="fr">Les 6 modes de document</li>
-          <li data-lang="en">Auto translation</li>
-          <li data-lang="fr">Traduction automatique</li>
-          <li data-lang="en">Full history</li>
-          <li data-lang="fr">Historique complet</li>
-          <li data-lang="en">2 AI captures/day (trial)</li>
-          <li data-lang="fr">2 captures IA/jour (essai)</li>
+          <li><span data-lang="en">Tesseract OCR engine</span><span data-lang="fr">Moteur OCR Tesseract</span></li>
+          <li><span data-lang="en">All 6 document modes</span><span data-lang="fr">Les 6 modes de document</span></li>
+          <li><span data-lang="en">Auto translation</span><span data-lang="fr">Traduction automatique</span></li>
+          <li><span data-lang="en">Full history</span><span data-lang="fr">Historique complet</span></li>
+          <li><span data-lang="en">2 AI captures/day (trial)</span><span data-lang="fr">2 captures IA/jour (essai)</span></li>
         </ul>
-        <button class="pricing-btn pricing-btn-free" data-lang="en">Add to Chrome</button>
-        <button class="pricing-btn pricing-btn-free" data-lang="fr">Ajouter à Chrome</button>
+        <button class="pricing-btn pricing-btn-free"><span data-lang="en">Add to Chrome</span><span data-lang="fr">Ajouter à Chrome</span></button>
       </div>
 
       <div class="pricing-card featured">
@@ -807,26 +804,19 @@
           <div style="font-family:'DM Serif Display',serif; font-size:1.8rem; color:var(--muted); text-decoration:line-through;">$9.99</div>
         </div>
         <div style="display:inline-flex; align-items:center; gap:0.4rem; background:rgba(163,196,168,0.15); border:1px solid rgba(163,196,168,0.25); color:var(--pro); font-size:0.72rem; padding:0.25rem 0.75rem; border-radius:100px; margin-bottom:0.5rem;">
-          ✦ <span data-lang="en">50% off — first 10 users only</span>
-          <span data-lang="fr">-50% — 10 premiers utilisateurs</span>
+          ✦ <span data-lang="en">50% off · first 10 users only</span><span data-lang="fr">-50% · 10 premiers utilisateurs</span>
         </div>
         <div class="pricing-note" data-lang="en">2500 AI credits · one-time payment</div>
         <div class="pricing-note" data-lang="fr">2500 crédits IA · paiement unique</div>
         <hr class="pricing-divider" style="border-color:rgba(163,196,168,0.15);">
         <ul class="pricing-features">
-          <li data-lang="en">Gemini Vision AI (Google)</li>
-          <li data-lang="fr">Gemini Vision IA (Google)</li>
-          <li data-lang="en">Near-perfect OCR accuracy</li>
-          <li data-lang="fr">Précision OCR quasi-parfaite</li>
-          <li data-lang="en">Fast + Quality modes</li>
-          <li data-lang="fr">Modes Rapide + Qualité</li>
-          <li data-lang="en">Everything in Free</li>
-          <li data-lang="fr">Tout ce qui est dans Free</li>
-          <li data-lang="en">Priority support</li>
-          <li data-lang="fr">Support prioritaire</li>
+          <li><span data-lang="en">Gemini Vision AI (Google)</span><span data-lang="fr">Gemini Vision IA (Google)</span></li>
+          <li><span data-lang="en">Near-perfect OCR accuracy</span><span data-lang="fr">Précision OCR quasi-parfaite</span></li>
+          <li><span data-lang="en">Fast + Quality modes</span><span data-lang="fr">Modes Rapide + Qualité</span></li>
+          <li><span data-lang="en">Everything in Free</span><span data-lang="fr">Tout ce qui est dans Free</span></li>
+          <li><span data-lang="en">Priority support</span><span data-lang="fr">Support prioritaire</span></li>
         </ul>
-        <button class="pricing-btn pricing-btn-pro" data-lang="en">Get Pro — $4.99</button>
-        <button class="pricing-btn pricing-btn-pro" data-lang="fr">Obtenir Pro — 4.99$</button>
+        <button class="pricing-btn pricing-btn-pro"><span data-lang="en">Get Pro — $4.99</span><span data-lang="fr">Obtenir Pro — $4.99</span></button>
       </div>
     </div>
   </div>
@@ -848,7 +838,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">Screen & Image Text Tool<span>.</span></div>
+  <div class="footer-logo">Screen &amp; Image Text Tool<span>.</span></div>
   <ul class="footer-links">
     <li><a href="#" data-lang="en">Privacy</a><a href="#" data-lang="fr">Confidentialité</a></li>
     <li><a href="#" data-lang="en">Support</a><a href="#" data-lang="fr">Support</a></li>

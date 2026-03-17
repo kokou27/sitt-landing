@@ -3,586 +3,762 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Screen & Image Text Tool — Extract Text from Any Image</title>
-<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<title>SITT — Extract Text from Any Image, Instantly</title>
+
+<!-- Favicon SVG matching extension purple gradient -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%238b7aff'/><stop offset='100%25' stop-color='%236fd3c8'/></linearGradient></defs><rect width='64' height='64' rx='14' fill='url(%23g)'/><text x='32' y='44' font-family='Georgia,serif' font-size='22' font-weight='bold' fill='white' text-anchor='middle' letter-spacing='1'>SITT</text></svg>">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #0a0a0a;
-    --surface: #111111;
-    --border: rgba(255,255,255,0.08);
-    --border-hover: rgba(255,255,255,0.18);
-    --text: #f0ede8;
-    --muted: #888880;
-    --accent: #c8b89a;
-    --accent-dim: rgba(200,184,154,0.12);
-    --pro: #a3c4a8;
-    --pro-dim: rgba(163,196,168,0.1);
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 16px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.25rem 3rem;
-    border-bottom: 1px solid var(--border);
-    background: rgba(10,10,10,0.85);
-    backdrop-filter: blur(12px);
-  }
-
-  .nav-logo {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.1rem;
-    letter-spacing: 0.02em;
-    color: var(--text);
-  }
-
-  .nav-logo span { color: var(--accent); }
-
-  .nav-right { display: flex; align-items: center; gap: 2rem; }
-
-  .lang-toggle {
-    display: flex; gap: 0;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    overflow: hidden;
-  }
-
-  .lang-btn {
-    background: none; border: none; cursor: pointer;
-    padding: 0.35rem 0.75rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    color: var(--muted);
-    transition: all 0.2s;
-  }
-
-  .lang-btn.active {
-    background: var(--accent-dim);
-    color: var(--accent);
-  }
-
-  .nav-cta {
-    background: var(--text);
-    color: var(--bg);
-    border: none;
-    padding: 0.5rem 1.25rem;
-    border-radius: 6px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: opacity 0.2s;
-    text-decoration: none;
-  }
-
-  .nav-cta:hover { opacity: 0.85; }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    text-align: center;
-    padding: 8rem 2rem 6rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: 20%; left: 50%;
-    transform: translateX(-50%);
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(200,184,154,0.06) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    border: 1px solid var(--border);
-    padding: 0.35rem 1rem;
-    border-radius: 100px;
-    font-size: 0.8rem;
-    color: var(--muted);
-    letter-spacing: 0.04em;
-    margin-bottom: 2.5rem;
-  }
-
-  .hero-badge .dot-gemini {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--pro);
-    display: inline-block;
-    flex-shrink: 0;
-  }
-
-  .hero h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(2.8rem, 6vw, 5.5rem);
-    line-height: 1.08;
-    letter-spacing: -0.02em;
-    max-width: 800px;
-    margin-bottom: 1.5rem;
-  }
-
-  .hero h1 em {
-    font-style: italic;
-    color: var(--accent);
-  }
-
-  .hero p {
-    font-size: 1.1rem;
-    color: var(--muted);
-    max-width: 480px;
-    margin: 0 auto 3rem;
-    font-weight: 300;
-    line-height: 1.7;
-  }
-
-  .hero-actions {
-    display: flex; gap: 1rem; align-items: center;
-    flex-wrap: wrap; justify-content: center;
-  }
-
-  .btn-primary {
-    background: var(--text);
-    color: var(--bg);
-    padding: 0.85rem 2rem;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    font-weight: 500;
-    text-decoration: none;
-    transition: opacity 0.2s;
-    border: none; cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-  }
-
-  .btn-primary:hover { opacity: 0.88; }
-
-  .btn-secondary {
-    background: none;
-    color: var(--muted);
-    padding: 0.85rem 1.5rem;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    text-decoration: none;
-    transition: color 0.2s;
-    border: 1px solid var(--border);
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 400;
-  }
-
-  .btn-secondary:hover { color: var(--text); border-color: var(--border-hover); }
-
-  /* DEMO VISUAL */
-  .hero-visual {
-    margin-top: 5rem;
-    width: 100%; max-width: 780px;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    overflow: hidden;
-    background: var(--surface);
-  }
-
-  .visual-bar {
-    display: flex; align-items: center; gap: 0.5rem;
-    padding: 0.85rem 1.25rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .dot { width: 10px; height: 10px; border-radius: 50%; }
-  .dot-r { background: #ff5f57; }
-  .dot-y { background: #febc2e; }
-  .dot-g { background: #28c840; }
-
-  .visual-content {
-    display: grid; grid-template-columns: 1fr 1fr;
-    height: 280px;
-  }
-
-  .visual-img {
-    border-right: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
-  }
-
-  .manga-placeholder {
-    width: 100%; height: 100%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'DM Serif Display', serif;
-    font-size: 2.5rem;
-    color: var(--border-hover);
-    letter-spacing: 0.1em;
-    background: repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 20px,
-      rgba(255,255,255,0.01) 20px,
-      rgba(255,255,255,0.01) 40px
-    );
-  }
-
-  .selection-box {
-    position: absolute;
-    top: 30%; left: 15%;
-    width: 70%; height: 40%;
-    border: 1.5px solid #4a90e2;
-    background: rgba(74,144,226,0.08);
-    border-radius: 3px;
-  }
-
-  .visual-result {
-    padding: 1.5rem;
-    display: flex; flex-direction: column; gap: 0.75rem;
-  }
-
-  .result-label {
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-
-  .result-text {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.05rem;
-    line-height: 1.5;
-    color: var(--text);
-    flex: 1;
-  }
-
-  .result-badge {
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    background: var(--pro-dim);
-    color: var(--pro);
-    font-size: 0.72rem;
-    padding: 0.25rem 0.7rem;
-    border-radius: 100px;
-    width: fit-content;
-    border: 1px solid rgba(163,196,168,0.2);
-  }
-
-  /* FEATURES */
-  section { padding: 7rem 2rem; }
-
-  .container { max-width: 1100px; margin: 0 auto; }
-
-  .section-label {
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1rem;
-  }
-
-  .section-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(2rem, 3.5vw, 3rem);
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    max-width: 500px;
-    margin-bottom: 1rem;
-  }
-
-  .section-sub {
-    color: var(--muted);
-    max-width: 420px;
-    font-weight: 300;
-    line-height: 1.7;
-    margin-bottom: 4rem;
-  }
-
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5px;
-    border: 1.5px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-  }
-
-  .feature-card {
-    background: var(--surface);
-    padding: 2.5rem 2rem;
-    position: relative;
-    transition: background 0.2s;
-  }
-
-  .feature-card:hover { background: #161616; }
-
-  .feature-icon {
-    font-size: 1.4rem;
-    margin-bottom: 1.25rem;
-    display: block;
-  }
-
-  .feature-title {
-    font-weight: 500;
-    font-size: 1rem;
-    margin-bottom: 0.6rem;
-    color: var(--text);
-  }
-
-  .feature-desc {
-    font-size: 0.875rem;
-    color: var(--muted);
-    line-height: 1.65;
-    font-weight: 300;
-  }
-
-  .feature-pro-tag {
-    position: absolute;
-    top: 1.25rem; right: 1.25rem;
-    background: var(--pro-dim);
-    color: var(--pro);
-    font-size: 0.65rem;
-    padding: 0.2rem 0.6rem;
-    border-radius: 100px;
-    letter-spacing: 0.06em;
-    border: 1px solid rgba(163,196,168,0.15);
-  }
-
-  /* HOW IT WORKS */
-  .how-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 3rem;
-  }
-
-  .how-step { position: relative; }
-
-  .how-num {
-    font-family: 'DM Serif Display', serif;
-    font-size: 3.5rem;
-    color: var(--border-hover);
-    line-height: 1;
-    margin-bottom: 1.25rem;
-  }
-
-  .how-title {
-    font-weight: 500;
-    font-size: 1rem;
-    margin-bottom: 0.6rem;
-  }
-
-  .how-desc {
-    font-size: 0.875rem;
-    color: var(--muted);
-    line-height: 1.65;
-    font-weight: 300;
-  }
-
-  /* PRICING */
-  .pricing-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    max-width: 720px;
-    margin: 0 auto;
-  }
-
-  .pricing-card {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 2.5rem 2rem;
-    background: var(--surface);
-  }
-
-  .pricing-card.featured {
-    border-color: rgba(163,196,168,0.35);
-    background: #0f1510;
-  }
-
-  .pricing-tier {
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 1.5rem;
-  }
-
-  .pricing-card.featured .pricing-tier {
-    color: var(--pro);
-  }
-
-  .pricing-price {
-    font-family: 'DM Serif Display', serif;
-    font-size: 3rem;
-    line-height: 1;
-    margin-bottom: 0.35rem;
-  }
-
-  .pricing-note {
-    font-size: 0.8rem;
-    color: var(--muted);
-    margin-bottom: 2rem;
-    font-weight: 300;
-  }
-
-  .pricing-divider {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin-bottom: 1.75rem;
-  }
-
-  .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; }
-
-  .pricing-features li {
-    font-size: 0.875rem;
-    color: var(--muted);
-    display: flex; align-items: flex-start; gap: 0.6rem;
-    font-weight: 300;
-  }
-
-  .pricing-features li::before {
-    content: '—';
-    color: var(--border-hover);
-    flex-shrink: 0;
-  }
-
-  .pricing-card.featured .pricing-features li { color: #a0b8a3; }
-  .pricing-card.featured .pricing-features li::before { color: var(--pro); }
-
-  .pricing-btn {
-    display: block;
-    text-align: center;
-    margin-top: 2.5rem;
-    padding: 0.85rem;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    text-decoration: none;
-    transition: all 0.2s;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    border: none;
-    width: 100%;
-  }
-
-  .pricing-btn-free {
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--muted);
-  }
-
-  .pricing-btn-free:hover { border-color: var(--border-hover); color: var(--text); }
-
-  .pricing-btn-pro {
-    background: var(--pro);
-    color: #0a1a0c;
-  }
-
-  .pricing-btn-pro:hover { opacity: 0.9; }
-
-  /* MODES */
-  .modes-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 1rem;
-  }
-
-  .mode-card {
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1.5rem 1rem;
-    text-align: center;
-    background: var(--surface);
-    transition: border-color 0.2s;
-  }
-
-  .mode-card:hover { border-color: var(--border-hover); }
-
-  .mode-icon { font-size: 1.5rem; margin-bottom: 0.75rem; display: block; }
-
-  .mode-name {
-    font-size: 0.8rem;
-    color: var(--muted);
-    font-weight: 400;
-  }
-
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .footer-logo {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1rem;
-    color: var(--muted);
-  }
-
-  .footer-logo span { color: var(--accent); }
-
-  .footer-links {
-    display: flex; gap: 2rem;
-    list-style: none;
-  }
-
-  .footer-links a {
-    font-size: 0.8rem;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .footer-links a:hover { color: var(--text); }
-
-  .footer-copy {
-    font-size: 0.75rem;
-    color: var(--border-hover);
-  }
-
-  /* LANG TOGGLE */
-  [data-lang] { display: none; }
-  .lang-en [data-lang="en"] { display: block; }
-  .lang-fr [data-lang="fr"] { display: block; }
-  span[data-lang] { display: none; }
-  .lang-en span[data-lang="en"] { display: inline; }
-  .lang-fr span[data-lang="fr"] { display: inline; }
-  li span[data-lang] { display: none; }
-  .lang-en li span[data-lang="en"] { display: inline; }
-  .lang-fr li span[data-lang="fr"] { display: inline; }
-
-  @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
-    .how-grid { grid-template-columns: 1fr; gap: 2rem; }
-    .modes-grid { grid-template-columns: repeat(3, 1fr); }
-    .pricing-grid { grid-template-columns: 1fr; }
-    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
-    .visual-content { grid-template-columns: 1fr; height: auto; }
-    .visual-img { height: 160px; border-right: none; border-bottom: 1px solid var(--border); }
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0a0a;
+  --surface: #111111;
+  --surface-2: #161616;
+  --border: rgba(255,255,255,0.07);
+  --border-hover: rgba(255,255,255,0.16);
+  --text: #f0ede8;
+  --muted: #888880;
+  --accent: #c8b89a;
+  --accent-dim: rgba(200,184,154,0.10);
+  --pro: #8b7aff;
+  --pro-end: #6fd3c8;
+  --pro-dim: rgba(139,122,255,0.10);
+  --pro-border: rgba(139,122,255,0.22);
+  --green: #a3c4a8;
+  --green-dim: rgba(163,196,168,0.10);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 3rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(10,10,10,0.88);
+  backdrop-filter: blur(14px);
+}
+
+.nav-logo {
+  display: flex; align-items: center; gap: 0.65rem;
+}
+
+.nav-logo-icon {
+  width: 28px; height: 28px; border-radius: 7px;
+  background: linear-gradient(135deg, var(--pro) 0%, var(--pro-end) 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Serif Display', serif;
+  font-size: 0.7rem;
+  color: white;
+  letter-spacing: 0.05em;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.nav-logo-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+.nav-logo-name span { color: var(--accent); }
+
+.nav-right { display: flex; align-items: center; gap: 1.75rem; }
+
+.lang-toggle {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.lang-btn {
+  background: none; border: none; cursor: pointer;
+  padding: 0.3rem 0.7rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem; font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  transition: all 0.18s;
+}
+.lang-btn.active { background: var(--accent-dim); color: var(--accent); }
+
+.nav-cta {
+  background: var(--text); color: var(--bg);
+  border: none; padding: 0.48rem 1.2rem;
+  border-radius: 6px; font-family: 'DM Sans', sans-serif;
+  font-size: 0.83rem; font-weight: 500;
+  cursor: pointer; transition: opacity 0.2s;
+  text-decoration: none; display: inline-block;
+}
+.nav-cta:hover { opacity: 0.84; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 9rem 2rem 6rem;
+  position: relative; overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute; top: 15%; left: 50%;
+  transform: translateX(-50%);
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(139,122,255,0.055) 0%, transparent 68%);
+  pointer-events: none;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 0.55rem;
+  border: 1px solid var(--border);
+  padding: 0.35rem 1rem;
+  border-radius: 100px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 2rem;
+  animation: fadeUp 0.6s ease both;
+}
+
+.dot-gemini {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--pro), var(--pro-end));
+  flex-shrink: 0;
+  box-shadow: 0 0 6px rgba(139,122,255,0.5);
+}
+
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.6rem, 6vw, 5.2rem);
+  line-height: 1.07;
+  letter-spacing: -0.025em;
+  max-width: 820px;
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.6s 0.1s ease both;
+}
+
+.hero h1 em { font-style: italic; color: var(--accent); }
+
+.hero p {
+  font-size: 1.08rem;
+  color: var(--muted);
+  max-width: 460px;
+  margin: 0 auto 2.75rem;
+  font-weight: 300; line-height: 1.75;
+  animation: fadeUp 0.6s 0.2s ease both;
+}
+
+.hero-actions {
+  display: flex; gap: 0.9rem;
+  align-items: center; flex-wrap: wrap;
+  justify-content: center;
+  animation: fadeUp 0.6s 0.3s ease both;
+}
+
+.btn-primary {
+  background: var(--text); color: var(--bg);
+  padding: 0.85rem 2rem; border-radius: 8px;
+  font-size: 0.93rem; font-weight: 500;
+  text-decoration: none; transition: opacity 0.2s;
+  border: none; cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+}
+.btn-primary:hover { opacity: 0.87; }
+
+.btn-secondary {
+  background: none; color: var(--muted);
+  padding: 0.85rem 1.4rem; border-radius: 8px;
+  font-size: 0.93rem; text-decoration: none;
+  transition: all 0.2s; border: 1px solid var(--border);
+  cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 400;
+}
+.btn-secondary:hover { color: var(--text); border-color: var(--border-hover); }
+
+/* ── HERO VISUAL ── */
+.hero-visual {
+  margin-top: 4.5rem;
+  width: 100%; max-width: 800px;
+  border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden;
+  background: var(--surface);
+  animation: fadeUp 0.7s 0.4s ease both;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04);
+}
+
+.visual-bar {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.8rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+}
+
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot-r { background: #ff5f57; } .dot-y { background: #febc2e; } .dot-g { background: #28c840; }
+
+.visual-url {
+  flex: 1; text-align: center;
+  font-size: 0.72rem; color: var(--muted);
+  letter-spacing: 0.03em;
+}
+
+.visual-content {
+  display: grid; grid-template-columns: 1fr 1fr;
+  height: 280px;
+}
+
+.visual-img {
+  border-right: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  background: repeating-linear-gradient(45deg,transparent,transparent 22px,rgba(255,255,255,0.012) 22px,rgba(255,255,255,0.012) 44px);
+}
+
+.manga-placeholder {
+  font-family: 'DM Serif Display', serif;
+  font-size: 3rem;
+  color: rgba(255,255,255,0.12);
+  letter-spacing: 0.15em;
+  user-select: none;
+}
+
+.selection-box {
+  position: absolute; top: 28%; left: 14%;
+  width: 72%; height: 44%;
+  border: 1.5px solid #6b9eff;
+  background: rgba(107,158,255,0.07);
+  border-radius: 3px;
+  animation: pulse-border 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse-border {
+  0%, 100% { border-color: #6b9eff; box-shadow: 0 0 0 0 rgba(107,158,255,0); }
+  50% { border-color: #8bb8ff; box-shadow: 0 0 12px rgba(107,158,255,0.2); }
+}
+
+.visual-result {
+  padding: 1.5rem;
+  display: flex; flex-direction: column; gap: 0.7rem;
+}
+
+.result-label {
+  font-size: 0.68rem; letter-spacing: 0.1em;
+  color: var(--muted); text-transform: uppercase;
+}
+
+.result-text {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1rem; line-height: 1.55;
+  color: var(--text); flex: 1;
+}
+
+.result-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: var(--pro-dim); color: var(--pro);
+  font-size: 0.7rem; padding: 0.22rem 0.65rem;
+  border-radius: 100px; width: fit-content;
+  border: 1px solid var(--pro-border);
+}
+
+/* ── WHAT'S NEW BANNER ── */
+.whats-new {
+  background: linear-gradient(135deg, rgba(139,122,255,0.06) 0%, rgba(111,211,200,0.04) 100%);
+  border-top: 1px solid var(--pro-border);
+  border-bottom: 1px solid var(--pro-border);
+  padding: 1.25rem 3rem;
+  display: flex; align-items: center;
+  justify-content: center; gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.whats-new-pill {
+  background: linear-gradient(135deg, var(--pro), var(--pro-end));
+  color: white; font-size: 0.68rem;
+  font-weight: 600; letter-spacing: 0.09em;
+  padding: 0.22rem 0.7rem; border-radius: 100px;
+  text-transform: uppercase; flex-shrink: 0;
+}
+
+.whats-new-text {
+  font-size: 0.85rem; color: rgba(240,237,232,0.75);
+  font-weight: 300;
+}
+
+.whats-new-items {
+  display: flex; gap: 1.5rem; flex-wrap: wrap;
+}
+
+.whats-new-item {
+  display: flex; align-items: center; gap: 0.4rem;
+  font-size: 0.78rem; color: var(--muted);
+}
+
+.whats-new-item::before {
+  content: '✦';
+  color: var(--pro); font-size: 0.6rem;
+}
+
+/* ── SECTIONS ── */
+section { padding: 7rem 2rem; }
+.container { max-width: 1100px; margin: 0 auto; }
+
+.section-label {
+  font-size: 0.72rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--accent);
+  margin-bottom: 0.9rem;
+}
+
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.9rem, 3.5vw, 2.9rem);
+  line-height: 1.15; letter-spacing: -0.022em;
+  max-width: 500px; margin-bottom: 0.9rem;
+}
+
+.section-sub {
+  color: var(--muted); max-width: 420px;
+  font-weight: 300; line-height: 1.75;
+  margin-bottom: 3.5rem;
+}
+
+/* ── FEATURES GRID ── */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 1.5px;
+  border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden;
+}
+
+.feature-card {
+  background: var(--surface);
+  padding: 2.25rem 1.75rem;
+  position: relative; transition: background 0.2s;
+}
+.feature-card:hover { background: var(--surface-2); }
+
+.feature-icon { font-size: 1.3rem; margin-bottom: 1.1rem; display: block; }
+
+.feature-title {
+  font-weight: 500; font-size: 0.97rem;
+  margin-bottom: 0.55rem; color: var(--text);
+}
+
+.feature-desc {
+  font-size: 0.855rem; color: var(--muted);
+  line-height: 1.65; font-weight: 300;
+}
+
+.feature-pro-tag {
+  position: absolute; top: 1.2rem; right: 1.2rem;
+  background: var(--pro-dim); color: var(--pro);
+  font-size: 0.63rem; padding: 0.18rem 0.55rem;
+  border-radius: 100px; letter-spacing: 0.06em;
+  border: 1px solid var(--pro-border);
+}
+
+/* ── HOW IT WORKS ── */
+.how-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+}
+
+.how-step { position: relative; }
+
+.how-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 3.2rem; color: var(--border-hover);
+  line-height: 1; margin-bottom: 1.2rem;
+}
+
+.how-title { font-weight: 500; font-size: 0.97rem; margin-bottom: 0.55rem; }
+
+.how-desc {
+  font-size: 0.855rem; color: var(--muted);
+  line-height: 1.65; font-weight: 300;
+}
+
+/* ── MODES ── */
+.modes-grid {
+  display: grid; grid-template-columns: repeat(6, 1fr);
+  gap: 0.9rem;
+}
+
+.mode-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.4rem 0.8rem;
+  text-align: center; background: var(--surface);
+  transition: border-color 0.2s, transform 0.2s;
+  cursor: default;
+}
+.mode-card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+
+.mode-icon { font-size: 1.5rem; margin-bottom: 0.65rem; display: block; }
+
+.mode-name { font-size: 0.78rem; color: var(--muted); font-weight: 400; }
+
+/* ── PRICING ── */
+.pricing-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1.25rem;
+  max-width: 900px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.pricing-card {
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 2.25rem 1.75rem;
+  background: var(--surface);
+}
+
+.pricing-packs {
+  display: flex; flex-direction: column; gap: 1rem;
+}
+
+.pack-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+  background: var(--surface);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  transition: border-color 0.2s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.pack-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: linear-gradient(180deg, var(--pro), var(--pro-end));
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.pack-card:hover { border-color: var(--pro-border); transform: translateX(3px); }
+.pack-card:hover::before { opacity: 1; }
+
+.pack-card.popular {
+  border-color: var(--pro-border);
+  background: linear-gradient(135deg, rgba(139,122,255,0.06) 0%, rgba(10,10,10,0) 60%);
+}
+.pack-card.popular::before { opacity: 1; }
+
+.pack-badge {
+  position: absolute; top: 1rem; right: 1rem;
+  background: linear-gradient(135deg, var(--pro), var(--pro-end));
+  color: white; font-size: 0.62rem;
+  font-weight: 600; letter-spacing: 0.07em;
+  padding: 0.18rem 0.55rem; border-radius: 100px;
+  text-transform: uppercase;
+}
+
+.pack-info {}
+
+.pack-name {
+  font-weight: 500; font-size: 0.97rem;
+  color: var(--text); margin-bottom: 0.25rem;
+}
+
+.pack-credits {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.3rem;
+  background: linear-gradient(135deg, var(--pro), var(--pro-end));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.3rem;
+}
+
+.pack-desc {
+  font-size: 0.78rem; color: var(--muted); font-weight: 300;
+}
+
+.pack-price-col { text-align: right; }
+
+.pack-price {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.7rem; line-height: 1;
+  color: var(--text); margin-bottom: 0.3rem;
+}
+
+.pack-btn {
+  display: block; text-align: center;
+  padding: 0.5rem 1.1rem;
+  border-radius: 7px; font-size: 0.8rem; font-weight: 500;
+  text-decoration: none; transition: all 0.2s;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  border: none; white-space: nowrap;
+  background: linear-gradient(135deg, var(--pro) 0%, var(--pro-end) 100%);
+  color: white; margin-top: 0.5rem;
+}
+.pack-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+.pricing-tier {
+  font-size: 0.72rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.pricing-price {
+  font-family: 'DM Serif Display', serif;
+  font-size: 3rem; line-height: 1; margin-bottom: 0.3rem;
+}
+
+.pricing-note {
+  font-size: 0.78rem; color: var(--muted);
+  margin-bottom: 1.75rem; font-weight: 300;
+}
+
+.pricing-divider {
+  border: none; border-top: 1px solid var(--border);
+  margin-bottom: 1.6rem;
+}
+
+.pricing-features { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
+
+.pricing-features li {
+  font-size: 0.855rem; color: var(--muted);
+  display: flex; align-items: flex-start; gap: 0.55rem;
+  font-weight: 300;
+}
+.pricing-features li::before { content: '—'; color: var(--border-hover); flex-shrink: 0; }
+
+.pricing-btn {
+  display: block; text-align: center;
+  margin-top: 2.25rem; padding: 0.82rem;
+  border-radius: 8px; font-size: 0.88rem; font-weight: 500;
+  text-decoration: none; transition: all 0.2s;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  border: none; width: 100%;
+}
+
+.pricing-btn-free {
+  background: none; border: 1px solid var(--border); color: var(--muted);
+}
+.pricing-btn-free:hover { border-color: var(--border-hover); color: var(--text); }
+
+/* ── CREDIT EXPLAINER ── */
+.credit-explainer {
+  display: flex; align-items: flex-start; gap: 0.55rem;
+  font-size: 0.77rem; color: var(--muted);
+  margin-top: 1.25rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.02);
+  max-width: 900px; margin-left: auto; margin-right: auto;
+  line-height: 1.6;
+}
+.credit-explainer strong { color: rgba(200,184,154,0.75); font-weight: 500; }
+
+@media (max-width: 768px) {
+  .pricing-layout { grid-template-columns: 1fr; }
+  .pack-card { grid-template-columns: 1fr; }
+  .pack-price-col { text-align: left; display: flex; align-items: center; gap: 1rem; }
+}
+
+/* ── COMPARISON TABLE ── */
+.compare-wrap {
+  max-width: 680px; margin: 0 auto;
+  border: 1px solid var(--border); border-radius: 12px;
+  overflow: hidden;
+}
+
+.compare-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.compare-table th {
+  padding: 1rem 1.5rem;
+  text-align: left; font-weight: 500;
+  font-size: 0.78rem; letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+}
+
+.compare-table th:last-child {
+  color: var(--pro); text-align: center;
+}
+
+.compare-table th:nth-child(2) { text-align: center; }
+
+.compare-table td {
+  padding: 0.9rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted); font-weight: 300;
+}
+
+.compare-table tr:last-child td { border-bottom: none; }
+
+.compare-table td:nth-child(2),
+.compare-table td:last-child {
+  text-align: center;
+}
+
+.compare-table td:last-child { color: var(--pro); }
+
+.check { color: var(--green); }
+.cross { color: rgba(255,255,255,0.2); }
+.limited { color: var(--accent); font-size: 0.78rem; }
+
+/* ── FAQ ── */
+.faq-list {
+  max-width: 680px;
+  display: flex; flex-direction: column; gap: 0;
+  border: 1px solid var(--border); border-radius: 12px;
+  overflow: hidden;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.faq-item:last-child { border-bottom: none; }
+
+.faq-q {
+  width: 100%; text-align: left;
+  padding: 1.3rem 1.5rem;
+  background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.93rem; font-weight: 500;
+  color: var(--text); gap: 1rem;
+  transition: background 0.15s;
+}
+.faq-q:hover { background: rgba(255,255,255,0.025); }
+
+.faq-arrow {
+  font-size: 0.7rem; color: var(--muted); flex-shrink: 0;
+  transition: transform 0.25s;
+}
+.faq-item.open .faq-arrow { transform: rotate(180deg); }
+
+.faq-a {
+  display: none;
+  padding: 0 1.5rem 1.3rem;
+  font-size: 0.875rem; color: var(--muted);
+  font-weight: 300; line-height: 1.75;
+}
+.faq-item.open .faq-a { display: block; }
+
+/* ── CTA ── */
+.cta-section {
+  text-align: center; padding: 8rem 2rem;
+  position: relative; overflow: hidden;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(139,122,255,0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2.5rem 3rem;
+  display: flex; align-items: center;
+  justify-content: space-between;
+}
+
+.footer-logo {
+  display: flex; align-items: center; gap: 0.55rem;
+  font-family: 'DM Serif Display', serif;
+  font-size: 0.95rem; color: var(--muted);
+}
+
+.footer-logo-icon {
+  width: 22px; height: 22px; border-radius: 5px;
+  background: linear-gradient(135deg, var(--pro) 0%, var(--pro-end) 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.52rem; font-weight: bold; color: white;
+  letter-spacing: 0.03em; font-family: 'DM Serif Display', serif;
+}
+
+.footer-logo span { color: var(--accent); }
+
+.footer-links { display: flex; gap: 1.75rem; list-style: none; }
+
+.footer-links a {
+  font-size: 0.78rem; color: var(--muted);
+  text-decoration: none; transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--text); }
+
+.footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.18); }
+
+/* ── ANIMATION ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── LANG TOGGLE ── */
+[data-lang] { display: none; }
+.lang-en [data-lang="en"] { display: block; }
+.lang-fr [data-lang="fr"] { display: block; }
+span[data-lang], li span[data-lang] { display: none; }
+.lang-en span[data-lang="en"],
+.lang-en li span[data-lang="en"] { display: inline; }
+.lang-fr span[data-lang="fr"],
+.lang-fr li span[data-lang="fr"] { display: inline; }
+td[data-lang], th[data-lang] { display: none; }
+.lang-en td[data-lang="en"], .lang-en th[data-lang="en"] { display: table-cell; }
+.lang-fr td[data-lang="fr"], .lang-fr th[data-lang="fr"] { display: table-cell; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  .how-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .modes-grid { grid-template-columns: repeat(3, 1fr); }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .compare-wrap { overflow-x: auto; }
+  footer { flex-direction: column; gap: 1.4rem; text-align: center; }
+  .visual-content { grid-template-columns: 1fr; height: auto; }
+  .visual-img { height: 150px; border-right: none; border-bottom: 1px solid var(--border); }
+  .whats-new { padding: 1rem 1.5rem; }
+  section { padding: 5rem 1.5rem; }
+}
 </style>
 </head>
 <body class="lang-en">
 
-<!-- NAV -->
+<!-- ── NAV ── -->
 <nav>
-  <div class="nav-logo">SITT<span>.</span></div>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">SITT</div>
+    <span class="nav-logo-name">SITT<span>.</span></span>
+  </div>
   <div class="nav-right">
     <div class="lang-toggle">
       <button class="lang-btn active" onclick="setLang('en')">EN</button>
@@ -595,19 +771,19 @@
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- ── HERO ── -->
 <section class="hero">
+  <div class="hero-badge">
+    <span class="dot-gemini"></span>
+    <span data-lang="en">v2.0 — Now powered by Gemini Vision AI</span>
+    <span data-lang="fr">v2.0 — Désormais propulsé par Gemini Vision IA</span>
+  </div>
+
   <h1 data-lang="en">Extract text from <em>any image,</em> instantly.</h1>
   <h1 data-lang="fr">Extrayez le texte de <em>n'importe quelle image,</em> instantanément.</h1>
 
-  <div class="hero-badge" style="margin-bottom:1.5rem; margin-top:0.5rem;">
-    <span class="dot-gemini"></span>
-    <span data-lang="en">Now powered by Gemini Vision AI</span>
-    <span data-lang="fr">Désormais propulsé par Gemini Vision IA</span>
-  </div>
-
-  <p data-lang="en">A Chrome extension that reads manga, PDFs, screenshots, photos and more — with AI-powered precision.</p>
-  <p data-lang="fr">Une extension Chrome qui lit les mangas, PDFs, captures d'écran, photos et plus — avec une précision dopée à l'IA.</p>
+  <p data-lang="en">A Chrome extension that reads manga, PDFs, screenshots, photos and more — with AI precision and a Tesseract fallback that works offline.</p>
+  <p data-lang="fr">Une extension Chrome qui lit les mangas, PDFs, captures d'écran, photos et plus — avec une précision IA et un fallback Tesseract qui fonctionne hors ligne.</p>
 
   <div class="hero-actions">
     <a href="#" class="btn-primary">
@@ -625,6 +801,7 @@
       <div class="dot dot-r"></div>
       <div class="dot dot-y"></div>
       <div class="dot dot-g"></div>
+      <div class="visual-url">manga-reader.com</div>
     </div>
     <div class="visual-content">
       <div class="visual-img">
@@ -638,15 +815,29 @@
         </div>
         <div class="result-text">"WE ARE USELESS NOW. ALL WE CAN DO IS BURY THIS HATRED DEEP WITHIN OUR HEARTS."</div>
         <div class="result-badge">
-          ✦ <span data-lang="en">Gemini Vision Pro</span>
-          <span data-lang="fr">Gemini Vision Pro</span>
+          ✦ Gemini Vision AI · ~0.8s
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FEATURES -->
+<!-- ── WHAT'S NEW BANNER ── -->
+<div class="whats-new">
+  <span class="whats-new-pill">What's new in v2.0</span>
+  <div class="whats-new-items">
+    <div class="whats-new-item" data-lang="en">Gemini Vision replaces basic OCR</div>
+    <div class="whats-new-item" data-lang="fr">Gemini Vision remplace l'OCR basique</div>
+    <div class="whats-new-item" data-lang="en">6 document-specific modes</div>
+    <div class="whats-new-item" data-lang="fr">6 modes spécifiques par document</div>
+    <div class="whats-new-item" data-lang="en">Markdown + LaTeX rendering</div>
+    <div class="whats-new-item" data-lang="fr">Rendu Markdown + LaTeX</div>
+    <div class="whats-new-item" data-lang="en">Re-translate from history</div>
+    <div class="whats-new-item" data-lang="fr">Re-traduire depuis l'historique</div>
+  </div>
+</div>
+
+<!-- ── FEATURES ── -->
 <section id="features">
   <div class="container">
     <div class="section-label">
@@ -655,63 +846,63 @@
     </div>
     <h2 class="section-title" data-lang="en">Everything you need to read any image.</h2>
     <h2 class="section-title" data-lang="fr">Tout ce qu'il faut pour lire n'importe quelle image.</h2>
-    <p class="section-sub" data-lang="en">Built for manga readers, researchers, students, and anyone who needs to extract text fast.</p>
-    <p class="section-sub" data-lang="fr">Conçu pour les lecteurs de manga, chercheurs, étudiants, et toute personne ayant besoin d'extraire du texte rapidement.</p>
+    <p class="section-sub" data-lang="en">Built for manga readers, researchers, students, and anyone who needs to extract text fast — with or without internet.</p>
+    <p class="section-sub" data-lang="fr">Conçu pour les lecteurs de manga, chercheurs, étudiants — avec ou sans connexion internet.</p>
 
     <div class="features-grid">
       <div class="feature-card">
         <span class="feature-icon">🤖</span>
         <div class="feature-title" data-lang="en">Gemini Vision AI</div>
         <div class="feature-title" data-lang="fr">Gemini Vision IA</div>
-        <div class="feature-desc" data-lang="en">Google's latest vision model reads text with near-perfect accuracy, even from stylized manga fonts.</div>
-        <div class="feature-desc" data-lang="fr">Le dernier modèle de vision de Google lit le texte avec une précision quasi-parfaite, même depuis des polices manga stylisées.</div>
+        <div class="feature-desc" data-lang="en">Google's vision model reads even the most stylized manga fonts with near-perfect accuracy. Results in ~1 second.</div>
+        <div class="feature-desc" data-lang="fr">Le modèle de vision de Google lit même les polices manga les plus stylisées avec une précision quasi-parfaite. Résultat en ~1 seconde.</div>
         <div class="feature-pro-tag">Pro</div>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">📡</span>
+        <div class="feature-title" data-lang="en">Offline Tesseract fallback</div>
+        <div class="feature-title" data-lang="fr">Fallback Tesseract hors ligne</div>
+        <div class="feature-desc" data-lang="en">No internet? No problem. Tesseract.js runs locally in the browser with advanced preprocessing pipelines for every document type.</div>
+        <div class="feature-desc" data-lang="fr">Pas d'internet ? Aucun problème. Tesseract.js tourne localement dans le navigateur avec des pipelines de preprocessing pour chaque type de document.</div>
       </div>
 
       <div class="feature-card">
         <span class="feature-icon">🌍</span>
         <div class="feature-title" data-lang="en">Auto Translation</div>
         <div class="feature-title" data-lang="fr">Traduction automatique</div>
-        <div class="feature-desc" data-lang="en">Translate extracted text in one click. Supports 20+ languages via Google Translate.</div>
-        <div class="feature-desc" data-lang="fr">Traduisez le texte extrait en un clic. Supporte 20+ langues via Google Translate.</div>
+        <div class="feature-desc" data-lang="en">Translate extracted text in one click via Google Translate, MyMemory or LibreTranslate. 20+ languages. Edit and re-translate anytime.</div>
+        <div class="feature-desc" data-lang="fr">Traduisez en un clic via Google Translate, MyMemory ou LibreTranslate. 20+ langues. Éditez et re-traduisez à tout moment.</div>
       </div>
 
       <div class="feature-card">
         <span class="feature-icon">⚡</span>
         <div class="feature-title" data-lang="en">Instant Selection</div>
         <div class="feature-title" data-lang="fr">Sélection instantanée</div>
-        <div class="feature-desc" data-lang="en">Press Alt+R, draw a box around any text on screen. Results appear in under 2 seconds.</div>
-        <div class="feature-desc" data-lang="fr">Appuyez sur Alt+R, dessinez un cadre autour du texte. Les résultats apparaissent en moins de 2 secondes.</div>
+        <div class="feature-desc" data-lang="en">Press Alt+R, draw a box around any text on screen. The sidebar opens automatically with extracted text and translation.</div>
+        <div class="feature-desc" data-lang="fr">Appuyez sur Alt+R, dessinez un cadre. La sidebar s'ouvre automatiquement avec le texte extrait et la traduction.</div>
       </div>
 
       <div class="feature-card">
-        <span class="feature-icon">📚</span>
-        <div class="feature-title" data-lang="en">6 Document Modes</div>
-        <div class="feature-title" data-lang="fr">6 modes de document</div>
-        <div class="feature-desc" data-lang="en">Manga, PDF, Screenshot, Photo, Subtitle, Game — each mode is optimized for its content type.</div>
-        <div class="feature-desc" data-lang="fr">Manga, PDF, Capture, Photo, Sous-titre, Jeu — chaque mode est optimisé pour son type de contenu.</div>
+        <span class="feature-icon">📐</span>
+        <div class="feature-title" data-lang="en">Markdown + LaTeX</div>
+        <div class="feature-title" data-lang="fr">Markdown + LaTeX</div>
+        <div class="feature-desc" data-lang="en">OCR results are rendered with full Markdown and KaTeX support. Tables, code blocks, and mathematical formulas display correctly.</div>
+        <div class="feature-desc" data-lang="fr">Les résultats OCR sont rendus avec Markdown complet et support KaTeX. Tableaux, blocs de code et formules mathématiques s'affichent correctement.</div>
       </div>
 
       <div class="feature-card">
         <span class="feature-icon">🕓</span>
-        <div class="feature-title" data-lang="en">Full History</div>
-        <div class="feature-title" data-lang="fr">Historique complet</div>
-        <div class="feature-desc" data-lang="en">Every capture is saved. Edit, re-translate, or copy from your history at any time.</div>
-        <div class="feature-desc" data-lang="fr">Chaque capture est sauvegardée. Éditez, re-traduisez ou copiez depuis votre historique à tout moment.</div>
-      </div>
-
-      <div class="feature-card">
-        <span class="feature-icon">🌙</span>
-        <div class="feature-title" data-lang="en">Dark Mode</div>
-        <div class="feature-title" data-lang="fr">Mode sombre</div>
-        <div class="feature-desc" data-lang="en">Beautiful dark interface that stays out of the way while you read.</div>
-        <div class="feature-desc" data-lang="fr">Une belle interface sombre qui reste discrète pendant votre lecture.</div>
+        <div class="feature-title" data-lang="en">Editable History</div>
+        <div class="feature-title" data-lang="fr">Historique éditable</div>
+        <div class="feature-desc" data-lang="en">Every capture is saved with word count and source info. Edit the OCR text, re-translate it, or copy it — anytime.</div>
+        <div class="feature-desc" data-lang="fr">Chaque capture est sauvegardée avec comptage de mots. Éditez le texte OCR, re-traduisez-le, ou copiez-le — à tout moment.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
+<!-- ── HOW IT WORKS ── -->
 <section style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
   <div class="container">
     <div class="section-label">
@@ -726,28 +917,28 @@
         <div class="how-num">01</div>
         <div class="how-title" data-lang="en">Press Alt+R</div>
         <div class="how-title" data-lang="fr">Appuyez sur Alt+R</div>
-        <div class="how-desc" data-lang="en">Activate the selection mode on any webpage or application. A subtle overlay appears.</div>
-        <div class="how-desc" data-lang="fr">Activez le mode de sélection sur n'importe quelle page web ou application. Un overlay subtil apparaît.</div>
+        <div class="how-desc" data-lang="en">Activate selection mode on any webpage or application. A subtle overlay appears with a crosshair cursor.</div>
+        <div class="how-desc" data-lang="fr">Activez le mode de sélection sur n'importe quelle page ou application. Un overlay subtil apparaît avec un curseur en croix.</div>
       </div>
       <div class="how-step">
         <div class="how-num">02</div>
         <div class="how-title" data-lang="en">Draw a selection</div>
         <div class="how-title" data-lang="fr">Dessinez une sélection</div>
-        <div class="how-desc" data-lang="en">Click and drag to select the area containing the text you want to extract.</div>
-        <div class="how-desc" data-lang="fr">Cliquez et glissez pour sélectionner la zone contenant le texte que vous souhaitez extraire.</div>
+        <div class="how-desc" data-lang="en">Click and drag to select the area containing the text. The selection box highlights in blue.</div>
+        <div class="how-desc" data-lang="fr">Cliquez et glissez pour sélectionner la zone. Le cadre de sélection s'affiche en bleu.</div>
       </div>
       <div class="how-step">
         <div class="how-num">03</div>
         <div class="how-title" data-lang="en">Read & translate</div>
         <div class="how-title" data-lang="fr">Lisez et traduisez</div>
-        <div class="how-desc" data-lang="en">The sidebar shows the extracted text instantly. Translate, copy, or edit as needed.</div>
-        <div class="how-desc" data-lang="fr">La barre latérale affiche le texte extrait instantanément. Traduisez, copiez ou éditez selon vos besoins.</div>
+        <div class="how-desc" data-lang="en">The sidebar opens with the extracted text. Translate, copy, edit, or re-translate in one click. Your history is always there.</div>
+        <div class="how-desc" data-lang="fr">La sidebar s'ouvre avec le texte extrait. Traduisez, copiez, éditez ou re-traduisez en un clic. Votre historique est toujours là.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- MODES -->
+<!-- ── MODES ── -->
 <section>
   <div class="container">
     <div class="section-label">
@@ -756,91 +947,335 @@
     </div>
     <h2 class="section-title" data-lang="en">Optimized for every format.</h2>
     <h2 class="section-title" data-lang="fr">Optimisé pour chaque format.</h2>
-    <p class="section-sub" data-lang="en">Each mode uses a tailored OCR strategy for maximum accuracy.</p>
-    <p class="section-sub" data-lang="fr">Chaque mode utilise une stratégie OCR adaptée pour une précision maximale.</p>
+    <p class="section-sub" data-lang="en">Each mode uses a dedicated OCR strategy — different preprocessing, PSM passes, and confidence thresholds tuned per content type.</p>
+    <p class="section-sub" data-lang="fr">Chaque mode utilise une stratégie OCR dédiée — preprocessing, passes PSM et seuils de confiance ajustés par type de contenu.</p>
 
     <div class="modes-grid">
       <div class="mode-card"><span class="mode-icon">🎌</span><div class="mode-name">Manga</div></div>
       <div class="mode-card"><span class="mode-icon">📄</span><div class="mode-name">PDF</div></div>
-      <div class="mode-card"><span class="mode-icon">🖥️</span><div class="mode-name" data-lang="en">Screenshot</div><div class="mode-name" data-lang="fr">Capture</div></div>
-      <div class="mode-card"><span class="mode-icon">📷</span><div class="mode-name" data-lang="en">Photo</div><div class="mode-name" data-lang="fr">Photo</div></div>
-      <div class="mode-card"><span class="mode-icon">📺</span><div class="mode-name" data-lang="en">Subtitle</div><div class="mode-name" data-lang="fr">Sous-titre</div></div>
-      <div class="mode-card"><span class="mode-icon">🎮</span><div class="mode-name" data-lang="en">Game</div><div class="mode-name" data-lang="fr">Jeu vidéo</div></div>
+      <div class="mode-card">
+        <span class="mode-icon">🖥️</span>
+        <div class="mode-name" data-lang="en">Screenshot</div>
+        <div class="mode-name" data-lang="fr">Capture</div>
+      </div>
+      <div class="mode-card">
+        <span class="mode-icon">📷</span>
+        <div class="mode-name" data-lang="en">Photo</div>
+        <div class="mode-name" data-lang="fr">Photo</div>
+      </div>
+      <div class="mode-card">
+        <span class="mode-icon">📺</span>
+        <div class="mode-name" data-lang="en">Subtitle</div>
+        <div class="mode-name" data-lang="fr">Sous-titre</div>
+      </div>
+      <div class="mode-card">
+        <span class="mode-icon">🎮</span>
+        <div class="mode-name" data-lang="en">Game</div>
+        <div class="mode-name" data-lang="fr">Jeu vidéo</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- PRICING -->
+<!-- ── COMPARE ── -->
 <section style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container" style="display:flex; flex-direction:column; align-items:center;">
+    <div class="section-label" style="text-align:center;">
+      <span data-lang="en">Free vs Pro</span>
+      <span data-lang="fr">Gratuit vs Pro</span>
+    </div>
+    <h2 class="section-title" style="text-align:center; max-width:100%;" data-lang="en">What do you get?</h2>
+    <h2 class="section-title" style="text-align:center; max-width:100%;" data-lang="fr">Qu'est-ce que vous obtenez ?</h2>
+    <p class="section-sub" style="text-align:center; max-width:100%; margin-bottom:3rem;" data-lang="en">Full transparency on limits — no surprises.</p>
+    <p class="section-sub" style="text-align:center; max-width:100%; margin-bottom:3rem;" data-lang="fr">Limites en toute transparence — pas de surprises.</p>
+
+    <div class="compare-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th data-lang="en">Feature</th>
+            <th data-lang="fr">Fonctionnalité</th>
+            <th data-lang="en">Free</th>
+            <th data-lang="fr">Gratuit</th>
+            <th data-lang="en">Pro</th>
+            <th data-lang="fr">Pro</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-lang="en">Tesseract OCR (offline)</td>
+            <td data-lang="fr">OCR Tesseract (hors ligne)</td>
+            <td data-lang="en"><span class="check">✓</span></td>
+            <td data-lang="fr"><span class="check">✓</span></td>
+            <td data-lang="en"><span class="check">✓</span></td>
+            <td data-lang="fr"><span class="check">✓</span></td>
+          </tr>
+          <tr>
+            <td data-lang="en">Gemini Vision AI</td>
+            <td data-lang="fr">IA Gemini Vision</td>
+            <td data-lang="en"><span class="limited">2 / day trial</span></td>
+            <td data-lang="fr"><span class="limited">2 / jour essai</span></td>
+            <td data-lang="en"><span class="check">✓ Credits</span></td>
+            <td data-lang="fr"><span class="check">✓ Crédits</span></td>
+          </tr>
+          <tr>
+            <td data-lang="en">Daily capture limit</td>
+            <td data-lang="fr">Limite captures / jour</td>
+            <td data-lang="en"><span class="limited">10 / day</span></td>
+            <td data-lang="fr"><span class="limited">10 / jour</span></td>
+            <td data-lang="en"><span class="check">Unlimited</span></td>
+            <td data-lang="fr"><span class="check">Illimité</span></td>
+          </tr>
+          <tr>
+            <td data-lang="en">All 6 document modes</td>
+            <td data-lang="fr">Les 6 modes de document</td>
+            <td data-lang="en"><span class="check">✓</span></td>
+            <td data-lang="fr"><span class="check">✓</span></td>
+            <td data-lang="en"><span class="check">✓</span></td>
+            <td data-lang="fr"><span class="check">✓</span></td>
+          </tr>
+          <tr>
+            <td data-lang="en">Auto translation</td>
+            <td data-lang="fr">Traduction automatique</td>
+            <td data-lang="en"><span class="check">✓</span></td>
+            <td data-lang="fr"><span class="check">✓</span></td>
+            <td data-lang="en"><span class="check">✓ Unlimited</span></td>
+            <td data-lang="fr"><span class="check">✓ Illimitée</span></td>
+          </tr>
+          <tr>
+            <td data-lang="en">Editable history</td>
+            <td data-lang="fr">Historique éditable</td>
+            <td data-lang="en"><span class="check">✓</span></td>
+            <td data-lang="fr"><span class="check">✓</span></td>
+            <td data-lang="en"><span class="check">✓</span></td>
+            <td data-lang="fr"><span class="check">✓</span></td>
+          </tr>
+          <tr>
+            <td data-lang="en">Quality OCR mode</td>
+            <td data-lang="fr">Mode OCR Qualité</td>
+            <td data-lang="en"><span class="cross">—</span></td>
+            <td data-lang="fr"><span class="cross">—</span></td>
+            <td data-lang="en"><span class="check">✓</span></td>
+            <td data-lang="fr"><span class="check">✓</span></td>
+          </tr>
+          <tr>
+            <td data-lang="en">Dark + light mode</td>
+            <td data-lang="fr">Mode sombre + clair</td>
+            <td data-lang="en"><span class="check">✓</span></td>
+            <td data-lang="fr"><span class="check">✓</span></td>
+            <td data-lang="en"><span class="check">✓</span></td>
+            <td data-lang="fr"><span class="check">✓</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRICING ── -->
+<section>
   <div class="container">
     <div class="section-label" style="text-align:center;">
       <span data-lang="en">Pricing</span>
       <span data-lang="fr">Tarifs</span>
     </div>
-    <h2 class="section-title" style="text-align:center; max-width:100%; margin-bottom:0.5rem;" data-lang="en">Simple, one-time pricing.</h2>
-    <h2 class="section-title" style="text-align:center; max-width:100%; margin-bottom:0.5rem;" data-lang="fr">Tarification simple, en une fois.</h2>
-    <p style="text-align:center; color:var(--muted); font-weight:300; margin-bottom:4rem;" data-lang="en">No subscription. Buy once, use forever.</p>
-    <p style="text-align:center; color:var(--muted); font-weight:300; margin-bottom:4rem;" data-lang="fr">Pas d'abonnement. Achetez une fois, utilisez pour toujours.</p>
+    <h2 class="section-title" style="text-align:center; max-width:100%; margin-bottom:0.5rem;" data-lang="en">Buy credits, use them forever.</h2>
+    <h2 class="section-title" style="text-align:center; max-width:100%; margin-bottom:0.5rem;" data-lang="fr">Achetez des crédits, utilisez-les pour toujours.</h2>
+    <p style="text-align:center; color:var(--muted); font-weight:300; margin-bottom:4rem;" data-lang="en">No subscription. No expiry. One credit = one AI scan.</p>
+    <p style="text-align:center; color:var(--muted); font-weight:300; margin-bottom:4rem;" data-lang="fr">Pas d'abonnement. Pas d'expiration. Un crédit = un scan IA.</p>
 
-    <div class="pricing-grid">
+    <div class="pricing-layout">
+
+      <!-- FREE -->
       <div class="pricing-card">
         <div class="pricing-tier">Free</div>
         <div class="pricing-price">$0</div>
-        <div class="pricing-note" data-lang="en">Forever free</div>
-        <div class="pricing-note" data-lang="fr">Gratuit pour toujours</div>
+        <div class="pricing-note" data-lang="en">Forever free · no credit card</div>
+        <div class="pricing-note" data-lang="fr">Gratuit pour toujours · sans carte</div>
         <hr class="pricing-divider">
         <ul class="pricing-features">
-          <li><span data-lang="en">Tesseract OCR engine</span><span data-lang="fr">Moteur OCR Tesseract</span></li>
-          <li><span data-lang="en">All 6 document modes</span><span data-lang="fr">Les 6 modes de document</span></li>
+          <li><span data-lang="en">Tesseract OCR — offline</span><span data-lang="fr">OCR Tesseract — hors ligne</span></li>
+          <li><span data-lang="en">10 captures / day</span><span data-lang="fr">10 captures / jour</span></li>
+          <li><span data-lang="en">All 6 document modes</span><span data-lang="fr">6 modes de document</span></li>
           <li><span data-lang="en">Auto translation</span><span data-lang="fr">Traduction automatique</span></li>
-          <li><span data-lang="en">Full history</span><span data-lang="fr">Historique complet</span></li>
-          <li><span data-lang="en">2 AI captures/day (trial)</span><span data-lang="fr">2 captures IA/jour (essai)</span></li>
+          <li><span data-lang="en">Editable history</span><span data-lang="fr">Historique éditable</span></li>
+          <li><span data-lang="en">2 AI scans/day trial</span><span data-lang="fr">2 scans IA/jour essai</span></li>
         </ul>
-        <button class="pricing-btn pricing-btn-free"><span data-lang="en">Add to Chrome</span><span data-lang="fr">Ajouter à Chrome</span></button>
+        <button class="pricing-btn pricing-btn-free">
+          <span data-lang="en">Add to Chrome</span>
+          <span data-lang="fr">Ajouter à Chrome</span>
+        </button>
       </div>
 
-      <div class="pricing-card featured">
-        <div class="pricing-tier">Pro</div>
-        <div style="display:flex; align-items:baseline; gap:0.75rem; margin-bottom:0.35rem;">
-          <div class="pricing-price" style="color:var(--pro);">$4.99</div>
-          <div style="font-family:'DM Serif Display',serif; font-size:1.8rem; color:var(--muted); text-decoration:line-through;">$9.99</div>
+      <!-- CREDIT PACKS -->
+      <div class="pricing-packs">
+
+        <!-- Pack Découverte -->
+        <div class="pack-card">
+          <div class="pack-info">
+            <div class="pack-name" data-lang="en">Starter Pack</div>
+            <div class="pack-name" data-lang="fr">Pack Découverte</div>
+            <div class="pack-credits" data-lang="en">1 000 AI credits</div>
+            <div class="pack-credits" data-lang="fr">1 000 crédits IA</div>
+            <div class="pack-desc" data-lang="en">Great to get started — ~100 days of heavy use</div>
+            <div class="pack-desc" data-lang="fr">Idéal pour commencer — ~100 jours d'usage intensif</div>
+          </div>
+          <div class="pack-price-col">
+            <div class="pack-price">$4.99</div>
+            <button class="pack-btn">
+              <span data-lang="en">Buy</span>
+              <span data-lang="fr">Acheter</span>
+            </button>
+          </div>
         </div>
-        <div style="display:inline-flex; align-items:center; gap:0.4rem; background:rgba(163,196,168,0.15); border:1px solid rgba(163,196,168,0.25); color:var(--pro); font-size:0.72rem; padding:0.25rem 0.75rem; border-radius:100px; margin-bottom:0.5rem;">
-          ✦ <span data-lang="en">50% off · first 10 users only</span><span data-lang="fr">-50% · 10 premiers utilisateurs</span>
+
+        <!-- Pack Standard -->
+        <div class="pack-card popular">
+          <span class="pack-badge" data-lang="en">Most popular</span>
+          <span class="pack-badge" data-lang="fr">Le plus populaire</span>
+          <div class="pack-info">
+            <div class="pack-name" data-lang="en">Standard Pack</div>
+            <div class="pack-name" data-lang="fr">Pack Standard</div>
+            <div class="pack-credits" data-lang="en">3 000 AI credits</div>
+            <div class="pack-credits" data-lang="fr">3 000 crédits IA</div>
+            <div class="pack-desc" data-lang="en">Best value — 3× more credits for 2× the price</div>
+            <div class="pack-desc" data-lang="fr">Meilleur rapport — 3× plus de crédits pour 2× le prix</div>
+          </div>
+          <div class="pack-price-col">
+            <div class="pack-price">$9.99</div>
+            <button class="pack-btn">
+              <span data-lang="en">Buy</span>
+              <span data-lang="fr">Acheter</span>
+            </button>
+          </div>
         </div>
-        <div class="pricing-note" data-lang="en">2500 AI credits · one-time payment</div>
-        <div class="pricing-note" data-lang="fr">2500 crédits IA · paiement unique</div>
-        <hr class="pricing-divider" style="border-color:rgba(163,196,168,0.15);">
-        <ul class="pricing-features">
-          <li><span data-lang="en">Gemini Vision AI (Google)</span><span data-lang="fr">Gemini Vision IA (Google)</span></li>
-          <li><span data-lang="en">Near-perfect OCR accuracy</span><span data-lang="fr">Précision OCR quasi-parfaite</span></li>
-          <li><span data-lang="en">Fast + Quality modes</span><span data-lang="fr">Modes Rapide + Qualité</span></li>
-          <li><span data-lang="en">Everything in Free</span><span data-lang="fr">Tout ce qui est dans Free</span></li>
-          <li><span data-lang="en">Priority support</span><span data-lang="fr">Support prioritaire</span></li>
-        </ul>
-        <button class="pricing-btn pricing-btn-pro"><span data-lang="en">Get Pro — $4.99</span><span data-lang="fr">Obtenir Pro — $4.99</span></button>
+
+        <!-- Pack Pro -->
+        <div class="pack-card">
+          <div class="pack-info">
+            <div class="pack-name" data-lang="en">Pro Pack</div>
+            <div class="pack-name" data-lang="fr">Pack Pro</div>
+            <div class="pack-credits" data-lang="en">10 000 AI credits</div>
+            <div class="pack-credits" data-lang="fr">10 000 crédits IA</div>
+            <div class="pack-desc" data-lang="en">For power users — years of unlimited AI OCR</div>
+            <div class="pack-desc" data-lang="fr">Pour les utilisateurs intensifs — des années de scans IA</div>
+          </div>
+          <div class="pack-price-col">
+            <div class="pack-price">$19.99</div>
+            <button class="pack-btn">
+              <span data-lang="en">Buy</span>
+              <span data-lang="fr">Acheter</span>
+            </button>
+          </div>
+        </div>
+
       </div>
+    </div>
+
+    <!-- Credit explainer -->
+    <div class="credit-explainer" style="margin-top:1.75rem;">
+      ℹ️&nbsp;
+      <span data-lang="en"><strong>1 credit = 1 Gemini Vision AI scan.</strong> Credits never expire and stack — buy any pack anytime to top up. The Free tier includes 2 AI trial scans per day at no cost.</span>
+      <span data-lang="fr"><strong>1 crédit = 1 scan IA Gemini Vision.</strong> Les crédits n'expirent jamais et s'accumulent — achetez n'importe quel pack à tout moment. Le tier gratuit inclut 2 scans IA d'essai par jour sans frais.</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container" style="display:flex; flex-direction:column; align-items:center;">
+    <div class="section-label" style="text-align:center;">FAQ</div>
+    <h2 class="section-title" style="text-align:center; max-width:100%; margin-bottom:0.5rem;" data-lang="en">Common questions.</h2>
+    <h2 class="section-title" style="text-align:center; max-width:100%; margin-bottom:0.5rem;" data-lang="fr">Questions fréquentes.</h2>
+    <p class="section-sub" style="text-align:center; max-width:100%; margin-bottom:3rem;"></p>
+
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span data-lang="en">Does it work without internet?</span>
+          <span data-lang="fr">Ça fonctionne sans internet ?</span>
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a" data-lang="en">Yes. The Tesseract OCR engine runs entirely in your browser — no internet needed. Translation and Gemini Vision AI require a connection, but basic OCR is fully offline.</div>
+        <div class="faq-a" data-lang="fr">Oui. Le moteur OCR Tesseract tourne entièrement dans votre navigateur — aucune connexion requise. La traduction et Gemini Vision IA nécessitent une connexion, mais l'OCR de base est 100% hors ligne.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span data-lang="en">What is a "credit" exactly?</span>
+          <span data-lang="fr">C'est quoi un "crédit" exactement ?</span>
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a" data-lang="en">One credit = one AI-powered OCR scan using Gemini Vision. Credits never expire. The 2,500 included with Pro is enough for heavy daily use over several months. Free users get 2 AI scans per day as a trial.</div>
+        <div class="faq-a" data-lang="fr">Un crédit = un scan OCR alimenté par Gemini Vision. Les crédits n'expirent jamais. Les 2 500 inclus avec Pro suffisent pour une utilisation intensive sur plusieurs mois. Les utilisateurs gratuits ont 2 scans IA par jour en essai.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span data-lang="en">Is my data private?</span>
+          <span data-lang="fr">Mes données sont-elles privées ?</span>
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a" data-lang="en">Offline OCR (Tesseract) processes everything locally — nothing leaves your device. When using Gemini Vision or translation, only the selected image/text is sent to the respective API. Your history is stored locally in Chrome, not on any server.</div>
+        <div class="faq-a" data-lang="fr">L'OCR hors ligne (Tesseract) traite tout en local — rien ne quitte votre appareil. En utilisant Gemini Vision ou la traduction, seule l'image/le texte sélectionné est envoyé à l'API correspondante. Votre historique est stocké localement dans Chrome, pas sur un serveur.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span data-lang="en">Which languages does it support?</span>
+          <span data-lang="fr">Quelles langues sont supportées ?</span>
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a" data-lang="en">OCR supports English, French, Spanish, German, Italian, Portuguese, Russian, Japanese, Korean, Simplified Chinese, and Arabic. Translation supports 20+ languages via Google Translate, MyMemory, and LibreTranslate.</div>
+        <div class="faq-a" data-lang="fr">L'OCR supporte l'anglais, français, espagnol, allemand, italien, portugais, russe, japonais, coréen, chinois simplifié et arabe. La traduction supporte 20+ langues via Google Translate, MyMemory et LibreTranslate.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span data-lang="en">What's the difference between Fast and Quality mode?</span>
+          <span data-lang="fr">Quelle différence entre mode Rapide et Qualité ?</span>
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a" data-lang="en">Fast mode uses Tesseract with optimized preprocessing — it's quick and works offline. Quality mode sends the image to Gemini Vision AI, which delivers near-perfect accuracy on complex fonts and stylized text. Quality mode requires Pro and consumes 1 credit per scan.</div>
+        <div class="faq-a" data-lang="fr">Le mode Rapide utilise Tesseract avec preprocessing optimisé — rapide et hors ligne. Le mode Qualité envoie l'image à Gemini Vision IA, qui offre une précision quasi-parfaite sur les polices complexes. Le mode Qualité nécessite Pro et consomme 1 crédit par scan.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span data-lang="en">Does it work on any website?</span>
+          <span data-lang="fr">Ça fonctionne sur n'importe quel site ?</span>
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a" data-lang="en">It works on virtually all websites and web applications. It cannot run on special Chrome pages (chrome://, about://) or browser settings pages, which is a standard browser restriction.</div>
+        <div class="faq-a" data-lang="fr">Ça fonctionne sur quasiment tous les sites web et applications web. Ça ne peut pas fonctionner sur les pages spéciales de Chrome (chrome://, about://) — c'est une restriction standard du navigateur.</div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section style="text-align:center; padding: 8rem 2rem;">
+<!-- ── CTA ── -->
+<section class="cta-section">
   <div class="container">
-    <h2 style="font-family:'DM Serif Display',serif; font-size:clamp(2rem,4vw,3.5rem); letter-spacing:-0.02em; margin-bottom:1.25rem;" data-lang="en">Start reading. No limits.</h2>
-    <h2 style="font-family:'DM Serif Display',serif; font-size:clamp(2rem,4vw,3.5rem); letter-spacing:-0.02em; margin-bottom:1.25rem;" data-lang="fr">Commencez à lire. Sans limites.</h2>
-    <p style="color:var(--muted); font-weight:300; margin-bottom:2.5rem; font-size:1.05rem;" data-lang="en">Join readers using SITT to extract text from images instantly.</p>
-    <p style="color:var(--muted); font-weight:300; margin-bottom:2.5rem; font-size:1.05rem;" data-lang="fr">Rejoignez les lecteurs utilisant SITT pour extraire du texte instantanément.</p>
-    <a href="#" class="btn-primary" style="font-size:1rem; padding:1rem 2.5rem;">
+    <h2 style="font-family:'DM Serif Display',serif; font-size:clamp(2rem,4vw,3.4rem); letter-spacing:-0.022em; margin-bottom:1.1rem;" data-lang="en">Start reading. No limits.</h2>
+    <h2 style="font-family:'DM Serif Display',serif; font-size:clamp(2rem,4vw,3.4rem); letter-spacing:-0.022em; margin-bottom:1.1rem;" data-lang="fr">Commencez à lire. Sans limites.</h2>
+    <p style="color:var(--muted); font-weight:300; margin-bottom:2.5rem; font-size:1rem;" data-lang="en">Free forever. Upgrade when you're ready.</p>
+    <p style="color:var(--muted); font-weight:300; margin-bottom:2.5rem; font-size:1rem;" data-lang="fr">Gratuit pour toujours. Passez à Pro quand vous êtes prêt.</p>
+    <a href="#" class="btn-primary" style="font-size:0.98rem; padding:1rem 2.4rem;">
       <span data-lang="en">Add to Chrome — It's Free</span>
       <span data-lang="fr">Ajouter à Chrome — C'est Gratuit</span>
     </a>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ── FOOTER ── -->
 <footer>
-  <div class="footer-logo">Screen &amp; Image Text Tool<span>.</span></div>
+  <div class="footer-logo">
+    <div class="footer-logo-icon">SITT</div>
+    Screen &amp; Image Text Tool<span>.</span>
+  </div>
   <ul class="footer-links">
     <li><a href="#" data-lang="en">Privacy</a><a href="#" data-lang="fr">Confidentialité</a></li>
     <li><a href="#" data-lang="en">Support</a><a href="#" data-lang="fr">Support</a></li>
@@ -850,12 +1285,72 @@
 </footer>
 
 <script>
+  // ── LANG ──
   function setLang(lang) {
     document.body.className = 'lang-' + lang;
     document.querySelectorAll('.lang-btn').forEach(btn => {
       btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === lang);
     });
   }
+
+  // ── FAQ ──
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // ── BUY BUTTONS ──
+  const CHECKOUT_URL  = 'https://rouffdesign.lemonsqueezy.com/checkout/buy/01019996-11da-4c86-ad37-d029f8fce9b3';
+  const BACKEND_URL   = 'https://backend-gamma-mocha-87.vercel.app';
+
+  async function initBuyButtons() {
+    let enabled = false;
+
+    try {
+      const res  = await fetch(`${BACKEND_URL}/api/config`);
+      const data = await res.json();
+      enabled = data.buy_button_enabled === true || data.buy_button_enabled === 'true';
+    } catch (e) {
+      console.warn('Config fetch failed, buttons disabled by default');
+    }
+
+    const packBtns   = document.querySelectorAll('.pack-btn');
+    const navCta     = document.querySelector('.nav-cta');
+    const heroBtns   = document.querySelectorAll('.btn-primary');
+    const pricingFree = document.querySelectorAll('.pricing-btn-free');
+
+    if (enabled) {
+      // Activate all pack buy buttons → open checkout
+      packBtns.forEach(btn => {
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
+        btn.onclick = () => window.open(CHECKOUT_URL, '_blank');
+      });
+    } else {
+      // Disable pack buttons + show "Coming soon" tooltip
+      packBtns.forEach(btn => {
+        btn.disabled = true;
+        btn.style.opacity = '0.4';
+        btn.style.cursor = 'not-allowed';
+        btn.onclick = null;
+        // Replace label
+        const isEn = document.body.classList.contains('lang-fr') ? false : true;
+        btn.innerHTML = isEn ? 'Coming soon' : 'Bientôt disponible';
+      });
+    }
+  }
+
+  // Re-apply button state on lang switch so labels stay correct
+  const _origSetLang = setLang;
+  function setLang(lang) {
+    _origSetLang(lang);
+    initBuyButtons();
+  }
+
+  document.addEventListener('DOMContentLoaded', initBuyButtons);
 </script>
 
 </body>

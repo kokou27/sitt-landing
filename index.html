@@ -1,77 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Screen & Image Text Tool — Extract Text from Any Image</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --border: rgba(255,255,255,0.08);
+    --border-hover: rgba(255,255,255,0.18);
+    --text: #f0ede8;
+    --muted: #888880;
+    --accent: #c8b89a;
+    --accent-dim: rgba(200,184,154,0.12);
+    --pro: #a3c4a8;
+    --pro-dim: rgba(163,196,168,0.1);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 3rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+    color: var(--text);
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-right { display: flex; align-items: center; gap: 2rem; }
+
+  .lang-toggle {
+    display: flex; gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .lang-btn {
+    background: none; border: none; cursor: pointer;
+    padding: 0.35rem 0.75rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+
+  .lang-btn.active {
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+
+  .nav-cta {
+    background: var(--text);
+    color: var(--bg);
+    border: none;
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    text-decoration: none;
+  }
+
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 20%; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(200,184,154,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    border: 1px solid var(--border);
+    padding: 0.35rem 1rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-badge .dot-gemini {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--pro);
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    max-width: 800px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 480px;
+    margin: 0 auto 3rem;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex; gap: 1rem; align-items: center;
+    flex-wrap: wrap; justify-content: center;
+  }
+
+  .btn-primary {
+    background: var(--text);
+    color: var(--bg);
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: opacity 0.2s;
+    border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .btn-primary:hover { opacity: 0.88; }
+
+  .btn-secondary {
+    background: none;
+    color: var(--muted);
+    padding: 0.85rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: color 0.2s;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+  }
+
+  .btn-secondary:hover { color: var(--text); border-color: var(--border-hover); }
+
+  /* DEMO VISUAL */
+  .hero-visual {
+    margin-top: 5rem;
+    width: 100%; max-width: 780px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  .visual-bar {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.85rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #ff5f57; }
+  .dot-y { background: #febc2e; }
+  .dot-g { background: #28c840; }
+
+  .visual-content {
+    display: grid; grid-template-columns: 1fr 1fr;
+    height: 280px;
+  }
+
+  .visual-img {
+    border-right: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+
+  .manga-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    color: var(--border-hover);
+    letter-spacing: 0.1em;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 20px,
+      rgba(255,255,255,0.01) 20px,
+      rgba(255,255,255,0.01) 40px
+    );
+  }
+
+  .selection-box {
+    position: absolute;
+    top: 30%; left: 15%;
+    width: 70%; height: 40%;
+    border: 1.5px solid #4a90e2;
+    background: rgba(74,144,226,0.08);
+    border-radius: 3px;
+  }
+
+  .visual-result {
+    padding: 1.5rem;
+    display: flex; flex-direction: column; gap: 0.75rem;
+  }
+
+  .result-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .result-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .result-badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: var(--pro-dim);
+    color: var(--pro);
+    font-size: 0.72rem;
+    padding: 0.25rem 0.7rem;
+    border-radius: 100px;
+    width: fit-content;
+    border: 1px solid rgba(163,196,168,0.2);
+  }
+
+  /* FEATURES */
+  section { padding: 7rem 2rem; }
+
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    max-width: 500px;
+    margin-bottom: 1rem;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    max-width: 420px;
+    font-weight: 300;
+    line-height: 1.7;
+    margin-bottom: 4rem;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5px;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .feature-card {
+    background: var(--surface);
+    padding: 2.5rem 2rem;
+    position: relative;
+    transition: background 0.2s;
+  }
+
+  .feature-card:hover { background: #161616; }
+
+  .feature-icon {
+    font-size: 1.4rem;
+    margin-bottom: 1.25rem;
+    display: block;
+  }
+
+  .feature-title {
+    font-weight: 500;
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
+    color: var(--text);
+  }
+
+  .feature-desc {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  .feature-pro-tag {
+    position: absolute;
+    top: 1.25rem; right: 1.25rem;
+    background: var(--pro-dim);
+    color: var(--pro);
+    font-size: 0.65rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+    letter-spacing: 0.06em;
+    border: 1px solid rgba(163,196,168,0.15);
+  }
+
+  /* HOW IT WORKS */
+  .how-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+  }
+
+  .how-step { position: relative; }
+
+  .how-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3.5rem;
+    color: var(--border-hover);
+    line-height: 1;
+    margin-bottom: 1.25rem;
+  }
+
+  .how-title {
+    font-weight: 500;
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .how-desc {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* PRICING */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .pricing-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2.5rem 2rem;
+    background: var(--surface);
+  }
+
+  .pricing-card.featured {
+    border-color: rgba(163,196,168,0.35);
+    background: #0f1510;
+  }
+
+  .pricing-tier {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .pricing-card.featured .pricing-tier {
+    color: var(--pro);
+  }
+
+  .pricing-price {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3rem;
+    line-height: 1;
+    margin-bottom: 0.35rem;
+  }
+
+  .pricing-note {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+
+  .pricing-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin-bottom: 1.75rem;
+  }
+
+  .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; }
+
+  .pricing-features li {
+    font-size: 0.875rem;
+    color: var(--muted);
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    font-weight: 300;
+  }
+
+  .pricing-features li::before {
+    content: '—';
+    color: var(--border-hover);
+    flex-shrink: 0;
+  }
+
+  .pricing-card.featured .pricing-features li { color: #a0b8a3; }
+  .pricing-card.featured .pricing-features li::before { color: var(--pro); }
+
+  .pricing-btn {
+    display: block;
+    text-align: center;
+    margin-top: 2.5rem;
+    padding: 0.85rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    border: none;
+    width: 100%;
+  }
+
+  .pricing-btn-free {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .pricing-btn-free:hover { border-color: var(--border-hover); color: var(--text); }
+
+  .pricing-btn-pro {
+    background: var(--pro);
+    color: #0a1a0c;
+  }
+
+  .pricing-btn-pro:hover { opacity: 0.9; }
+
+  /* MODES */
+  .modes-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+  }
+
+  .mode-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    background: var(--surface);
+    transition: border-color 0.2s;
+  }
+
+  .mode-card:hover { border-color: var(--border-hover); }
+
+  .mode-icon { font-size: 1.5rem; margin-bottom: 0.75rem; display: block; }
+
+  .mode-name {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1rem;
+    color: var(--muted);
+  }
+
+  .footer-logo span { color: var(--accent); }
+
+  .footer-links {
+    display: flex; gap: 2rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--text); }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: var(--border-hover);
+  }
+
+  /* LANG TOGGLE */
+  [data-lang] { display: none; }
+  .lang-en [data-lang="en"] { display: block; }
+  .lang-fr [data-lang="fr"] { display: block; }
+  span[data-lang] { display: none; }
+  .lang-en span[data-lang="en"] { display: inline; }
+  .lang-fr span[data-lang="fr"] { display: inline; }
+  li span[data-lang] { display: none; }
+  .lang-en li span[data-lang="en"] { display: inline; }
+  .lang-fr li span[data-lang="fr"] { display: inline; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .how-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .modes-grid { grid-template-columns: repeat(3, 1fr); }
+    .pricing-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    .visual-content { grid-template-columns: 1fr; height: auto; }
+    .visual-img { height: 160px; border-right: none; border-bottom: 1px solid var(--border); }
+  }
+</style>
+</head>
+<body class="lang-en">
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SITT<span>.</span></div>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('fr')">FR</button>
+    </div>
+    <a href="#" class="nav-cta">
+      <span data-lang="en">Add to Chrome</span>
+      <span data-lang="fr">Ajouter à Chrome</span>
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1 data-lang="en">Extract text from <em>any image,</em> instantly.</h1>
+  <h1 data-lang="fr">Extrayez le texte de <em>n'importe quelle image,</em> instantanément.</h1>
+
+  <div class="hero-badge" style="margin-bottom:1.5rem; margin-top:0.5rem;">
+    <span class="dot-gemini"></span>
+    <span data-lang="en">Now powered by Gemini Vision AI</span>
+    <span data-lang="fr">Désormais propulsé par Gemini Vision IA</span>
+  </div>
+
+  <p data-lang="en">A Chrome extension that reads manga, PDFs, screenshots, photos and more — with AI-powered precision.</p>
+  <p data-lang="fr">Une extension Chrome qui lit les mangas, PDFs, captures d'écran, photos et plus — avec une précision dopée à l'IA.</p>
+
+  <div class="hero-actions">
+    <a href="#" class="btn-primary">
+      <span data-lang="en">Add to Chrome — Free</span>
+      <span data-lang="fr">Ajouter à Chrome — Gratuit</span>
+    </a>
+    <a href="#features" class="btn-secondary">
+      <span data-lang="en">See how it works</span>
+      <span data-lang="fr">Voir comment ça marche</span>
+    </a>
+  </div>
+
+  <div class="hero-visual">
+    <div class="visual-bar">
+      <div class="dot dot-r"></div>
+      <div class="dot dot-y"></div>
+      <div class="dot dot-g"></div>
+    </div>
+    <div class="visual-content">
+      <div class="visual-img">
+        <div class="manga-placeholder">漫画</div>
+        <div class="selection-box"></div>
+      </div>
+      <div class="visual-result">
+        <div class="result-label">
+          <span data-lang="en">Extracted text</span>
+          <span data-lang="fr">Texte extrait</span>
+        </div>
+        <div class="result-text">"WE ARE USELESS NOW. ALL WE CAN DO IS BURY THIS HATRED DEEP WITHIN OUR HEARTS."</div>
+        <div class="result-badge">
+          ✦ <span data-lang="en">Gemini Vision Pro</span>
+          <span data-lang="fr">Gemini Vision Pro</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <div class="section-label">
+      <span data-lang="en">Features</span>
+      <span data-lang="fr">Fonctionnalités</span>
+    </div>
+    <h2 class="section-title" data-lang="en">Everything you need to read any image.</h2>
+    <h2 class="section-title" data-lang="fr">Tout ce qu'il faut pour lire n'importe quelle image.</h2>
+    <p class="section-sub" data-lang="en">Built for manga readers, researchers, students, and anyone who needs to extract text fast.</p>
+    <p class="section-sub" data-lang="fr">Conçu pour les lecteurs de manga, chercheurs, étudiants, et toute personne ayant besoin d'extraire du texte rapidement.</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">🤖</span>
+        <div class="feature-title" data-lang="en">Gemini Vision AI</div>
+        <div class="feature-title" data-lang="fr">Gemini Vision IA</div>
+        <div class="feature-desc" data-lang="en">Google's latest vision model reads text with near-perfect accuracy, even from stylized manga fonts.</div>
+        <div class="feature-desc" data-lang="fr">Le dernier modèle de vision de Google lit le texte avec une précision quasi-parfaite, même depuis des polices manga stylisées.</div>
+        <div class="feature-pro-tag">Pro</div>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🌍</span>
+        <div class="feature-title" data-lang="en">Auto Translation</div>
+        <div class="feature-title" data-lang="fr">Traduction automatique</div>
+        <div class="feature-desc" data-lang="en">Translate extracted text in one click. Supports 20+ languages via Google Translate.</div>
+        <div class="feature-desc" data-lang="fr">Traduisez le texte extrait en un clic. Supporte 20+ langues via Google Translate.</div>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">⚡</span>
+        <div class="feature-title" data-lang="en">Instant Selection</div>
+        <div class="feature-title" data-lang="fr">Sélection instantanée</div>
+        <div class="feature-desc" data-lang="en">Press Alt+R, draw a box around any text on screen. Results appear in under 2 seconds.</div>
+        <div class="feature-desc" data-lang="fr">Appuyez sur Alt+R, dessinez un cadre autour du texte. Les résultats apparaissent en moins de 2 secondes.</div>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">📚</span>
+        <div class="feature-title" data-lang="en">6 Document Modes</div>
+        <div class="feature-title" data-lang="fr">6 modes de document</div>
+        <div class="feature-desc" data-lang="en">Manga, PDF, Screenshot, Photo, Subtitle, Game — each mode is optimized for its content type.</div>
+        <div class="feature-desc" data-lang="fr">Manga, PDF, Capture, Photo, Sous-titre, Jeu — chaque mode est optimisé pour son type de contenu.</div>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🕓</span>
+        <div class="feature-title" data-lang="en">Full History</div>
+        <div class="feature-title" data-lang="fr">Historique complet</div>
+        <div class="feature-desc" data-lang="en">Every capture is saved. Edit, re-translate, or copy from your history at any time.</div>
+        <div class="feature-desc" data-lang="fr">Chaque capture est sauvegardée. Éditez, re-traduisez ou copiez depuis votre historique à tout moment.</div>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🌙</span>
+        <div class="feature-title" data-lang="en">Dark Mode</div>
+        <div class="feature-title" data-lang="fr">Mode sombre</div>
+        <div class="feature-desc" data-lang="en">Beautiful dark interface that stays out of the way while you read.</div>
+        <div class="feature-desc" data-lang="fr">Une belle interface sombre qui reste discrète pendant votre lecture.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-label">
+      <span data-lang="en">How it works</span>
+      <span data-lang="fr">Comment ça marche</span>
+    </div>
+    <h2 class="section-title" data-lang="en">Three steps to extract any text.</h2>
+    <h2 class="section-title" data-lang="fr">Trois étapes pour extraire n'importe quel texte.</h2>
+
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="how-num">01</div>
+        <div class="how-title" data-lang="en">Press Alt+R</div>
+        <div class="how-title" data-lang="fr">Appuyez sur Alt+R</div>
+        <div class="how-desc" data-lang="en">Activate the selection mode on any webpage or application. A subtle overlay appears.</div>
+        <div class="how-desc" data-lang="fr">Activez le mode de sélection sur n'importe quelle page web ou application. Un overlay subtil apparaît.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">02</div>
+        <div class="how-title" data-lang="en">Draw a selection</div>
+        <div class="how-title" data-lang="fr">Dessinez une sélection</div>
+        <div class="how-desc" data-lang="en">Click and drag to select the area containing the text you want to extract.</div>
+        <div class="how-desc" data-lang="fr">Cliquez et glissez pour sélectionner la zone contenant le texte que vous souhaitez extraire.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">03</div>
+        <div class="how-title" data-lang="en">Read & translate</div>
+        <div class="how-title" data-lang="fr">Lisez et traduisez</div>
+        <div class="how-desc" data-lang="en">The sidebar shows the extracted text instantly. Translate, copy, or edit as needed.</div>
+        <div class="how-desc" data-lang="fr">La barre latérale affiche le texte extrait instantanément. Traduisez, copiez ou éditez selon vos besoins.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODES -->
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span data-lang="en">Document modes</span>
+      <span data-lang="fr">Modes de document</span>
+    </div>
+    <h2 class="section-title" data-lang="en">Optimized for every format.</h2>
+    <h2 class="section-title" data-lang="fr">Optimisé pour chaque format.</h2>
+    <p class="section-sub" data-lang="en">Each mode uses a tailored OCR strategy for maximum accuracy.</p>
+    <p class="section-sub" data-lang="fr">Chaque mode utilise une stratégie OCR adaptée pour une précision maximale.</p>
+
+    <div class="modes-grid">
+      <div class="mode-card"><span class="mode-icon">🎌</span><div class="mode-name">Manga</div></div>
+      <div class="mode-card"><span class="mode-icon">📄</span><div class="mode-name">PDF</div></div>
+      <div class="mode-card"><span class="mode-icon">🖥️</span><div class="mode-name" data-lang="en">Screenshot</div><div class="mode-name" data-lang="fr">Capture</div></div>
+      <div class="mode-card"><span class="mode-icon">📷</span><div class="mode-name" data-lang="en">Photo</div><div class="mode-name" data-lang="fr">Photo</div></div>
+      <div class="mode-card"><span class="mode-icon">📺</span><div class="mode-name" data-lang="en">Subtitle</div><div class="mode-name" data-lang="fr">Sous-titre</div></div>
+      <div class="mode-card"><span class="mode-icon">🎮</span><div class="mode-name" data-lang="en">Game</div><div class="mode-name" data-lang="fr">Jeu vidéo</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
 <section style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
   <div class="container">
     <div class="section-label" style="text-align:center;">
       <span data-lang="en">Pricing</span>
       <span data-lang="fr">Tarifs</span>
     </div>
-    <h2 class="section-title" style="text-align:center; max-width:100%; margin-bottom:0.5rem;" data-lang="en">Simple, one-time top-ups.</h2>
-    <h2 class="section-title" style="text-align:center; max-width:100%; margin-bottom:0.5rem;" data-lang="fr">Recharges simples, sans abonnement.</h2>
-    <p style="text-align:center; color:var(--muted); font-weight:300; margin-bottom:4rem;" data-lang="en">No subscription. Pay for what you use.</p>
-    <p style="text-align:center; color:var(--muted); font-weight:300; margin-bottom:4rem;" data-lang="fr">Pas d'abonnement. Payez ce que vous utilisez.</p>
+    <h2 class="section-title" style="text-align:center; max-width:100%; margin-bottom:0.5rem;" data-lang="en">Simple, one-time pricing.</h2>
+    <h2 class="section-title" style="text-align:center; max-width:100%; margin-bottom:0.5rem;" data-lang="fr">Tarification simple, en une fois.</h2>
+    <p style="text-align:center; color:var(--muted); font-weight:300; margin-bottom:4rem;" data-lang="en">No subscription. Buy once, use forever.</p>
+    <p style="text-align:center; color:var(--muted); font-weight:300; margin-bottom:4rem;" data-lang="fr">Pas d'abonnement. Achetez une fois, utilisez pour toujours.</p>
 
-    <div class="pricing-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); max-width: 1100px;">
-      
+    <div class="pricing-grid">
       <div class="pricing-card">
-        <div class="pricing-tier">Pack Découverte</div>
-        <div class="pricing-price">$4.99</div>
-        <div class="pricing-note" data-lang="en">1,000 AI Credits</div>
-        <div class="pricing-note" data-lang="fr">1 000 Crédits IA</div>
+        <div class="pricing-tier">Free</div>
+        <div class="pricing-price">$0</div>
+        <div class="pricing-note" data-lang="en">Forever free</div>
+        <div class="pricing-note" data-lang="fr">Gratuit pour toujours</div>
         <hr class="pricing-divider">
         <ul class="pricing-features">
-          <li><span data-lang="en">Gemini Vision Pro Access</span><span data-lang="fr">Accès Gemini Vision Pro</span></li>
-          <li><span data-lang="en">Perfect for casual reading</span><span data-lang="fr">Parfait pour une lecture occasionnelle</span></li>
-          <li><span data-lang="en">Credits never expire</span><span data-lang="fr">Les crédits n'expirent jamais</span></li>
+          <li><span data-lang="en">Tesseract OCR engine</span><span data-lang="fr">Moteur OCR Tesseract</span></li>
+          <li><span data-lang="en">All 6 document modes</span><span data-lang="fr">Les 6 modes de document</span></li>
+          <li><span data-lang="en">Auto translation</span><span data-lang="fr">Traduction automatique</span></li>
+          <li><span data-lang="en">Full history</span><span data-lang="fr">Historique complet</span></li>
+          <li><span data-lang="en">2 AI captures/day (trial)</span><span data-lang="fr">2 captures IA/jour (essai)</span></li>
         </ul>
-        <a href="TON_LIEN_LEMON_SQUEEZY" class="pricing-btn pricing-btn-free" style="text-decoration:none;">
-          <span data-lang="en">Buy Pack</span><span data-lang="fr">Acheter ce pack</span>
-        </a>
+        <button class="pricing-btn pricing-btn-free"><span data-lang="en">Add to Chrome</span><span data-lang="fr">Ajouter à Chrome</span></button>
       </div>
 
       <div class="pricing-card featured">
-        <div class="pricing-tier" style="display:flex; justify-content:space-between;">
-          <span>Pack Standard</span>
-          <span style="font-size:0.6rem; background:var(--pro); color:#0a1a0c; padding:2px 8px; border-radius:4px;">POPULAR</span>
+        <div class="pricing-tier">Pro</div>
+        <div style="display:flex; align-items:baseline; gap:0.75rem; margin-bottom:0.35rem;">
+          <div class="pricing-price" style="color:var(--pro);">$4.99</div>
+          <div style="font-family:'DM Serif Display',serif; font-size:1.8rem; color:var(--muted); text-decoration:line-through;">$9.99</div>
         </div>
-        <div class="pricing-price" style="color:var(--pro);">$9.99</div>
-        <div class="pricing-note" data-lang="en">3,000 AI Credits</div>
-        <div class="pricing-note" data-lang="fr">3 000 Crédits IA</div>
+        <div style="display:inline-flex; align-items:center; gap:0.4rem; background:rgba(163,196,168,0.15); border:1px solid rgba(163,196,168,0.25); color:var(--pro); font-size:0.72rem; padding:0.25rem 0.75rem; border-radius:100px; margin-bottom:0.5rem;">
+          ✦ <span data-lang="en">50% off · first 10 users only</span><span data-lang="fr">-50% · 10 premiers utilisateurs</span>
+        </div>
+        <div class="pricing-note" data-lang="en">2500 AI credits · one-time payment</div>
+        <div class="pricing-note" data-lang="fr">2500 crédits IA · paiement unique</div>
         <hr class="pricing-divider" style="border-color:rgba(163,196,168,0.15);">
         <ul class="pricing-features">
-          <li><strong>3x plus de crédits</strong></li>
-          <li><span data-lang="en">Priority processing</span><span data-lang="fr">Traitement prioritaire</span></li>
-          <li><span data-lang="en">Ideal for Manga binge-reading</span><span data-lang="fr">Idéal pour dévorer des mangas</span></li>
+          <li><span data-lang="en">Gemini Vision AI (Google)</span><span data-lang="fr">Gemini Vision IA (Google)</span></li>
+          <li><span data-lang="en">Near-perfect OCR accuracy</span><span data-lang="fr">Précision OCR quasi-parfaite</span></li>
+          <li><span data-lang="en">Fast + Quality modes</span><span data-lang="fr">Modes Rapide + Qualité</span></li>
+          <li><span data-lang="en">Everything in Free</span><span data-lang="fr">Tout ce qui est dans Free</span></li>
+          <li><span data-lang="en">Priority support</span><span data-lang="fr">Support prioritaire</span></li>
         </ul>
-        <a href="TON_LIEN_LEMON_SQUEEZY" class="pricing-btn pricing-btn-pro" style="text-decoration:none;">
-          <span data-lang="en">Buy Pack</span><span data-lang="fr">Acheter ce pack</span>
-        </a>
+        <button class="pricing-btn pricing-btn-pro"><span data-lang="en">Get Pro — $4.99</span><span data-lang="fr">Obtenir Pro — $4.99</span></button>
       </div>
-
-      <div class="pricing-card">
-        <div class="pricing-tier">Pack Pro</div>
-        <div class="pricing-price">$19.99</div>
-        <div class="pricing-note" data-lang="en">10,000 AI Credits</div>
-        <div class="pricing-note" data-lang="fr">10 000 Crédits IA</div>
-        <hr class="pricing-divider">
-        <ul class="pricing-features">
-          <li><span data-lang="en">Best value for money</span><span data-lang="fr">Meilleur rapport qualité/prix</span></li>
-          <li><span data-lang="en">For heavy users & students</span><span data-lang="fr">Pour les gros utilisateurs</span></li>
-          <li><span data-lang="en">Lifetime support</span><span data-lang="fr">Support à vie</span></li>
-        </ul>
-        <a href="TON_LIEN_LEMON_SQUEEZY" class="pricing-btn pricing-btn-free" style="text-decoration:none;">
-          <span data-lang="en">Buy Pack</span><span data-lang="fr">Acheter ce pack</span>
-        </a>
-      </div>
-
     </div>
   </div>
 </section>
+
+<!-- CTA -->
+<section style="text-align:center; padding: 8rem 2rem;">
+  <div class="container">
+    <h2 style="font-family:'DM Serif Display',serif; font-size:clamp(2rem,4vw,3.5rem); letter-spacing:-0.02em; margin-bottom:1.25rem;" data-lang="en">Start reading. No limits.</h2>
+    <h2 style="font-family:'DM Serif Display',serif; font-size:clamp(2rem,4vw,3.5rem); letter-spacing:-0.02em; margin-bottom:1.25rem;" data-lang="fr">Commencez à lire. Sans limites.</h2>
+    <p style="color:var(--muted); font-weight:300; margin-bottom:2.5rem; font-size:1.05rem;" data-lang="en">Join readers using SITT to extract text from images instantly.</p>
+    <p style="color:var(--muted); font-weight:300; margin-bottom:2.5rem; font-size:1.05rem;" data-lang="fr">Rejoignez les lecteurs utilisant SITT pour extraire du texte instantanément.</p>
+    <a href="#" class="btn-primary" style="font-size:1rem; padding:1rem 2.5rem;">
+      <span data-lang="en">Add to Chrome — It's Free</span>
+      <span data-lang="fr">Ajouter à Chrome — C'est Gratuit</span>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Screen &amp; Image Text Tool<span>.</span></div>
+  <ul class="footer-links">
+    <li><a href="#" data-lang="en">Privacy</a><a href="#" data-lang="fr">Confidentialité</a></li>
+    <li><a href="#" data-lang="en">Support</a><a href="#" data-lang="fr">Support</a></li>
+    <li><a href="#">Chrome Web Store</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 SITT</div>
+</footer>
 
 <script>
   function setLang(lang) {
     document.body.className = 'lang-' + lang;
     document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.classList.remove('active');
-      if(btn.innerText.toLowerCase() === lang) btn.classList.add('active');
+      btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === lang);
     });
   }
 </script>
+
+</body>
+</html>

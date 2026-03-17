@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — SITT</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%238b7aff'/><stop offset='100%25' stop-color='%236fd3c8'/></linearGradient></defs><rect width='64' height='64' rx='14' fill='url(%23g)'/><text x='32' y='44' font-family='Georgia,serif' font-size='22' font-weight='bold' fill='white' text-anchor='middle' letter-spacing='1'>SITT</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --border: rgba(255,255,255,0.07);
+    --text: #f0ede8;
+    --muted: #888880;
+    --accent: #c8b89a;
+    --pro: #8b7aff;
+    --pro-end: #6fd3c8;
+    --pro-dim: rgba(139,122,255,0.08);
+    --pro-border: rgba(139,122,255,0.2);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,10,0.9);
+    backdrop-filter: blur(14px);
+  }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 0.65rem;
+    text-decoration: none;
+  }
+
+  .nav-logo-icon {
+    width: 28px; height: 28px; border-radius: 7px;
+    background: linear-gradient(135deg, var(--pro), var(--pro-end));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 0.68rem; color: white; font-weight: bold;
+    letter-spacing: 0.03em;
+  }
+
+  .nav-logo-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem; color: var(--text);
+  }
+
+  .nav-logo-name span { color: var(--accent); }
+
+  .nav-back {
+    font-size: 0.82rem; color: var(--muted);
+    text-decoration: none; transition: color 0.2s;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .nav-back:hover { color: var(--text); }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 10rem 2rem 5rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; top: 10%; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse, rgba(139,122,255,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-label {
+    display: inline-block;
+    font-size: 0.72rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    line-height: 1.1; letter-spacing: -0.02em;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero p {
+    color: var(--muted); font-weight: 300;
+    font-size: 1rem; max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .updated {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    margin-top: 1.5rem;
+    font-size: 0.78rem; color: var(--muted);
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 0.35rem 0.9rem; border-radius: 100px;
+  }
+
+  .updated-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--pro-end);
+  }
+
+  /* ── LAYOUT ── */
+  .content-wrap {
+    max-width: 760px; margin: 0 auto;
+    padding: 0 2rem 8rem;
+  }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem 2rem;
+    margin-bottom: 4rem;
+  }
+
+  .toc-title {
+    font-size: 0.72rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .toc-list {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 0.5rem;
+    columns: 2;
+  }
+
+  .toc-list li { break-inside: avoid; }
+
+  .toc-list a {
+    font-size: 0.875rem; color: var(--muted);
+    text-decoration: none; transition: color 0.2s;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+
+  .toc-list a::before {
+    content: '—'; color: var(--border);
+    font-size: 0.75rem; flex-shrink: 0;
+  }
+
+  .toc-list a:hover { color: var(--text); }
+
+  /* ── SECTIONS ── */
+  .policy-section {
+    margin-bottom: 3.5rem;
+    padding-bottom: 3.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .policy-section:last-child {
+    border-bottom: none;
+  }
+
+  .section-num {
+    font-size: 0.7rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--pro);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+
+  .policy-section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem; letter-spacing: -0.015em;
+    margin-bottom: 1.25rem; color: var(--text);
+    line-height: 1.2;
+  }
+
+  .policy-section p {
+    color: var(--muted); font-weight: 300;
+    font-size: 0.925rem; line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .policy-section p:last-child { margin-bottom: 0; }
+
+  /* Data table */
+  .data-table {
+    width: 100%; border-collapse: collapse;
+    margin: 1.5rem 0; font-size: 0.875rem;
+    border: 1px solid var(--border); border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .data-table th {
+    padding: 0.85rem 1.25rem; text-align: left;
+    background: var(--surface); color: var(--muted);
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .data-table td {
+    padding: 0.85rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted); font-weight: 300;
+    vertical-align: top;
+  }
+
+  .data-table tr:last-child td { border-bottom: none; }
+
+  .data-table td:first-child { color: var(--text); font-weight: 400; }
+
+  /* Highlight box */
+  .highlight-box {
+    background: var(--pro-dim);
+    border: 1px solid var(--pro-border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    font-size: 0.875rem;
+    color: rgba(240,237,232,0.8);
+    font-weight: 300;
+    line-height: 1.75;
+  }
+
+  .highlight-box strong {
+    color: var(--text); font-weight: 500;
+  }
+
+  /* Green box */
+  .green-box {
+    background: rgba(111,211,200,0.06);
+    border: 1px solid rgba(111,211,200,0.2);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    font-size: 0.875rem;
+    color: rgba(111,211,200,0.9);
+    font-weight: 300;
+    line-height: 1.75;
+    display: flex; gap: 0.75rem; align-items: flex-start;
+  }
+
+  .green-box-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+  /* List */
+  .policy-list {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 0.6rem;
+    margin: 1rem 0;
+  }
+
+  .policy-list li {
+    font-size: 0.9rem; color: var(--muted);
+    font-weight: 300; line-height: 1.7;
+    display: flex; align-items: flex-start; gap: 0.65rem;
+    padding-left: 0.25rem;
+  }
+
+  .policy-list li::before {
+    content: '—'; color: var(--border);
+    flex-shrink: 0; margin-top: 0.05rem;
+  }
+
+  /* Contact card */
+  .contact-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-top: 1.5rem;
+    display: flex; align-items: center;
+    justify-content: space-between;
+    gap: 1rem; flex-wrap: wrap;
+  }
+
+  .contact-info p {
+    font-size: 0.875rem; margin-bottom: 0.25rem;
+  }
+
+  .contact-info p strong { color: var(--text); font-weight: 500; }
+
+  .contact-btn {
+    background: linear-gradient(135deg, var(--pro), var(--pro-end));
+    color: white; text-decoration: none;
+    padding: 0.65rem 1.4rem; border-radius: 8px;
+    font-size: 0.85rem; font-weight: 500;
+    transition: opacity 0.2s; white-space: nowrap;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .contact-btn:hover { opacity: 0.88; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 3rem;
+    display: flex; align-items: center;
+    justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+
+  .footer-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 0.95rem; color: var(--muted);
+  }
+  .footer-logo span { color: var(--accent); }
+
+  .footer-links {
+    display: flex; gap: 1.75rem; list-style: none;
+  }
+  .footer-links a {
+    font-size: 0.78rem; color: var(--muted);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--text); }
+
+  .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.18); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .hero { padding: 8rem 1.5rem 4rem; }
+    .content-wrap { padding: 0 1.5rem 6rem; }
+    .toc-list { columns: 1; }
+    .contact-card { flex-direction: column; }
+    footer { flex-direction: column; text-align: center; gap: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="nav-logo-icon">SITT</div>
+    <span class="nav-logo-name">SITT<span>.</span></span>
+  </a>
+  <a href="/" class="nav-back">← Back to home</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Legal</div>
+  <h1>Privacy Policy</h1>
+  <p>How SITT collects, uses, and protects your data. We keep it short and honest.</p>
+  <div class="updated">
+    <span class="updated-dot"></span>
+    Last updated: March 2025
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- TOC -->
+  <div class="toc">
+    <div class="toc-title">Contents</div>
+    <ul class="toc-list">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#data-collected">Data we collect</a></li>
+      <li><a href="#ocr-processing">OCR processing</a></li>
+      <li><a href="#third-parties">Third-party services</a></li>
+      <li><a href="#storage">Data storage</a></li>
+      <li><a href="#your-rights">Your rights</a></li>
+      <li><a href="#children">Children</a></li>
+      <li><a href="#changes">Changes</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- 1. OVERVIEW -->
+  <div class="policy-section" id="overview">
+    <span class="section-num">01</span>
+    <h2>Overview</h2>
+
+    <div class="green-box">
+      <span class="green-box-icon">🔒</span>
+      <div>
+        <strong>The short version:</strong> SITT processes images locally in your browser. We never sell your data. The only personal information we collect is your email address when you purchase AI credits — handled securely by LemonSqueezy and Supabase.
+      </div>
+    </div>
+
+    <p>SITT ("Screen & Image Text Tool") is a Chrome extension developed by Rouff Design. This Privacy Policy explains what data we collect, why we collect it, and how we handle it when you use our extension and website at <strong>sitt-landing.vercel.app</strong>.</p>
+
+    <p>By installing and using SITT, you agree to the practices described in this policy. If you do not agree, please uninstall the extension.</p>
+  </div>
+
+  <!-- 2. DATA COLLECTED -->
+  <div class="policy-section" id="data-collected">
+    <span class="section-num">02</span>
+    <h2>Data we collect</h2>
+
+    <p>We collect the minimum data required to operate the extension. Here is a complete breakdown:</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Why</th>
+          <th>Where stored</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Email address</td>
+          <td>To associate your AI credits with your purchase (Pro users only)</td>
+          <td>Supabase (encrypted)</td>
+        </tr>
+        <tr>
+          <td>Extension ID</td>
+          <td>Anonymous device identifier to manage your credit balance</td>
+          <td>Supabase + Chrome local storage</td>
+        </tr>
+        <tr>
+          <td>Credit balance & scan count</td>
+          <td>To track and display your remaining AI credits</td>
+          <td>Supabase + Chrome local storage</td>
+        </tr>
+        <tr>
+          <td>OCR history</td>
+          <td>To display your past captures in the sidebar</td>
+          <td>Chrome local storage only (your device)</td>
+        </tr>
+        <tr>
+          <td>Settings & preferences</td>
+          <td>OCR language, document mode, translation preferences</td>
+          <td>Chrome sync storage (your Chrome account)</td>
+        </tr>
+        <tr>
+          <td>Selected screen area</td>
+          <td>Sent to Gemini Vision API for AI OCR (Pro users only, on demand)</td>
+          <td>Not stored — processed and discarded</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="highlight-box">
+      <strong>We never collect:</strong> browsing history, passwords, personal communications, location data, financial information, or any data from pages you visit.
+    </div>
+  </div>
+
+  <!-- 3. OCR PROCESSING -->
+  <div class="policy-section" id="ocr-processing">
+    <span class="section-num">03</span>
+    <h2>OCR processing</h2>
+
+    <p>SITT offers two OCR modes with different privacy profiles:</p>
+
+    <div class="green-box">
+      <span class="green-box-icon">📡</span>
+      <div>
+        <strong>Tesseract OCR (Free & Pro Fast mode)</strong> — runs 100% locally in your browser using WebAssembly. No image data leaves your device. No internet connection required.
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <strong>Gemini Vision AI (Pro Quality mode)</strong> — when you trigger an AI scan, only the selected screen area is sent to our backend (hosted on Vercel), which forwards it to Google's Gemini Vision API. The image is processed and immediately discarded — it is never stored on our servers or Google's servers beyond the duration of the API call.
+    </div>
+
+    <p>Your OCR history (extracted text) is stored only in Chrome's local storage on your own device. It is never uploaded to any server.</p>
+  </div>
+
+  <!-- 4. THIRD PARTIES -->
+  <div class="policy-section" id="third-parties">
+    <span class="section-num">04</span>
+    <h2>Third-party services</h2>
+
+    <p>SITT integrates with the following third-party services. Each has its own privacy policy:</p>
+
+    <ul class="policy-list">
+      <li>
+        <strong>Google Gemini Vision API</strong> — used for AI-powered OCR. Only the selected image area is sent, on demand, when you use Quality mode. Governed by <a href="https://policies.google.com/privacy" style="color:var(--pro);">Google's Privacy Policy</a>.
+      </li>
+      <li>
+        <strong>LemonSqueezy</strong> — our payment processor. Handles all payment transactions. We never see or store your credit card details. Governed by <a href="https://www.lemonsqueezy.com/privacy" style="color:var(--pro);">LemonSqueezy's Privacy Policy</a>.
+      </li>
+      <li>
+        <strong>Supabase</strong> — our database provider. Stores your email and credit balance (Pro users only). Data is encrypted at rest. Governed by <a href="https://supabase.com/privacy" style="color:var(--pro);">Supabase's Privacy Policy</a>.
+      </li>
+      <li>
+        <strong>Vercel</strong> — hosts our backend API and landing page. Standard access logs may be retained for up to 30 days. Governed by <a href="https://vercel.com/legal/privacy-policy" style="color:var(--pro);">Vercel's Privacy Policy</a>.
+      </li>
+      <li>
+        <strong>Google Translate / MyMemory / LibreTranslate</strong> — used for translation. Only the extracted text is sent when you request a translation. No personal data is included.
+      </li>
+    </ul>
+
+    <p>We do not sell, rent, or share your personal data with any third party for advertising or marketing purposes.</p>
+  </div>
+
+  <!-- 5. STORAGE -->
+  <div class="policy-section" id="storage">
+    <span class="section-num">05</span>
+    <h2>Data storage & retention</h2>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Retention</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>OCR history</td>
+          <td>Stored locally on your device. Deleted when you clear history or uninstall the extension. Free users: 7 days. Pro users: unlimited.</td>
+        </tr>
+        <tr>
+          <td>Settings</td>
+          <td>Stored in Chrome sync storage. Deleted when you uninstall the extension.</td>
+        </tr>
+        <tr>
+          <td>Email & credit balance</td>
+          <td>Retained as long as you have an active account. You may request deletion at any time by contacting us.</td>
+        </tr>
+        <tr>
+          <td>Selected images (AI OCR)</td>
+          <td>Not retained. Processed in real-time and immediately discarded.</td>
+        </tr>
+        <tr>
+          <td>Payment records</td>
+          <td>Retained by LemonSqueezy as required by law (typically 7 years for financial records).</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 6. YOUR RIGHTS -->
+  <div class="policy-section" id="your-rights">
+    <span class="section-num">06</span>
+    <h2>Your rights</h2>
+
+    <p>Depending on your location, you may have the following rights regarding your personal data:</p>
+
+    <ul class="policy-list">
+      <li><strong>Access</strong> — request a copy of the data we hold about you</li>
+      <li><strong>Correction</strong> — request correction of inaccurate data</li>
+      <li><strong>Deletion</strong> — request deletion of your account and associated data</li>
+      <li><strong>Portability</strong> — request your data in a portable format</li>
+      <li><strong>Objection</strong> — object to specific processing activities</li>
+    </ul>
+
+    <p>To exercise any of these rights, contact us using the form below. We will respond within 30 days.</p>
+
+    <p>For local data (OCR history, settings), you can delete it directly from the extension sidebar at any time without contacting us.</p>
+  </div>
+
+  <!-- 7. CHILDREN -->
+  <div class="policy-section" id="children">
+    <span class="section-num">07</span>
+    <h2>Children's privacy</h2>
+
+    <p>SITT is not directed at children under the age of 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided us with personal information, please contact us and we will delete it promptly.</p>
+  </div>
+
+  <!-- 8. CHANGES -->
+  <div class="policy-section" id="changes">
+    <span class="section-num">08</span>
+    <h2>Changes to this policy</h2>
+
+    <p>We may update this Privacy Policy from time to time. When we do, we will update the "Last updated" date at the top of this page. For significant changes, we will notify users through the extension or our website.</p>
+
+    <p>Continued use of SITT after changes are posted constitutes your acceptance of the updated policy.</p>
+  </div>
+
+  <!-- 9. CONTACT -->
+  <div class="policy-section" id="contact">
+    <span class="section-num">09</span>
+    <h2>Contact</h2>
+
+    <p>If you have any questions, concerns, or requests regarding this Privacy Policy or your personal data, please reach out to us:</p>
+
+    <div class="contact-card">
+      <div class="contact-info">
+        <p><strong>Rouff Design</strong></p>
+        <p>SITT — Screen & Image Text Tool</p>
+        <p style="margin-top:0.5rem; font-size:0.8rem;">We aim to respond within 48 hours.</p>
+      </div>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSez9QkbMEKXDTwrIOrPTaG7fSIAdN30IEjjAbYWlFCwZenzsw/viewform"
+         target="_blank" class="contact-btn">
+        Contact us →
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Screen &amp; Image Text Tool<span>.</span></div>
+  <ul class="footer-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/privacy">Privacy</a></li>
+    <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSez9QkbMEKXDTwrIOrPTaG7fSIAdN30IEjjAbYWlFCwZenzsw/viewform" target="_blank">Support</a></li>
+    <li><a href="https://chromewebstore.google.com/detail/sitt/joenimodijoophmdlgpgblkjfgenplgg" target="_blank">Chrome Web Store</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 SITT · Rouff Design</div>
+</footer>
+
+</body>
+</html>

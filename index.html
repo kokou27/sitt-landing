@@ -4,13 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SITT — Extract Text from Any Image, Instantly</title>
-
-<!-- Favicon SVG matching extension purple gradient -->
+<meta name="description" content="A Chrome extension that reads manga, PDFs, screenshots and more with Gemini Vision AI. Free forever, AI credits available.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%238b7aff'/><stop offset='100%25' stop-color='%236fd3c8'/></linearGradient></defs><rect width='64' height='64' rx='14' fill='url(%23g)'/><text x='32' y='44' font-family='Georgia,serif' font-size='22' font-weight='bold' fill='white' text-anchor='middle' letter-spacing='1'>SITT</text></svg>">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -55,6 +52,7 @@ nav {
 
 .nav-logo {
   display: flex; align-items: center; gap: 0.65rem;
+  text-decoration: none;
 }
 
 .nav-logo-icon {
@@ -62,39 +60,38 @@ nav {
   background: linear-gradient(135deg, var(--pro) 0%, var(--pro-end) 100%);
   display: flex; align-items: center; justify-content: center;
   font-family: 'DM Serif Display', serif;
-  font-size: 0.7rem;
-  color: white;
-  letter-spacing: 0.05em;
-  font-weight: bold;
-  flex-shrink: 0;
+  font-size: 0.7rem; color: white; letter-spacing: 0.05em;
+  font-weight: bold; flex-shrink: 0;
 }
 
 .nav-logo-name {
   font-family: 'DM Serif Display', serif;
-  font-size: 1.05rem;
-  letter-spacing: 0.02em;
-  color: var(--text);
+  font-size: 1.05rem; letter-spacing: 0.02em; color: var(--text);
+}
+.nav-logo-name span { color: var(--accent); }
+
+.nav-center {
+  display: flex; align-items: center; gap: 2rem;
+  position: absolute; left: 50%; transform: translateX(-50%);
 }
 
-.nav-logo-name span { color: var(--accent); }
+.nav-link {
+  font-size: 0.83rem; color: var(--muted); text-decoration: none;
+  transition: color 0.2s; font-weight: 400;
+}
+.nav-link:hover { color: var(--text); }
 
 .nav-right { display: flex; align-items: center; gap: 1.75rem; }
 
 .lang-toggle {
-  display: flex;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  overflow: hidden;
+  display: flex; border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
 }
 
 .lang-btn {
   background: none; border: none; cursor: pointer;
-  padding: 0.3rem 0.7rem;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.78rem; font-weight: 500;
-  letter-spacing: 0.05em;
-  color: var(--muted);
-  transition: all 0.18s;
+  padding: 0.3rem 0.7rem; font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem; font-weight: 500; letter-spacing: 0.05em;
+  color: var(--muted); transition: all 0.18s;
 }
 .lang-btn.active { background: var(--accent-dim); color: var(--accent); }
 
@@ -113,8 +110,7 @@ nav {
   min-height: 100vh;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  text-align: center;
-  padding: 9rem 2rem 6rem;
+  text-align: center; padding: 9rem 2rem 6rem;
   position: relative; overflow: hidden;
 }
 
@@ -127,51 +123,59 @@ nav {
   pointer-events: none;
 }
 
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 0%, transparent 100%);
+  opacity: 0.35;
+}
+
 .hero-badge {
   display: inline-flex; align-items: center; gap: 0.55rem;
-  border: 1px solid var(--border);
-  padding: 0.35rem 1rem;
-  border-radius: 100px;
-  font-size: 0.78rem;
-  color: var(--muted);
-  letter-spacing: 0.04em;
-  margin-bottom: 2rem;
-  animation: fadeUp 0.6s ease both;
+  border: 1px solid var(--border); padding: 0.35rem 1rem;
+  border-radius: 100px; font-size: 0.78rem; color: var(--muted);
+  letter-spacing: 0.04em; margin-bottom: 2rem;
+  animation: fadeUp 0.6s ease both; position: relative; z-index: 1;
 }
 
 .dot-gemini {
   width: 6px; height: 6px; border-radius: 50%;
   background: linear-gradient(135deg, var(--pro), var(--pro-end));
-  flex-shrink: 0;
-  box-shadow: 0 0 6px rgba(139,122,255,0.5);
+  flex-shrink: 0; box-shadow: 0 0 6px rgba(139,122,255,0.5);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 6px rgba(139,122,255,0.5); }
+  50% { box-shadow: 0 0 12px rgba(139,122,255,0.9); }
 }
 
 .hero h1 {
   font-family: 'DM Serif Display', serif;
   font-size: clamp(2.6rem, 6vw, 5.2rem);
-  line-height: 1.07;
-  letter-spacing: -0.025em;
-  max-width: 820px;
-  margin-bottom: 1.5rem;
+  line-height: 1.07; letter-spacing: -0.025em;
+  max-width: 820px; margin-bottom: 1.5rem;
   animation: fadeUp 0.6s 0.1s ease both;
+  position: relative; z-index: 1;
 }
-
 .hero h1 em { font-style: italic; color: var(--accent); }
 
-.hero p {
-  font-size: 1.08rem;
-  color: var(--muted);
-  max-width: 460px;
-  margin: 0 auto 2.75rem;
+.hero > p {
+  font-size: 1.08rem; color: var(--muted);
+  max-width: 460px; margin: 0 auto 2.75rem;
   font-weight: 300; line-height: 1.75;
   animation: fadeUp 0.6s 0.2s ease both;
+  position: relative; z-index: 1;
 }
 
 .hero-actions {
   display: flex; gap: 0.9rem;
-  align-items: center; flex-wrap: wrap;
-  justify-content: center;
-  animation: fadeUp 0.6s 0.3s ease both;
+  align-items: center; flex-wrap: wrap; justify-content: center;
+  animation: fadeUp 0.6s 0.3s ease both; position: relative; z-index: 1;
+  margin-bottom: 0.75rem;
 }
 
 .btn-primary {
@@ -179,8 +183,7 @@ nav {
   padding: 0.85rem 2rem; border-radius: 8px;
   font-size: 0.93rem; font-weight: 500;
   text-decoration: none; transition: opacity 0.2s;
-  border: none; cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
+  border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
 }
 .btn-primary:hover { opacity: 0.87; }
 
@@ -193,21 +196,27 @@ nav {
 }
 .btn-secondary:hover { color: var(--text); border-color: var(--border-hover); }
 
+.hero-trust {
+  font-size: 0.75rem; color: var(--muted);
+  display: flex; align-items: center; gap: 1rem;
+  justify-content: center; flex-wrap: wrap;
+  animation: fadeUp 0.6s 0.35s ease both;
+  position: relative; z-index: 1; opacity: 0.7;
+}
+.trust-sep { opacity: 0.3; }
+
 /* ── HERO VISUAL ── */
 .hero-visual {
-  margin-top: 4.5rem;
-  width: 100%; max-width: 800px;
-  border: 1px solid var(--border);
-  border-radius: 14px; overflow: hidden;
-  background: var(--surface);
-  animation: fadeUp 0.7s 0.4s ease both;
+  margin-top: 4.5rem; width: 100%; max-width: 800px;
+  border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+  background: var(--surface); animation: fadeUp 0.7s 0.4s ease both;
   box-shadow: 0 40px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04);
+  position: relative; z-index: 1;
 }
 
 .visual-bar {
   display: flex; align-items: center; gap: 0.5rem;
-  padding: 0.8rem 1.2rem;
-  border-bottom: 1px solid var(--border);
+  padding: 0.8rem 1.2rem; border-bottom: 1px solid var(--border);
   background: rgba(255,255,255,0.02);
 }
 
@@ -215,14 +224,13 @@ nav {
 .dot-r { background: #ff5f57; } .dot-y { background: #febc2e; } .dot-g { background: #28c840; }
 
 .visual-url {
-  flex: 1; text-align: center;
-  font-size: 0.72rem; color: var(--muted);
-  letter-spacing: 0.03em;
+  flex: 1; text-align: center; font-size: 0.72rem; color: var(--muted);
+  letter-spacing: 0.03em; background: rgba(255,255,255,0.03);
+  padding: 0.2rem 0.8rem; border-radius: 4px; max-width: 240px; margin: 0 auto;
 }
 
 .visual-content {
-  display: grid; grid-template-columns: 1fr 1fr;
-  height: 280px;
+  display: grid; grid-template-columns: 1fr 1fr; height: 280px;
 }
 
 .visual-img {
@@ -233,30 +241,41 @@ nav {
 }
 
 .manga-placeholder {
-  font-family: 'DM Serif Display', serif;
-  font-size: 3rem;
-  color: rgba(255,255,255,0.12);
-  letter-spacing: 0.15em;
-  user-select: none;
+  font-family: 'DM Serif Display', serif; font-size: 3rem;
+  color: rgba(255,255,255,0.12); letter-spacing: 0.15em; user-select: none;
 }
 
 .selection-box {
-  position: absolute; top: 28%; left: 14%;
-  width: 72%; height: 44%;
-  border: 1.5px solid #6b9eff;
-  background: rgba(107,158,255,0.07);
-  border-radius: 3px;
+  position: absolute; top: 28%; left: 14%; width: 72%; height: 44%;
+  border: 1.5px solid #6b9eff; background: rgba(107,158,255,0.07); border-radius: 3px;
   animation: pulse-border 2.5s ease-in-out infinite;
 }
+
+.sel-corner { position: absolute; width: 8px; height: 8px; border-color: #6b9eff; border-style: solid; }
+.sc-tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+.sc-tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+.sc-bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+.sc-br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
 
 @keyframes pulse-border {
   0%, 100% { border-color: #6b9eff; box-shadow: 0 0 0 0 rgba(107,158,255,0); }
   50% { border-color: #8bb8ff; box-shadow: 0 0 12px rgba(107,158,255,0.2); }
 }
 
+.spin-wrap {
+  position: absolute; top: 12px; right: 12px; width: 38px; height: 38px;
+  background: rgba(15,15,20,0.95); border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 12px rgba(139,122,255,0.3);
+}
+.spin {
+  width: 18px; height: 18px; border: 2px solid rgba(139,122,255,0.2);
+  border-top-color: var(--pro); border-radius: 50%; animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
 .visual-result {
-  padding: 1.5rem;
-  display: flex; flex-direction: column; gap: 0.7rem;
+  padding: 1.5rem; display: flex; flex-direction: column; gap: 0.7rem;
 }
 
 .result-label {
@@ -266,55 +285,37 @@ nav {
 
 .result-text {
   font-family: 'DM Serif Display', serif;
-  font-size: 1rem; line-height: 1.55;
-  color: var(--text); flex: 1;
+  font-size: 1rem; line-height: 1.55; color: var(--text); flex: 1;
 }
 
 .result-badge {
   display: inline-flex; align-items: center; gap: 0.4rem;
-  background: var(--pro-dim); color: var(--pro);
-  font-size: 0.7rem; padding: 0.22rem 0.65rem;
-  border-radius: 100px; width: fit-content;
-  border: 1px solid var(--pro-border);
+  background: var(--pro-dim); color: var(--pro); font-size: 0.7rem;
+  padding: 0.22rem 0.65rem; border-radius: 100px;
+  width: fit-content; border: 1px solid var(--pro-border);
 }
 
 /* ── WHAT'S NEW BANNER ── */
 .whats-new {
   background: linear-gradient(135deg, rgba(139,122,255,0.06) 0%, rgba(111,211,200,0.04) 100%);
-  border-top: 1px solid var(--pro-border);
-  border-bottom: 1px solid var(--pro-border);
-  padding: 1.25rem 3rem;
-  display: flex; align-items: center;
-  justify-content: center; gap: 1.25rem;
-  flex-wrap: wrap;
+  border-top: 1px solid var(--pro-border); border-bottom: 1px solid var(--pro-border);
+  padding: 1.25rem 3rem; display: flex; align-items: center;
+  justify-content: center; gap: 1.25rem; flex-wrap: wrap;
 }
 
 .whats-new-pill {
   background: linear-gradient(135deg, var(--pro), var(--pro-end));
-  color: white; font-size: 0.68rem;
-  font-weight: 600; letter-spacing: 0.09em;
-  padding: 0.22rem 0.7rem; border-radius: 100px;
-  text-transform: uppercase; flex-shrink: 0;
+  color: white; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.09em;
+  padding: 0.22rem 0.7rem; border-radius: 100px; text-transform: uppercase; flex-shrink: 0;
 }
 
-.whats-new-text {
-  font-size: 0.85rem; color: rgba(240,237,232,0.75);
-  font-weight: 300;
-}
-
-.whats-new-items {
-  display: flex; gap: 1.5rem; flex-wrap: wrap;
-}
+.whats-new-items { display: flex; gap: 1.5rem; flex-wrap: wrap; }
 
 .whats-new-item {
   display: flex; align-items: center; gap: 0.4rem;
   font-size: 0.78rem; color: var(--muted);
 }
-
-.whats-new-item::before {
-  content: '✦';
-  color: var(--pro); font-size: 0.6rem;
-}
+.whats-new-item::before { content: '✦'; color: var(--pro); font-size: 0.6rem; }
 
 /* ── SECTIONS ── */
 section { padding: 7rem 2rem; }
@@ -322,8 +323,7 @@ section { padding: 7rem 2rem; }
 
 .section-label {
   font-size: 0.72rem; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--accent);
-  margin-bottom: 0.9rem;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 0.9rem;
 }
 
 .section-title {
@@ -335,133 +335,115 @@ section { padding: 7rem 2rem; }
 
 .section-sub {
   color: var(--muted); max-width: 420px;
-  font-weight: 300; line-height: 1.75;
-  margin-bottom: 3.5rem;
+  font-weight: 300; line-height: 1.75; margin-bottom: 3.5rem;
 }
 
 /* ── FEATURES GRID ── */
 .features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-  gap: 1.5px;
-  border: 1px solid var(--border);
-  border-radius: 12px; overflow: hidden;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 1.5px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
 }
 
 .feature-card {
-  background: var(--surface);
-  padding: 2.25rem 1.75rem;
+  background: var(--surface); padding: 2.25rem 1.75rem;
   position: relative; transition: background 0.2s;
 }
 .feature-card:hover { background: var(--surface-2); }
 
 .feature-icon { font-size: 1.3rem; margin-bottom: 1.1rem; display: block; }
 
-.feature-title {
-  font-weight: 500; font-size: 0.97rem;
-  margin-bottom: 0.55rem; color: var(--text);
-}
+.feature-title { font-weight: 500; font-size: 0.97rem; margin-bottom: 0.55rem; color: var(--text); }
 
-.feature-desc {
-  font-size: 0.855rem; color: var(--muted);
-  line-height: 1.65; font-weight: 300;
-}
+.feature-desc { font-size: 0.855rem; color: var(--muted); line-height: 1.65; font-weight: 300; }
 
 .feature-pro-tag {
   position: absolute; top: 1.2rem; right: 1.2rem;
-  background: var(--pro-dim); color: var(--pro);
-  font-size: 0.63rem; padding: 0.18rem 0.55rem;
-  border-radius: 100px; letter-spacing: 0.06em;
+  background: var(--pro-dim); color: var(--pro); font-size: 0.63rem;
+  padding: 0.18rem 0.55rem; border-radius: 100px; letter-spacing: 0.06em;
   border: 1px solid var(--pro-border);
 }
 
 /* ── HOW IT WORKS ── */
-.how-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 3rem;
-}
-
-.how-step { position: relative; }
+.how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; }
 
 .how-num {
-  font-family: 'DM Serif Display', serif;
-  font-size: 3.2rem; color: var(--border-hover);
-  line-height: 1; margin-bottom: 1.2rem;
+  font-family: 'DM Serif Display', serif; font-size: 3.2rem;
+  background: linear-gradient(135deg, var(--pro), var(--pro-end));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; line-height: 1; margin-bottom: 1.2rem; opacity: 0.5;
 }
-
 .how-title { font-weight: 500; font-size: 0.97rem; margin-bottom: 0.55rem; }
-
-.how-desc {
-  font-size: 0.855rem; color: var(--muted);
-  line-height: 1.65; font-weight: 300;
-}
+.how-desc { font-size: 0.855rem; color: var(--muted); line-height: 1.65; font-weight: 300; }
 
 /* ── MODES ── */
-.modes-grid {
-  display: grid; grid-template-columns: repeat(6, 1fr);
-  gap: 0.9rem;
-}
+.modes-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.9rem; }
 
 .mode-card {
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 1.4rem 0.8rem;
-  text-align: center; background: var(--surface);
-  transition: border-color 0.2s, transform 0.2s;
-  cursor: default;
+  border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.4rem 0.8rem; text-align: center; background: var(--surface);
+  transition: border-color 0.2s, transform 0.2s; cursor: default;
 }
 .mode-card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
-
 .mode-icon { font-size: 1.5rem; margin-bottom: 0.65rem; display: block; }
-
 .mode-name { font-size: 0.78rem; color: var(--muted); font-weight: 400; }
+
+/* ── COMPARE TABLE ── */
+.compare-wrap {
+  max-width: 680px; margin: 0 auto;
+  border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+}
+
+.compare-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+
+.compare-table th {
+  padding: 1rem 1.5rem; text-align: left; font-weight: 500;
+  font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase;
+  background: var(--surface); border-bottom: 1px solid var(--border); color: var(--muted);
+}
+.compare-table th:last-child { color: var(--pro); text-align: center; }
+.compare-table th:nth-child(2) { text-align: center; }
+
+.compare-table td {
+  padding: 0.9rem 1.5rem; border-bottom: 1px solid var(--border);
+  color: var(--muted); font-weight: 300;
+}
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table td:nth-child(2), .compare-table td:last-child { text-align: center; }
+.compare-table td:last-child { color: var(--pro); }
+
+.check { color: var(--green); }
+.cross { color: rgba(255,255,255,0.2); }
+.limited { color: var(--accent); font-size: 0.78rem; }
 
 /* ── PRICING ── */
 .pricing-layout {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 1.25rem;
-  max-width: 900px;
-  margin: 0 auto;
-  align-items: start;
+  display: grid; grid-template-columns: 1fr 2fr;
+  gap: 1.25rem; max-width: 900px; margin: 0 auto; align-items: start;
 }
 
 .pricing-card {
-  border: 1px solid var(--border);
-  border-radius: 12px; padding: 2.25rem 1.75rem;
-  background: var(--surface);
+  border: 1px solid var(--border); border-radius: 12px;
+  padding: 2.25rem 1.75rem; background: var(--surface);
 }
 
-.pricing-packs {
-  display: flex; flex-direction: column; gap: 1rem;
-}
+.pricing-packs { display: flex; flex-direction: column; gap: 1rem; }
 
 .pack-card {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.5rem 1.75rem;
-  background: var(--surface);
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 1rem;
+  border: 1px solid var(--border); border-radius: 12px;
+  padding: 1.5rem 1.75rem; background: var(--surface);
+  display: grid; grid-template-columns: 1fr auto;
+  align-items: center; gap: 1rem;
   transition: border-color 0.2s, transform 0.2s;
-  position: relative;
-  overflow: hidden;
+  position: relative; overflow: hidden;
 }
-
 .pack-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0;
+  content: ''; position: absolute; top: 0; left: 0;
   width: 3px; height: 100%;
   background: linear-gradient(180deg, var(--pro), var(--pro-end));
-  opacity: 0;
-  transition: opacity 0.2s;
+  opacity: 0; transition: opacity 0.2s;
 }
-
 .pack-card:hover { border-color: var(--pro-border); transform: translateX(3px); }
 .pack-card:hover::before { opacity: 1; }
-
 .pack-card.popular {
   border-color: var(--pro-border);
   background: linear-gradient(135deg, rgba(139,122,255,0.06) 0%, rgba(10,10,10,0) 60%);
@@ -471,232 +453,173 @@ section { padding: 7rem 2rem; }
 .pack-badge {
   position: absolute; top: 1rem; right: 1rem;
   background: linear-gradient(135deg, var(--pro), var(--pro-end));
-  color: white; font-size: 0.62rem;
-  font-weight: 600; letter-spacing: 0.07em;
-  padding: 0.18rem 0.55rem; border-radius: 100px;
-  text-transform: uppercase;
+  color: white; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.07em;
+  padding: 0.18rem 0.55rem; border-radius: 100px; text-transform: uppercase;
 }
 
-.pack-info {}
-
-.pack-name {
-  font-weight: 500; font-size: 0.97rem;
-  color: var(--text); margin-bottom: 0.25rem;
-}
+.pack-name { font-weight: 500; font-size: 0.97rem; color: var(--text); margin-bottom: 0.25rem; }
 
 .pack-credits {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.3rem;
+  font-family: 'DM Serif Display', serif; font-size: 1.3rem;
   background: linear-gradient(135deg, var(--pro), var(--pro-end));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 0.3rem;
+  background-clip: text; margin-bottom: 0.3rem;
 }
 
-.pack-desc {
-  font-size: 0.78rem; color: var(--muted); font-weight: 300;
-}
+.pack-desc { font-size: 0.78rem; color: var(--muted); font-weight: 300; }
 
 .pack-price-col { text-align: right; }
 
 .pack-price {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.7rem; line-height: 1;
-  color: var(--text); margin-bottom: 0.3rem;
+  font-family: 'DM Serif Display', serif; font-size: 1.7rem;
+  line-height: 1; color: var(--text); margin-bottom: 0.3rem;
 }
 
 .pack-btn {
-  display: block; text-align: center;
-  padding: 0.5rem 1.1rem;
+  display: block; text-align: center; padding: 0.5rem 1.1rem;
   border-radius: 7px; font-size: 0.8rem; font-weight: 500;
   text-decoration: none; transition: all 0.2s;
-  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  cursor: not-allowed; font-family: 'DM Sans', sans-serif;
   border: none; white-space: nowrap;
   background: linear-gradient(135deg, var(--pro) 0%, var(--pro-end) 100%);
-  color: white; margin-top: 0.5rem;
+  color: white; margin-top: 0.5rem; opacity: 0.35;
 }
-.pack-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+.pack-btn.enabled { cursor: pointer; opacity: 1; }
+.pack-btn.enabled:hover { opacity: 0.88; transform: translateY(-1px); }
 
 .pricing-tier {
   font-size: 0.72rem; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--muted);
-  margin-bottom: 1.5rem;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem;
 }
 
 .pricing-price {
-  font-family: 'DM Serif Display', serif;
-  font-size: 3rem; line-height: 1; margin-bottom: 0.3rem;
+  font-family: 'DM Serif Display', serif; font-size: 3rem; line-height: 1; margin-bottom: 0.3rem;
 }
 
-.pricing-note {
-  font-size: 0.78rem; color: var(--muted);
-  margin-bottom: 1.75rem; font-weight: 300;
-}
+.pricing-note { font-size: 0.78rem; color: var(--muted); margin-bottom: 1.75rem; font-weight: 300; }
 
-.pricing-divider {
-  border: none; border-top: 1px solid var(--border);
-  margin-bottom: 1.6rem;
-}
+.pricing-divider { border: none; border-top: 1px solid var(--border); margin-bottom: 1.6rem; }
 
 .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
-
 .pricing-features li {
-  font-size: 0.855rem; color: var(--muted);
-  display: flex; align-items: flex-start; gap: 0.55rem;
-  font-weight: 300;
+  font-size: 0.855rem; color: var(--muted); display: flex; align-items: flex-start; gap: 0.55rem; font-weight: 300;
 }
 .pricing-features li::before { content: '—'; color: var(--border-hover); flex-shrink: 0; }
 
 .pricing-btn {
-  display: block; text-align: center;
-  margin-top: 2.25rem; padding: 0.82rem;
+  display: block; text-align: center; margin-top: 2.25rem; padding: 0.82rem;
   border-radius: 8px; font-size: 0.88rem; font-weight: 500;
-  text-decoration: none; transition: all 0.2s;
-  cursor: pointer; font-family: 'DM Sans', sans-serif;
-  border: none; width: 100%;
+  text-decoration: none; transition: all 0.2s; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; border: none; width: 100%;
 }
-
-.pricing-btn-free {
-  background: none; border: 1px solid var(--border); color: var(--muted);
-}
+.pricing-btn-free { background: none; border: 1px solid var(--border); color: var(--muted); }
 .pricing-btn-free:hover { border-color: var(--border-hover); color: var(--text); }
 
-/* ── CREDIT EXPLAINER ── */
 .credit-explainer {
   display: flex; align-items: flex-start; gap: 0.55rem;
-  font-size: 0.77rem; color: var(--muted);
-  margin-top: 1.25rem;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: rgba(255,255,255,0.02);
-  max-width: 900px; margin-left: auto; margin-right: auto;
-  line-height: 1.6;
+  font-size: 0.77rem; color: var(--muted); margin-top: 1.75rem;
+  padding: 0.75rem 1rem; border: 1px solid var(--border);
+  border-radius: 8px; background: rgba(255,255,255,0.02);
+  max-width: 900px; margin-left: auto; margin-right: auto; line-height: 1.6;
 }
 .credit-explainer strong { color: rgba(200,184,154,0.75); font-weight: 500; }
 
-@media (max-width: 768px) {
-  .pricing-layout { grid-template-columns: 1fr; }
-  .pack-card { grid-template-columns: 1fr; }
-  .pack-price-col { text-align: left; display: flex; align-items: center; gap: 1rem; }
-}
-
-/* ── COMPARISON TABLE ── */
-.compare-wrap {
-  max-width: 680px; margin: 0 auto;
-  border: 1px solid var(--border); border-radius: 12px;
-  overflow: hidden;
-}
-
-.compare-table {
-  width: 100%; border-collapse: collapse;
-  font-size: 0.875rem;
-}
-
-.compare-table th {
-  padding: 1rem 1.5rem;
-  text-align: left; font-weight: 500;
-  font-size: 0.78rem; letter-spacing: 0.06em;
-  text-transform: uppercase;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  color: var(--muted);
-}
-
-.compare-table th:last-child {
-  color: var(--pro); text-align: center;
-}
-
-.compare-table th:nth-child(2) { text-align: center; }
-
-.compare-table td {
-  padding: 0.9rem 1.5rem;
-  border-bottom: 1px solid var(--border);
-  color: var(--muted); font-weight: 300;
-}
-
-.compare-table tr:last-child td { border-bottom: none; }
-
-.compare-table td:nth-child(2),
-.compare-table td:last-child {
-  text-align: center;
-}
-
-.compare-table td:last-child { color: var(--pro); }
-
-.check { color: var(--green); }
-.cross { color: rgba(255,255,255,0.2); }
-.limited { color: var(--accent); font-size: 0.78rem; }
-
 /* ── FAQ ── */
 .faq-list {
-  max-width: 680px;
-  display: flex; flex-direction: column; gap: 0;
-  border: 1px solid var(--border); border-radius: 12px;
-  overflow: hidden;
+  max-width: 680px; display: flex; flex-direction: column;
+  border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
 }
-
-.faq-item {
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
-}
+.faq-item { border-bottom: 1px solid var(--border); background: var(--surface); }
 .faq-item:last-child { border-bottom: none; }
 
 .faq-q {
-  width: 100%; text-align: left;
-  padding: 1.3rem 1.5rem;
+  width: 100%; text-align: left; padding: 1.3rem 1.5rem;
   background: none; border: none; cursor: pointer;
   display: flex; align-items: center; justify-content: space-between;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.93rem; font-weight: 500;
-  color: var(--text); gap: 1rem;
-  transition: background 0.15s;
+  font-family: 'DM Sans', sans-serif; font-size: 0.93rem; font-weight: 500;
+  color: var(--text); gap: 1rem; transition: background 0.15s;
 }
 .faq-q:hover { background: rgba(255,255,255,0.025); }
 
-.faq-arrow {
-  font-size: 0.7rem; color: var(--muted); flex-shrink: 0;
-  transition: transform 0.25s;
-}
+.faq-arrow { font-size: 0.7rem; color: var(--muted); flex-shrink: 0; transition: transform 0.25s; }
 .faq-item.open .faq-arrow { transform: rotate(180deg); }
 
 .faq-a {
-  display: none;
-  padding: 0 1.5rem 1.3rem;
-  font-size: 0.875rem; color: var(--muted);
-  font-weight: 300; line-height: 1.75;
+  display: none; padding: 0 1.5rem 1.3rem;
+  font-size: 0.875rem; color: var(--muted); font-weight: 300; line-height: 1.75;
 }
 .faq-item.open .faq-a { display: block; }
 
-/* ── CTA ── */
-.cta-section {
-  text-align: center; padding: 8rem 2rem;
-  position: relative; overflow: hidden;
+/* ── CONTACT ── */
+.contact-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 5rem; align-items: start; max-width: 900px; margin: 0 auto;
 }
 
+.contact-options { display: flex; flex-direction: column; gap: 1rem; margin-top: 0.5rem; }
+
+.contact-option {
+  display: flex; align-items: flex-start; gap: 1rem; padding: 1.25rem;
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 10px; text-decoration: none; transition: all 0.2s;
+}
+.contact-option:hover { border-color: var(--pro-border); transform: translateX(3px); }
+
+.co-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+.co-title { font-size: 0.9rem; font-weight: 500; color: var(--text); margin-bottom: 0.2rem; }
+.co-desc { font-size: 0.8rem; color: var(--muted); font-weight: 300; line-height: 1.6; }
+
+.contact-right {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 2.25rem;
+}
+
+.cf-title { font-family: 'DM Serif Display', serif; font-size: 1.3rem; margin-bottom: 0.25rem; }
+.cf-sub { font-size: 0.82rem; color: var(--muted); font-weight: 300; margin-bottom: 1.25rem; }
+.cf-fields { display: flex; flex-direction: column; gap: 0.9rem; }
+.cf-field { display: flex; flex-direction: column; gap: 0.35rem; }
+.cf-label { font-size: 0.7rem; font-weight: 500; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; }
+
+.cf-input, .cf-textarea {
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0.72rem 1rem;
+  font-family: 'DM Sans', sans-serif; font-size: 0.875rem;
+  color: var(--text); transition: border-color 0.2s; outline: none; width: 100%;
+}
+.cf-input::placeholder, .cf-textarea::placeholder { color: var(--muted); opacity: 0.4; }
+.cf-input:focus, .cf-textarea:focus { border-color: var(--pro-border); }
+.cf-textarea { resize: vertical; min-height: 96px; }
+
+.cf-submit {
+  background: linear-gradient(135deg, var(--pro), var(--pro-end));
+  color: white; border: none; padding: 0.85rem; border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 500;
+  cursor: pointer; transition: all 0.2s; width: 100%; margin-top: 0.25rem;
+}
+.cf-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+.cf-success { display: none; text-align: center; padding: 1.25rem; color: var(--green); font-size: 0.88rem; }
+
+/* ── CTA ── */
+.cta-section {
+  text-align: center; padding: 8rem 2rem; position: relative; overflow: hidden;
+}
 .cta-section::before {
-  content: '';
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 600px; height: 400px;
+  content: ''; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%); width: 600px; height: 400px;
   background: radial-gradient(ellipse, rgba(139,122,255,0.05) 0%, transparent 70%);
   pointer-events: none;
 }
 
 /* ── FOOTER ── */
 footer {
-  border-top: 1px solid var(--border);
-  padding: 2.5rem 3rem;
-  display: flex; align-items: center;
-  justify-content: space-between;
+  border-top: 1px solid var(--border); padding: 2.5rem 3rem;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
 }
 
 .footer-logo {
   display: flex; align-items: center; gap: 0.55rem;
-  font-family: 'DM Serif Display', serif;
-  font-size: 0.95rem; color: var(--muted);
+  font-family: 'DM Serif Display', serif; font-size: 0.95rem; color: var(--muted);
 }
-
 .footer-logo-icon {
   width: 22px; height: 22px; border-radius: 5px;
   background: linear-gradient(135deg, var(--pro) 0%, var(--pro-end) 100%);
@@ -704,75 +627,83 @@ footer {
   font-size: 0.52rem; font-weight: bold; color: white;
   letter-spacing: 0.03em; font-family: 'DM Serif Display', serif;
 }
-
 .footer-logo span { color: var(--accent); }
 
 .footer-links { display: flex; gap: 1.75rem; list-style: none; }
-
-.footer-links a {
-  font-size: 0.78rem; color: var(--muted);
-  text-decoration: none; transition: color 0.2s;
-}
+.footer-links a { font-size: 0.78rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
 .footer-links a:hover { color: var(--text); }
-
 .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.18); }
 
-/* ── ANIMATION ── */
+/* ── ANIMATIONS ── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── LANG TOGGLE ── */
+/* ── LANG ── */
 [data-lang] { display: none; }
 .lang-en [data-lang="en"] { display: block; }
 .lang-fr [data-lang="fr"] { display: block; }
 span[data-lang], li span[data-lang] { display: none; }
-.lang-en span[data-lang="en"],
-.lang-en li span[data-lang="en"] { display: inline; }
-.lang-fr span[data-lang="fr"],
-.lang-fr li span[data-lang="fr"] { display: inline; }
+.lang-en span[data-lang="en"], .lang-en li span[data-lang="en"] { display: inline; }
+.lang-fr span[data-lang="fr"], .lang-fr li span[data-lang="fr"] { display: inline; }
 td[data-lang], th[data-lang] { display: none; }
 .lang-en td[data-lang="en"], .lang-en th[data-lang="en"] { display: table-cell; }
 .lang-fr td[data-lang="fr"], .lang-fr th[data-lang="fr"] { display: table-cell; }
+div[data-lang] { display: none; }
+.lang-en div[data-lang="en"] { display: flex; }
+.lang-fr div[data-lang="fr"] { display: flex; }
 
 /* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .pricing-layout { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+}
 @media (max-width: 768px) {
   nav { padding: 1rem 1.5rem; }
+  .nav-center { display: none; }
   .how-grid { grid-template-columns: 1fr; gap: 2rem; }
   .modes-grid { grid-template-columns: repeat(3, 1fr); }
-  .pricing-grid { grid-template-columns: 1fr; }
-  .compare-wrap { overflow-x: auto; }
   footer { flex-direction: column; gap: 1.4rem; text-align: center; }
   .visual-content { grid-template-columns: 1fr; height: auto; }
   .visual-img { height: 150px; border-right: none; border-bottom: 1px solid var(--border); }
   .whats-new { padding: 1rem 1.5rem; }
   section { padding: 5rem 1.5rem; }
+  .pack-card { grid-template-columns: 1fr; }
+  .pack-price-col { text-align: left; display: flex; align-items: center; gap: 1rem; }
 }
 </style>
 </head>
 <body class="lang-en">
 
-<!-- ── NAV ── -->
+<!-- NAV -->
 <nav>
-  <div class="nav-logo">
+  <a href="/" class="nav-logo">
     <div class="nav-logo-icon">SITT</div>
     <span class="nav-logo-name">SITT<span>.</span></span>
+  </a>
+  <div class="nav-center">
+    <a href="#features" class="nav-link"><span data-lang="en">Features</span><span data-lang="fr">Fonctionnalités</span></a>
+    <a href="#pricing" class="nav-link"><span data-lang="en">Pricing</span><span data-lang="fr">Tarifs</span></a>
+    <a href="#faq" class="nav-link">FAQ</a>
+    <a href="#contact" class="nav-link"><span data-lang="en">Contact</span><span data-lang="fr">Contact</span></a>
   </div>
   <div class="nav-right">
     <div class="lang-toggle">
       <button class="lang-btn active" onclick="setLang('en')">EN</button>
       <button class="lang-btn" onclick="setLang('fr')">FR</button>
     </div>
-    <a href="#" class="nav-cta">
+    <a href="https://chromewebstore.google.com/detail/sitt/joenimodijoophmdlgpgblkjfgenplgg" target="_blank" class="nav-cta">
       <span data-lang="en">Add to Chrome</span>
       <span data-lang="fr">Ajouter à Chrome</span>
     </a>
   </div>
 </nav>
 
-<!-- ── HERO ── -->
+<!-- HERO -->
 <section class="hero">
+  <div class="hero-grid"></div>
+
   <div class="hero-badge">
     <span class="dot-gemini"></span>
     <span data-lang="en">v2.0 — Now powered by Gemini Vision AI</span>
@@ -786,7 +717,7 @@ td[data-lang], th[data-lang] { display: none; }
   <p data-lang="fr">Une extension Chrome qui lit les mangas, PDFs, captures d'écran, photos et plus — avec une précision IA et un fallback Tesseract qui fonctionne hors ligne.</p>
 
   <div class="hero-actions">
-    <a href="#" class="btn-primary">
+    <a href="https://chromewebstore.google.com/detail/sitt/joenimodijoophmdlgpgblkjfgenplgg" target="_blank" class="btn-primary">
       <span data-lang="en">Add to Chrome — Free</span>
       <span data-lang="fr">Ajouter à Chrome — Gratuit</span>
     </a>
@@ -794,6 +725,14 @@ td[data-lang], th[data-lang] { display: none; }
       <span data-lang="en">See how it works</span>
       <span data-lang="fr">Voir comment ça marche</span>
     </a>
+  </div>
+
+  <div class="hero-trust">
+    <span data-lang="en">Free forever</span><span data-lang="fr">Gratuit pour toujours</span>
+    <span class="trust-sep">·</span>
+    <span data-lang="en">No account needed</span><span data-lang="fr">Aucun compte requis</span>
+    <span class="trust-sep">·</span>
+    <span data-lang="en">Works offline</span><span data-lang="fr">Fonctionne hors ligne</span>
   </div>
 
   <div class="hero-visual">
@@ -806,7 +745,13 @@ td[data-lang], th[data-lang] { display: none; }
     <div class="visual-content">
       <div class="visual-img">
         <div class="manga-placeholder">漫画</div>
-        <div class="selection-box"></div>
+        <div class="selection-box">
+          <div class="sel-corner sc-tl"></div>
+          <div class="sel-corner sc-tr"></div>
+          <div class="sel-corner sc-bl"></div>
+          <div class="sel-corner sc-br"></div>
+        </div>
+        <div class="spin-wrap"><div class="spin"></div></div>
       </div>
       <div class="visual-result">
         <div class="result-label">
@@ -814,15 +759,13 @@ td[data-lang], th[data-lang] { display: none; }
           <span data-lang="fr">Texte extrait</span>
         </div>
         <div class="result-text">"WE ARE USELESS NOW. ALL WE CAN DO IS BURY THIS HATRED DEEP WITHIN OUR HEARTS."</div>
-        <div class="result-badge">
-          ✦ Gemini Vision AI · ~0.8s
-        </div>
+        <div class="result-badge">✦ Gemini Vision AI · ~0.8s</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── WHAT'S NEW BANNER ── -->
+<!-- WHAT'S NEW -->
 <div class="whats-new">
   <span class="whats-new-pill">What's new in v2.0</span>
   <div class="whats-new-items">
@@ -837,13 +780,10 @@ td[data-lang], th[data-lang] { display: none; }
   </div>
 </div>
 
-<!-- ── FEATURES ── -->
+<!-- FEATURES -->
 <section id="features">
   <div class="container">
-    <div class="section-label">
-      <span data-lang="en">Features</span>
-      <span data-lang="fr">Fonctionnalités</span>
-    </div>
+    <div class="section-label"><span data-lang="en">Features</span><span data-lang="fr">Fonctionnalités</span></div>
     <h2 class="section-title" data-lang="en">Everything you need to read any image.</h2>
     <h2 class="section-title" data-lang="fr">Tout ce qu'il faut pour lire n'importe quelle image.</h2>
     <p class="section-sub" data-lang="en">Built for manga readers, researchers, students, and anyone who needs to extract text fast — with or without internet.</p>
@@ -858,15 +798,13 @@ td[data-lang], th[data-lang] { display: none; }
         <div class="feature-desc" data-lang="fr">Le modèle de vision de Google lit même les polices manga les plus stylisées avec une précision quasi-parfaite. Résultat en ~1 seconde.</div>
         <div class="feature-pro-tag">Pro</div>
       </div>
-
       <div class="feature-card">
         <span class="feature-icon">📡</span>
         <div class="feature-title" data-lang="en">Offline Tesseract fallback</div>
         <div class="feature-title" data-lang="fr">Fallback Tesseract hors ligne</div>
         <div class="feature-desc" data-lang="en">No internet? No problem. Tesseract.js runs locally in the browser with advanced preprocessing pipelines for every document type.</div>
-        <div class="feature-desc" data-lang="fr">Pas d'internet ? Aucun problème. Tesseract.js tourne localement dans le navigateur avec des pipelines de preprocessing pour chaque type de document.</div>
+        <div class="feature-desc" data-lang="fr">Pas d'internet ? Tesseract.js tourne localement dans le navigateur avec des pipelines de preprocessing avancés pour chaque type de document.</div>
       </div>
-
       <div class="feature-card">
         <span class="feature-icon">🌍</span>
         <div class="feature-title" data-lang="en">Auto Translation</div>
@@ -874,7 +812,6 @@ td[data-lang], th[data-lang] { display: none; }
         <div class="feature-desc" data-lang="en">Translate extracted text in one click via Google Translate, MyMemory or LibreTranslate. 20+ languages. Edit and re-translate anytime.</div>
         <div class="feature-desc" data-lang="fr">Traduisez en un clic via Google Translate, MyMemory ou LibreTranslate. 20+ langues. Éditez et re-traduisez à tout moment.</div>
       </div>
-
       <div class="feature-card">
         <span class="feature-icon">⚡</span>
         <div class="feature-title" data-lang="en">Instant Selection</div>
@@ -882,15 +819,12 @@ td[data-lang], th[data-lang] { display: none; }
         <div class="feature-desc" data-lang="en">Press Alt+R, draw a box around any text on screen. The sidebar opens automatically with extracted text and translation.</div>
         <div class="feature-desc" data-lang="fr">Appuyez sur Alt+R, dessinez un cadre. La sidebar s'ouvre automatiquement avec le texte extrait et la traduction.</div>
       </div>
-
       <div class="feature-card">
         <span class="feature-icon">📐</span>
-        <div class="feature-title" data-lang="en">Markdown + LaTeX</div>
-        <div class="feature-title" data-lang="fr">Markdown + LaTeX</div>
+        <div class="feature-title">Markdown + LaTeX</div>
         <div class="feature-desc" data-lang="en">OCR results are rendered with full Markdown and KaTeX support. Tables, code blocks, and mathematical formulas display correctly.</div>
         <div class="feature-desc" data-lang="fr">Les résultats OCR sont rendus avec Markdown complet et support KaTeX. Tableaux, blocs de code et formules mathématiques s'affichent correctement.</div>
       </div>
-
       <div class="feature-card">
         <span class="feature-icon">🕓</span>
         <div class="feature-title" data-lang="en">Editable History</div>
@@ -902,16 +836,12 @@ td[data-lang], th[data-lang] { display: none; }
   </div>
 </section>
 
-<!-- ── HOW IT WORKS ── -->
+<!-- HOW IT WORKS -->
 <section style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
   <div class="container">
-    <div class="section-label">
-      <span data-lang="en">How it works</span>
-      <span data-lang="fr">Comment ça marche</span>
-    </div>
+    <div class="section-label"><span data-lang="en">How it works</span><span data-lang="fr">Comment ça marche</span></div>
     <h2 class="section-title" data-lang="en">Three steps to extract any text.</h2>
     <h2 class="section-title" data-lang="fr">Trois étapes pour extraire n'importe quel texte.</h2>
-
     <div class="how-grid">
       <div class="how-step">
         <div class="how-num">01</div>
@@ -938,155 +868,67 @@ td[data-lang], th[data-lang] { display: none; }
   </div>
 </section>
 
-<!-- ── MODES ── -->
+<!-- MODES -->
 <section>
   <div class="container">
-    <div class="section-label">
-      <span data-lang="en">Document modes</span>
-      <span data-lang="fr">Modes de document</span>
-    </div>
+    <div class="section-label"><span data-lang="en">Document modes</span><span data-lang="fr">Modes de document</span></div>
     <h2 class="section-title" data-lang="en">Optimized for every format.</h2>
     <h2 class="section-title" data-lang="fr">Optimisé pour chaque format.</h2>
     <p class="section-sub" data-lang="en">Each mode uses a dedicated OCR strategy — different preprocessing, PSM passes, and confidence thresholds tuned per content type.</p>
     <p class="section-sub" data-lang="fr">Chaque mode utilise une stratégie OCR dédiée — preprocessing, passes PSM et seuils de confiance ajustés par type de contenu.</p>
-
     <div class="modes-grid">
       <div class="mode-card"><span class="mode-icon">🎌</span><div class="mode-name">Manga</div></div>
       <div class="mode-card"><span class="mode-icon">📄</span><div class="mode-name">PDF</div></div>
-      <div class="mode-card">
-        <span class="mode-icon">🖥️</span>
-        <div class="mode-name" data-lang="en">Screenshot</div>
-        <div class="mode-name" data-lang="fr">Capture</div>
-      </div>
-      <div class="mode-card">
-        <span class="mode-icon">📷</span>
-        <div class="mode-name" data-lang="en">Photo</div>
-        <div class="mode-name" data-lang="fr">Photo</div>
-      </div>
-      <div class="mode-card">
-        <span class="mode-icon">📺</span>
-        <div class="mode-name" data-lang="en">Subtitle</div>
-        <div class="mode-name" data-lang="fr">Sous-titre</div>
-      </div>
-      <div class="mode-card">
-        <span class="mode-icon">🎮</span>
-        <div class="mode-name" data-lang="en">Game</div>
-        <div class="mode-name" data-lang="fr">Jeu vidéo</div>
-      </div>
+      <div class="mode-card"><span class="mode-icon">🖥️</span><div class="mode-name" data-lang="en">Screenshot</div><div class="mode-name" data-lang="fr">Capture</div></div>
+      <div class="mode-card"><span class="mode-icon">📷</span><div class="mode-name" data-lang="en">Photo</div><div class="mode-name" data-lang="fr">Photo</div></div>
+      <div class="mode-card"><span class="mode-icon">📺</span><div class="mode-name" data-lang="en">Subtitle</div><div class="mode-name" data-lang="fr">Sous-titre</div></div>
+      <div class="mode-card"><span class="mode-icon">🎮</span><div class="mode-name" data-lang="en">Game</div><div class="mode-name" data-lang="fr">Jeu vidéo</div></div>
     </div>
   </div>
 </section>
 
-<!-- ── COMPARE ── -->
+<!-- COMPARE -->
 <section style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
   <div class="container" style="display:flex; flex-direction:column; align-items:center;">
-    <div class="section-label" style="text-align:center;">
-      <span data-lang="en">Free vs Pro</span>
-      <span data-lang="fr">Gratuit vs Pro</span>
-    </div>
+    <div class="section-label" style="text-align:center;"><span data-lang="en">Free vs Pro</span><span data-lang="fr">Gratuit vs Pro</span></div>
     <h2 class="section-title" style="text-align:center; max-width:100%;" data-lang="en">What do you get?</h2>
     <h2 class="section-title" style="text-align:center; max-width:100%;" data-lang="fr">Qu'est-ce que vous obtenez ?</h2>
     <p class="section-sub" style="text-align:center; max-width:100%; margin-bottom:3rem;" data-lang="en">Full transparency on limits — no surprises.</p>
     <p class="section-sub" style="text-align:center; max-width:100%; margin-bottom:3rem;" data-lang="fr">Limites en toute transparence — pas de surprises.</p>
-
     <div class="compare-wrap">
       <table class="compare-table">
         <thead>
           <tr>
-            <th data-lang="en">Feature</th>
-            <th data-lang="fr">Fonctionnalité</th>
-            <th data-lang="en">Free</th>
-            <th data-lang="fr">Gratuit</th>
-            <th data-lang="en">Pro</th>
-            <th data-lang="fr">Pro</th>
+            <th data-lang="en">Feature</th><th data-lang="fr">Fonctionnalité</th>
+            <th data-lang="en">Free</th><th data-lang="fr">Gratuit</th>
+            <th data-lang="en">Pro</th><th data-lang="fr">Pro</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td data-lang="en">Tesseract OCR (offline)</td>
-            <td data-lang="fr">OCR Tesseract (hors ligne)</td>
-            <td data-lang="en"><span class="check">✓</span></td>
-            <td data-lang="fr"><span class="check">✓</span></td>
-            <td data-lang="en"><span class="check">✓</span></td>
-            <td data-lang="fr"><span class="check">✓</span></td>
-          </tr>
-          <tr>
-            <td data-lang="en">Gemini Vision AI</td>
-            <td data-lang="fr">IA Gemini Vision</td>
-            <td data-lang="en"><span class="limited">2 / day trial</span></td>
-            <td data-lang="fr"><span class="limited">2 / jour essai</span></td>
-            <td data-lang="en"><span class="check">✓ Credits</span></td>
-            <td data-lang="fr"><span class="check">✓ Crédits</span></td>
-          </tr>
-          <tr>
-            <td data-lang="en">Daily capture limit</td>
-            <td data-lang="fr">Limite captures / jour</td>
-            <td data-lang="en"><span class="limited">10 / day</span></td>
-            <td data-lang="fr"><span class="limited">10 / jour</span></td>
-            <td data-lang="en"><span class="check">Unlimited</span></td>
-            <td data-lang="fr"><span class="check">Illimité</span></td>
-          </tr>
-          <tr>
-            <td data-lang="en">All 6 document modes</td>
-            <td data-lang="fr">Les 6 modes de document</td>
-            <td data-lang="en"><span class="check">✓</span></td>
-            <td data-lang="fr"><span class="check">✓</span></td>
-            <td data-lang="en"><span class="check">✓</span></td>
-            <td data-lang="fr"><span class="check">✓</span></td>
-          </tr>
-          <tr>
-            <td data-lang="en">Auto translation</td>
-            <td data-lang="fr">Traduction automatique</td>
-            <td data-lang="en"><span class="check">✓</span></td>
-            <td data-lang="fr"><span class="check">✓</span></td>
-            <td data-lang="en"><span class="check">✓ Unlimited</span></td>
-            <td data-lang="fr"><span class="check">✓ Illimitée</span></td>
-          </tr>
-          <tr>
-            <td data-lang="en">Editable history</td>
-            <td data-lang="fr">Historique éditable</td>
-            <td data-lang="en"><span class="check">✓</span></td>
-            <td data-lang="fr"><span class="check">✓</span></td>
-            <td data-lang="en"><span class="check">✓</span></td>
-            <td data-lang="fr"><span class="check">✓</span></td>
-          </tr>
-          <tr>
-            <td data-lang="en">Quality OCR mode</td>
-            <td data-lang="fr">Mode OCR Qualité</td>
-            <td data-lang="en"><span class="cross">—</span></td>
-            <td data-lang="fr"><span class="cross">—</span></td>
-            <td data-lang="en"><span class="check">✓</span></td>
-            <td data-lang="fr"><span class="check">✓</span></td>
-          </tr>
-          <tr>
-            <td data-lang="en">Dark + light mode</td>
-            <td data-lang="fr">Mode sombre + clair</td>
-            <td data-lang="en"><span class="check">✓</span></td>
-            <td data-lang="fr"><span class="check">✓</span></td>
-            <td data-lang="en"><span class="check">✓</span></td>
-            <td data-lang="fr"><span class="check">✓</span></td>
-          </tr>
+          <tr><td data-lang="en">Tesseract OCR (offline)</td><td data-lang="fr">OCR Tesseract (hors ligne)</td><td data-lang="en"><span class="check">✓</span></td><td data-lang="fr"><span class="check">✓</span></td><td data-lang="en"><span class="check">✓</span></td><td data-lang="fr"><span class="check">✓</span></td></tr>
+          <tr><td data-lang="en">Gemini Vision AI</td><td data-lang="fr">IA Gemini Vision</td><td data-lang="en"><span class="limited">2 / day trial</span></td><td data-lang="fr"><span class="limited">2 / jour essai</span></td><td data-lang="en"><span class="check">✓ Credits</span></td><td data-lang="fr"><span class="check">✓ Crédits</span></td></tr>
+          <tr><td data-lang="en">Daily capture limit</td><td data-lang="fr">Limite captures / jour</td><td data-lang="en"><span class="limited">10 / day</span></td><td data-lang="fr"><span class="limited">10 / jour</span></td><td data-lang="en"><span class="check">Unlimited</span></td><td data-lang="fr"><span class="check">Illimité</span></td></tr>
+          <tr><td data-lang="en">All 6 document modes</td><td data-lang="fr">Les 6 modes de document</td><td data-lang="en"><span class="check">✓</span></td><td data-lang="fr"><span class="check">✓</span></td><td data-lang="en"><span class="check">✓</span></td><td data-lang="fr"><span class="check">✓</span></td></tr>
+          <tr><td data-lang="en">Auto translation</td><td data-lang="fr">Traduction automatique</td><td data-lang="en"><span class="check">✓</span></td><td data-lang="fr"><span class="check">✓</span></td><td data-lang="en"><span class="check">✓ Unlimited</span></td><td data-lang="fr"><span class="check">✓ Illimitée</span></td></tr>
+          <tr><td data-lang="en">Editable history</td><td data-lang="fr">Historique éditable</td><td data-lang="en"><span class="check">✓</span></td><td data-lang="fr"><span class="check">✓</span></td><td data-lang="en"><span class="check">✓</span></td><td data-lang="fr"><span class="check">✓</span></td></tr>
+          <tr><td data-lang="en">Quality OCR mode</td><td data-lang="fr">Mode OCR Qualité</td><td data-lang="en"><span class="cross">—</span></td><td data-lang="fr"><span class="cross">—</span></td><td data-lang="en"><span class="check">✓</span></td><td data-lang="fr"><span class="check">✓</span></td></tr>
+          <tr><td data-lang="en">Dark + light mode</td><td data-lang="fr">Mode sombre + clair</td><td data-lang="en"><span class="check">✓</span></td><td data-lang="fr"><span class="check">✓</span></td><td data-lang="en"><span class="check">✓</span></td><td data-lang="fr"><span class="check">✓</span></td></tr>
         </tbody>
       </table>
     </div>
   </div>
 </section>
 
-<!-- ── PRICING ── -->
-<section>
+<!-- PRICING -->
+<section id="pricing">
   <div class="container">
-    <div class="section-label" style="text-align:center;">
-      <span data-lang="en">Pricing</span>
-      <span data-lang="fr">Tarifs</span>
-    </div>
+    <div class="section-label" style="text-align:center;"><span data-lang="en">Pricing</span><span data-lang="fr">Tarifs</span></div>
     <h2 class="section-title" style="text-align:center; max-width:100%; margin-bottom:0.5rem;" data-lang="en">Buy credits, use them forever.</h2>
     <h2 class="section-title" style="text-align:center; max-width:100%; margin-bottom:0.5rem;" data-lang="fr">Achetez des crédits, utilisez-les pour toujours.</h2>
     <p style="text-align:center; color:var(--muted); font-weight:300; margin-bottom:4rem;" data-lang="en">No subscription. No expiry. One credit = one AI scan.</p>
     <p style="text-align:center; color:var(--muted); font-weight:300; margin-bottom:4rem;" data-lang="fr">Pas d'abonnement. Pas d'expiration. Un crédit = un scan IA.</p>
 
     <div class="pricing-layout">
-
-      <!-- FREE -->
       <div class="pricing-card">
         <div class="pricing-tier">Free</div>
         <div class="pricing-price">$0</div>
@@ -1101,16 +943,13 @@ td[data-lang], th[data-lang] { display: none; }
           <li><span data-lang="en">Editable history</span><span data-lang="fr">Historique éditable</span></li>
           <li><span data-lang="en">2 AI scans/day trial</span><span data-lang="fr">2 scans IA/jour essai</span></li>
         </ul>
-        <button class="pricing-btn pricing-btn-free">
+        <a href="https://chromewebstore.google.com/detail/sitt/joenimodijoophmdlgpgblkjfgenplgg" target="_blank" class="pricing-btn pricing-btn-free">
           <span data-lang="en">Add to Chrome</span>
           <span data-lang="fr">Ajouter à Chrome</span>
-        </button>
+        </a>
       </div>
 
-      <!-- CREDIT PACKS -->
       <div class="pricing-packs">
-
-        <!-- Pack Découverte -->
         <div class="pack-card">
           <div class="pack-info">
             <div class="pack-name" data-lang="en">Starter Pack</div>
@@ -1122,17 +961,15 @@ td[data-lang], th[data-lang] { display: none; }
           </div>
           <div class="pack-price-col">
             <div class="pack-price">$4.99</div>
-            <button class="pack-btn">
-              <span data-lang="en">Buy</span>
-              <span data-lang="fr">Acheter</span>
+            <button class="pack-btn" id="btn-starter">
+              <span data-lang="en">Buy</span><span data-lang="fr">Acheter</span>
             </button>
           </div>
         </div>
 
-        <!-- Pack Standard -->
         <div class="pack-card popular">
-          <span class="pack-badge" data-lang="en">Most popular</span>
-          <span class="pack-badge" data-lang="fr">Le plus populaire</span>
+          <span class="pack-badge" data-lang="en">Best value</span>
+          <span class="pack-badge" data-lang="fr">Meilleur rapport</span>
           <div class="pack-info">
             <div class="pack-name" data-lang="en">Standard Pack</div>
             <div class="pack-name" data-lang="fr">Pack Standard</div>
@@ -1143,14 +980,12 @@ td[data-lang], th[data-lang] { display: none; }
           </div>
           <div class="pack-price-col">
             <div class="pack-price">$9.99</div>
-            <button class="pack-btn">
-              <span data-lang="en">Buy</span>
-              <span data-lang="fr">Acheter</span>
+            <button class="pack-btn" id="btn-standard">
+              <span data-lang="en">Buy</span><span data-lang="fr">Acheter</span>
             </button>
           </div>
         </div>
 
-        <!-- Pack Pro -->
         <div class="pack-card">
           <div class="pack-info">
             <div class="pack-name" data-lang="en">Pro Pack</div>
@@ -1162,36 +997,30 @@ td[data-lang], th[data-lang] { display: none; }
           </div>
           <div class="pack-price-col">
             <div class="pack-price">$19.99</div>
-            <button class="pack-btn">
-              <span data-lang="en">Buy</span>
-              <span data-lang="fr">Acheter</span>
+            <button class="pack-btn" id="btn-pro">
+              <span data-lang="en">Buy</span><span data-lang="fr">Acheter</span>
             </button>
           </div>
         </div>
-
       </div>
     </div>
 
-    <!-- Credit explainer -->
-    <div class="credit-explainer" style="margin-top:1.75rem;">
+    <div class="credit-explainer">
       ℹ️&nbsp;
       <span data-lang="en"><strong>1 credit = 1 Gemini Vision AI scan.</strong> Credits never expire and stack — buy any pack anytime to top up. The Free tier includes 2 AI trial scans per day at no cost.</span>
       <span data-lang="fr"><strong>1 crédit = 1 scan IA Gemini Vision.</strong> Les crédits n'expirent jamais et s'accumulent — achetez n'importe quel pack à tout moment. Le tier gratuit inclut 2 scans IA d'essai par jour sans frais.</span>
     </div>
-
   </div>
 </section>
 
-<!-- ── FAQ ── -->
-<section style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+<!-- FAQ -->
+<section id="faq" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
   <div class="container" style="display:flex; flex-direction:column; align-items:center;">
     <div class="section-label" style="text-align:center;">FAQ</div>
     <h2 class="section-title" style="text-align:center; max-width:100%; margin-bottom:0.5rem;" data-lang="en">Common questions.</h2>
     <h2 class="section-title" style="text-align:center; max-width:100%; margin-bottom:0.5rem;" data-lang="fr">Questions fréquentes.</h2>
     <p class="section-sub" style="text-align:center; max-width:100%; margin-bottom:3rem;"></p>
-
     <div class="faq-list">
-
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">
           <span data-lang="en">Does it work without internet?</span>
@@ -1201,17 +1030,15 @@ td[data-lang], th[data-lang] { display: none; }
         <div class="faq-a" data-lang="en">Yes. The Tesseract OCR engine runs entirely in your browser — no internet needed. Translation and Gemini Vision AI require a connection, but basic OCR is fully offline.</div>
         <div class="faq-a" data-lang="fr">Oui. Le moteur OCR Tesseract tourne entièrement dans votre navigateur — aucune connexion requise. La traduction et Gemini Vision IA nécessitent une connexion, mais l'OCR de base est 100% hors ligne.</div>
       </div>
-
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">
           <span data-lang="en">What is a "credit" exactly?</span>
           <span data-lang="fr">C'est quoi un "crédit" exactement ?</span>
           <span class="faq-arrow">▾</span>
         </button>
-        <div class="faq-a" data-lang="en">One credit = one AI-powered OCR scan using Gemini Vision. Credits never expire. The 2,500 included with Pro is enough for heavy daily use over several months. Free users get 2 AI scans per day as a trial.</div>
-        <div class="faq-a" data-lang="fr">Un crédit = un scan OCR alimenté par Gemini Vision. Les crédits n'expirent jamais. Les 2 500 inclus avec Pro suffisent pour une utilisation intensive sur plusieurs mois. Les utilisateurs gratuits ont 2 scans IA par jour en essai.</div>
+        <div class="faq-a" data-lang="en">One credit = one AI-powered OCR scan using Gemini Vision. Credits never expire. Free users get 2 AI scans per day as a trial. Buy a pack to get more.</div>
+        <div class="faq-a" data-lang="fr">Un crédit = un scan OCR alimenté par Gemini Vision. Les crédits n'expirent jamais. Les utilisateurs gratuits ont 2 scans IA par jour en essai. Achetez un pack pour en obtenir plus.</div>
       </div>
-
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">
           <span data-lang="en">Is my data private?</span>
@@ -1219,9 +1046,8 @@ td[data-lang], th[data-lang] { display: none; }
           <span class="faq-arrow">▾</span>
         </button>
         <div class="faq-a" data-lang="en">Offline OCR (Tesseract) processes everything locally — nothing leaves your device. When using Gemini Vision or translation, only the selected image/text is sent to the respective API. Your history is stored locally in Chrome, not on any server.</div>
-        <div class="faq-a" data-lang="fr">L'OCR hors ligne (Tesseract) traite tout en local — rien ne quitte votre appareil. En utilisant Gemini Vision ou la traduction, seule l'image/le texte sélectionné est envoyé à l'API correspondante. Votre historique est stocké localement dans Chrome, pas sur un serveur.</div>
+        <div class="faq-a" data-lang="fr">L'OCR hors ligne (Tesseract) traite tout en local. En utilisant Gemini Vision ou la traduction, seule l'image/le texte sélectionné est envoyé à l'API correspondante. Votre historique est stocké localement dans Chrome, pas sur un serveur.</div>
       </div>
-
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">
           <span data-lang="en">Which languages does it support?</span>
@@ -1231,69 +1057,141 @@ td[data-lang], th[data-lang] { display: none; }
         <div class="faq-a" data-lang="en">OCR supports English, French, Spanish, German, Italian, Portuguese, Russian, Japanese, Korean, Simplified Chinese, and Arabic. Translation supports 20+ languages via Google Translate, MyMemory, and LibreTranslate.</div>
         <div class="faq-a" data-lang="fr">L'OCR supporte l'anglais, français, espagnol, allemand, italien, portugais, russe, japonais, coréen, chinois simplifié et arabe. La traduction supporte 20+ langues via Google Translate, MyMemory et LibreTranslate.</div>
       </div>
-
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">
           <span data-lang="en">What's the difference between Fast and Quality mode?</span>
           <span data-lang="fr">Quelle différence entre mode Rapide et Qualité ?</span>
           <span class="faq-arrow">▾</span>
         </button>
-        <div class="faq-a" data-lang="en">Fast mode uses Tesseract with optimized preprocessing — it's quick and works offline. Quality mode sends the image to Gemini Vision AI, which delivers near-perfect accuracy on complex fonts and stylized text. Quality mode requires Pro and consumes 1 credit per scan.</div>
-        <div class="faq-a" data-lang="fr">Le mode Rapide utilise Tesseract avec preprocessing optimisé — rapide et hors ligne. Le mode Qualité envoie l'image à Gemini Vision IA, qui offre une précision quasi-parfaite sur les polices complexes. Le mode Qualité nécessite Pro et consomme 1 crédit par scan.</div>
+        <div class="faq-a" data-lang="en">Fast mode uses Tesseract with optimized preprocessing — quick and offline. Quality mode sends the image to Gemini Vision AI, which delivers near-perfect accuracy on complex fonts and stylized text. Quality mode requires credits.</div>
+        <div class="faq-a" data-lang="fr">Le mode Rapide utilise Tesseract avec preprocessing optimisé — rapide et hors ligne. Le mode Qualité envoie l'image à Gemini Vision IA, qui offre une précision quasi-parfaite sur les polices complexes. Le mode Qualité nécessite des crédits.</div>
       </div>
-
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">
           <span data-lang="en">Does it work on any website?</span>
           <span data-lang="fr">Ça fonctionne sur n'importe quel site ?</span>
           <span class="faq-arrow">▾</span>
         </button>
-        <div class="faq-a" data-lang="en">It works on virtually all websites and web applications. It cannot run on special Chrome pages (chrome://, about://) or browser settings pages, which is a standard browser restriction.</div>
-        <div class="faq-a" data-lang="fr">Ça fonctionne sur quasiment tous les sites web et applications web. Ça ne peut pas fonctionner sur les pages spéciales de Chrome (chrome://, about://) — c'est une restriction standard du navigateur.</div>
+        <div class="faq-a" data-lang="en">It works on virtually all websites and web applications. It cannot run on special Chrome pages (chrome://, about://) — this is a standard browser restriction.</div>
+        <div class="faq-a" data-lang="fr">Ça fonctionne sur quasiment tous les sites web. Ça ne peut pas fonctionner sur les pages spéciales de Chrome (chrome://, about://) — c'est une restriction standard du navigateur.</div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ── CTA ── -->
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <div class="section-label"><span data-lang="en">Contact</span><span data-lang="fr">Contact</span></div>
+        <h2 class="section-title" data-lang="en">Got a question or issue?</h2>
+        <h2 class="section-title" data-lang="fr">Une question ou un problème ?</h2>
+        <p class="section-sub" data-lang="en">We read every message and respond within 48 hours. Don't hesitate to report OCR errors — it helps us improve.</p>
+        <p class="section-sub" data-lang="fr">Nous lisons chaque message et répondons sous 48 heures. Signalez les erreurs OCR — ça nous aide à nous améliorer.</p>
+        <div class="contact-options">
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSez9QkbMEKXDTwrIOrPTaG7fSIAdN30IEjjAbYWlFCwZenzsw/viewform" target="_blank" class="contact-option">
+            <span class="co-icon">🐛</span>
+            <div>
+              <div class="co-title" data-lang="en">Report an OCR issue</div>
+              <div class="co-title" data-lang="fr">Signaler un problème OCR</div>
+              <div class="co-desc" data-lang="en">Bad recognition on a specific font? Let us know with a screenshot.</div>
+              <div class="co-desc" data-lang="fr">Mauvaise reconnaissance sur une police ? Envoyez-nous une capture.</div>
+            </div>
+          </a>
+          <a href="https://chromewebstore.google.com/detail/sitt/joenimodijoophmdlgpgblkjfgenplgg" target="_blank" class="contact-option">
+            <span class="co-icon">⭐</span>
+            <div>
+              <div class="co-title" data-lang="en">Leave a review</div>
+              <div class="co-title" data-lang="fr">Laisser un avis</div>
+              <div class="co-desc" data-lang="en">Enjoying SITT? A review on the Chrome Web Store helps a lot.</div>
+              <div class="co-desc" data-lang="fr">Vous appréciez SITT ? Un avis sur le Chrome Web Store aide beaucoup.</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-right">
+        <div class="cf-title" data-lang="en">Send us a message</div>
+        <div class="cf-title" data-lang="fr">Envoyez-nous un message</div>
+        <div class="cf-sub" data-lang="en">For general questions, feedback, or anything else.</div>
+        <div class="cf-sub" data-lang="fr">Pour les questions générales, retours, ou autre chose.</div>
+        <div class="cf-fields">
+          <div class="cf-field">
+            <label class="cf-label" data-lang="en">Your email</label>
+            <label class="cf-label" data-lang="fr">Votre email</label>
+            <input type="email" id="cf-email" class="cf-input" placeholder="you@example.com">
+          </div>
+          <div class="cf-field">
+            <label class="cf-label" data-lang="en">Subject</label>
+            <label class="cf-label" data-lang="fr">Sujet</label>
+            <input type="text" id="cf-subject" class="cf-input"
+              data-placeholder-en="What's this about?"
+              data-placeholder-fr="De quoi s'agit-il ?">
+          </div>
+          <div class="cf-field">
+            <label class="cf-label" data-lang="en">Message</label>
+            <label class="cf-label" data-lang="fr">Message</label>
+            <textarea id="cf-message" class="cf-textarea"
+              data-placeholder-en="Tell us anything — we read every message."
+              data-placeholder-fr="Dites-nous tout — nous lisons chaque message."></textarea>
+          </div>
+          <button class="cf-submit" onclick="submitForm()">
+            <span data-lang="en">Send message →</span>
+            <span data-lang="fr">Envoyer →</span>
+          </button>
+          <div class="cf-success" id="cf-success">
+            <span data-lang="en">✓ Redirecting to our contact form...</span>
+            <span data-lang="fr">✓ Redirection vers notre formulaire de contact...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
 <section class="cta-section">
   <div class="container">
     <h2 style="font-family:'DM Serif Display',serif; font-size:clamp(2rem,4vw,3.4rem); letter-spacing:-0.022em; margin-bottom:1.1rem;" data-lang="en">Start reading. No limits.</h2>
     <h2 style="font-family:'DM Serif Display',serif; font-size:clamp(2rem,4vw,3.4rem); letter-spacing:-0.022em; margin-bottom:1.1rem;" data-lang="fr">Commencez à lire. Sans limites.</h2>
     <p style="color:var(--muted); font-weight:300; margin-bottom:2.5rem; font-size:1rem;" data-lang="en">Free forever. Upgrade when you're ready.</p>
     <p style="color:var(--muted); font-weight:300; margin-bottom:2.5rem; font-size:1rem;" data-lang="fr">Gratuit pour toujours. Passez à Pro quand vous êtes prêt.</p>
-    <a href="#" class="btn-primary" style="font-size:0.98rem; padding:1rem 2.4rem;">
+    <a href="https://chromewebstore.google.com/detail/sitt/joenimodijoophmdlgpgblkjfgenplgg" target="_blank" class="btn-primary" style="font-size:0.98rem; padding:1rem 2.4rem;">
       <span data-lang="en">Add to Chrome — It's Free</span>
       <span data-lang="fr">Ajouter à Chrome — C'est Gratuit</span>
     </a>
   </div>
 </section>
 
-<!-- ── FOOTER ── -->
+<!-- FOOTER -->
 <footer>
   <div class="footer-logo">
     <div class="footer-logo-icon">SITT</div>
     Screen &amp; Image Text Tool<span>.</span>
   </div>
   <ul class="footer-links">
-    <li><a href="#" data-lang="en">Privacy</a><a href="#" data-lang="fr">Confidentialité</a></li>
-    <li><a href="#" data-lang="en">Support</a><a href="#" data-lang="fr">Support</a></li>
-    <li><a href="#">Chrome Web Store</a></li>
+    <li><a href="/privacy" data-lang="en">Privacy</a><a href="/privacy" data-lang="fr">Confidentialité</a></li>
+    <li><a href="#contact" data-lang="en">Support</a><a href="#contact" data-lang="fr">Support</a></li>
+    <li><a href="https://chromewebstore.google.com/detail/sitt/joenimodijoophmdlgpgblkjfgenplgg" target="_blank">Chrome Web Store</a></li>
   </ul>
-  <div class="footer-copy">© 2025 SITT</div>
+  <div class="footer-copy">© 2025 SITT · Rouff Design</div>
 </footer>
 
 <script>
-  // ── LANG ──
+  // LANG
   function setLang(lang) {
     document.body.className = 'lang-' + lang;
     document.querySelectorAll('.lang-btn').forEach(btn => {
       btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === lang);
     });
+    document.querySelectorAll('[data-placeholder-' + lang + ']').forEach(el => {
+      el.placeholder = el.getAttribute('data-placeholder-' + lang);
+    });
+    updatePackButtons();
   }
 
-  // ── FAQ ──
+  // FAQ
   function toggleFaq(btn) {
     const item = btn.closest('.faq-item');
     const isOpen = item.classList.contains('open');
@@ -1301,57 +1199,61 @@ td[data-lang], th[data-lang] { display: none; }
     if (!isOpen) item.classList.add('open');
   }
 
-  // ── BUY BUTTONS ──
-  const CHECKOUT_URL  = 'https://rouffdesign.lemonsqueezy.com/checkout/buy/01019996-11da-4c86-ad37-d029f8fce9b3';
-  const BACKEND_URL   = 'https://backend-gamma-mocha-87.vercel.app';
+  // BUY BUTTONS
+  const CHECKOUT_URL = 'https://rouffdesign.lemonsqueezy.com/checkout/buy/01019996-11da-4c86-ad37-d029f8fce9b3';
+  const BACKEND_URL  = 'https://backend-gamma-mocha-87.vercel.app';
+  let buyEnabled = false;
 
   async function initBuyButtons() {
-    let enabled = false;
-
     try {
       const res  = await fetch(`${BACKEND_URL}/api/config`);
       const data = await res.json();
-      enabled = data.buy_button_enabled === true || data.buy_button_enabled === 'true';
-    } catch (e) {
-      console.warn('Config fetch failed, buttons disabled by default');
-    }
+      buyEnabled = data.buy_button_enabled === true || data.buy_button_enabled === 'true';
+    } catch(e) { buyEnabled = false; }
+    updatePackButtons();
+  }
 
-    const packBtns   = document.querySelectorAll('.pack-btn');
-    const navCta     = document.querySelector('.nav-cta');
-    const heroBtns   = document.querySelectorAll('.btn-primary');
-    const pricingFree = document.querySelectorAll('.pricing-btn-free');
-
-    if (enabled) {
-      // Activate all pack buy buttons → open checkout
-      packBtns.forEach(btn => {
+  function updatePackButtons() {
+    const isEn = !document.body.classList.contains('lang-fr');
+    ['btn-starter', 'btn-standard', 'btn-pro'].forEach(id => {
+      const btn = document.getElementById(id);
+      if (!btn) return;
+      if (buyEnabled) {
+        btn.classList.add('enabled');
         btn.disabled = false;
-        btn.style.opacity = '1';
-        btn.style.cursor = 'pointer';
         btn.onclick = () => window.open(CHECKOUT_URL, '_blank');
-      });
-    } else {
-      // Disable pack buttons + show "Coming soon" tooltip
-      packBtns.forEach(btn => {
+        btn.innerHTML = isEn ? 'Buy →' : 'Acheter →';
+      } else {
+        btn.classList.remove('enabled');
         btn.disabled = true;
-        btn.style.opacity = '0.4';
-        btn.style.cursor = 'not-allowed';
         btn.onclick = null;
-        // Replace label
-        const isEn = document.body.classList.contains('lang-fr') ? false : true;
-        btn.innerHTML = isEn ? 'Coming soon' : 'Bientôt disponible';
-      });
+        btn.innerHTML = isEn ? 'Coming soon' : 'Bientôt';
+      }
+    });
+  }
+
+  // CONTACT FORM
+  function submitForm() {
+    const email   = document.getElementById('cf-email').value.trim();
+    const message = document.getElementById('cf-message').value.trim();
+    const isEn    = !document.body.classList.contains('lang-fr');
+    if (!email || !message) {
+      alert(isEn ? 'Please fill in your email and message.' : 'Veuillez remplir votre email et votre message.');
+      return;
     }
+    window.open('https://docs.google.com/forms/d/e/1FAIpQLSez9QkbMEKXDTwrIOrPTaG7fSIAdN30IEjjAbYWlFCwZenzsw/viewform', '_blank');
+    document.getElementById('cf-success').style.display = 'block';
+    document.getElementById('cf-email').value    = '';
+    document.getElementById('cf-subject').value  = '';
+    document.getElementById('cf-message').value  = '';
   }
 
-  // Re-apply button state on lang switch so labels stay correct
-  const _origSetLang = setLang;
-  function setLang(lang) {
-    _origSetLang(lang);
+  document.addEventListener('DOMContentLoaded', () => {
     initBuyButtons();
-  }
-
-  document.addEventListener('DOMContentLoaded', initBuyButtons);
+    document.querySelectorAll('[data-placeholder-en]').forEach(el => {
+      el.placeholder = el.getAttribute('data-placeholder-en');
+    });
+  });
 </script>
-
 </body>
 </html>

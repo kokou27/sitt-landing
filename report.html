@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Report an OCR issue — SITT</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%238b7aff'/><stop offset='100%25' stop-color='%236fd3c8'/></linearGradient></defs><rect width='64' height='64' rx='14' fill='url(%23g)'/><text x='32' y='44' font-family='Georgia,serif' font-size='22' font-weight='bold' fill='white' text-anchor='middle' letter-spacing='1'>SITT</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #0a0a0a;
+  --surface:    #111111;
+  --surface-2:  #161616;
+  --border:     rgba(255,255,255,0.07);
+  --border-h:   rgba(255,255,255,0.14);
+  --text:       #f0ede8;
+  --muted:      #888880;
+  --accent:     #c8b89a;
+  --accent-dim: rgba(200,184,154,0.10);
+  --pro:        #8b7aff;
+  --pro-end:    #6fd3c8;
+  --pro-dim:    rgba(139,122,255,0.08);
+  --pro-border: rgba(139,122,255,0.2);
+  --green:      #a3c4a8;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg); color: var(--text);
+  font-size: 16px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 3rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(10,10,10,0.9); backdrop-filter: blur(14px);
+}
+
+.nav-logo { display: flex; align-items: center; gap: 0.65rem; text-decoration: none; }
+.nav-logo-icon {
+  width: 28px; height: 28px; border-radius: 7px;
+  background: linear-gradient(135deg, var(--pro), var(--pro-end));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Serif Display', serif; font-size: 0.7rem;
+  color: white; font-weight: bold; letter-spacing: 0.05em;
+}
+.nav-logo-name { font-family: 'DM Serif Display', serif; font-size: 1.05rem; color: var(--text); }
+.nav-logo-name span { color: var(--accent); }
+
+.nav-right { display: flex; align-items: center; gap: 1rem; }
+
+.lang-toggle { display: flex; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.lang-btn {
+  background: none; border: none; cursor: pointer;
+  padding: 0.3rem 0.7rem; font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem; font-weight: 500; letter-spacing: 0.05em;
+  color: var(--muted); transition: all 0.18s;
+}
+.lang-btn.active { background: var(--accent-dim); color: var(--accent); }
+
+.nav-back {
+  font-size: 0.82rem; color: var(--muted);
+  text-decoration: none; transition: color 0.2s;
+}
+.nav-back:hover { color: var(--text); }
+
+/* MAIN */
+main {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  padding: 8rem 2rem 4rem;
+}
+
+.form-wrap {
+  width: 100%; max-width: 560px;
+}
+
+/* HEADER */
+.form-header { margin-bottom: 2.5rem; }
+
+.form-tag {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--pro-dim); border: 1px solid var(--pro-border);
+  padding: 0.28rem 0.8rem; border-radius: 100px;
+  font-size: 0.7rem; color: var(--pro);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  font-weight: 500; margin-bottom: 1.25rem;
+}
+.form-tag-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--pro); }
+
+.form-header h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 0.75rem;
+}
+.form-header h1 em { font-style: italic; color: var(--accent); }
+
+.form-header p {
+  font-size: 0.9rem; color: var(--muted);
+  font-weight: 300; line-height: 1.7;
+}
+
+/* FORM CARD */
+.form-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; padding: 2.25rem;
+}
+
+.form-fields { display: flex; flex-direction: column; gap: 1.25rem; }
+
+.field { display: flex; flex-direction: column; gap: 0.4rem; }
+
+.field-label {
+  font-size: 0.7rem; font-weight: 500; color: var(--muted);
+  letter-spacing: 0.06em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.field-required { color: var(--pro); font-size: 0.65rem; }
+
+.field-input, .field-select, .field-textarea {
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 9px; padding: 0.8rem 1rem;
+  font-family: 'DM Sans', sans-serif; font-size: 0.875rem;
+  color: var(--text); transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none; width: 100%;
+}
+.field-input::placeholder, .field-textarea::placeholder {
+  color: var(--muted); opacity: 0.45;
+}
+.field-input:focus, .field-select:focus, .field-textarea:focus {
+  border-color: var(--pro-border);
+  box-shadow: 0 0 0 3px rgba(139,122,255,0.08);
+}
+
+/* Select custom arrow */
+.field-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888880' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem; cursor: pointer;
+}
+.field-select option { background: #1a1a1a; color: var(--text); }
+
+.field-textarea { resize: vertical; min-height: 120px; line-height: 1.65; }
+
+/* Modes grid */
+.modes-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem;
+}
+
+.mode-option { display: none; }
+.mode-label {
+  display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+  padding: 0.85rem 0.5rem; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface-2);
+  cursor: pointer; transition: all 0.18s; text-align: center;
+}
+.mode-label:hover { border-color: var(--border-h); }
+.mode-option:checked + .mode-label {
+  border-color: var(--pro-border); background: var(--pro-dim); color: var(--pro);
+}
+.mode-emoji { font-size: 1.2rem; }
+.mode-text { font-size: 0.72rem; color: var(--muted); font-weight: 400; }
+.mode-option:checked + .mode-label .mode-text { color: var(--pro); }
+
+/* Hint */
+.field-hint {
+  font-size: 0.72rem; color: var(--muted); font-weight: 300;
+  opacity: 0.6; margin-top: 0.1rem;
+}
+
+/* Submit */
+.form-submit {
+  background: linear-gradient(135deg, var(--pro), var(--pro-end));
+  color: white; border: none; padding: 0.95rem;
+  border-radius: 9px; font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem; font-weight: 500; cursor: pointer;
+  transition: all 0.2s; width: 100%; margin-top: 0.5rem;
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+}
+.form-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+.form-submit:active { transform: translateY(0); }
+
+/* Success state */
+.form-success {
+  display: none; text-align: center; padding: 2rem 1rem;
+}
+.success-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+.success-title {
+  font-family: 'DM Serif Display', serif; font-size: 1.4rem;
+  margin-bottom: 0.6rem;
+}
+.success-desc { font-size: 0.875rem; color: var(--muted); font-weight: 300; line-height: 1.7; }
+.success-back {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  margin-top: 1.5rem; font-size: 0.82rem; color: var(--muted);
+  text-decoration: none; transition: color 0.2s;
+}
+.success-back:hover { color: var(--text); }
+
+/* Footer */
+footer {
+  border-top: 1px solid var(--border); padding: 1.75rem 3rem;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-logo { display: flex; align-items: center; gap: 0.5rem; font-family: 'DM Serif Display', serif; font-size: 0.9rem; color: var(--muted); }
+.footer-logo-icon {
+  width: 20px; height: 20px; border-radius: 5px;
+  background: linear-gradient(135deg, var(--pro), var(--pro-end));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.48rem; font-weight: bold; color: white; font-family: 'DM Serif Display', serif;
+}
+.footer-logo span { color: var(--accent); }
+.footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.18); }
+
+/* LANG */
+[data-lang] { display: none; }
+.lang-en [data-lang="en"] { display: block; }
+.lang-fr [data-lang="fr"] { display: block; }
+span[data-lang] { display: none; }
+.lang-en span[data-lang="en"] { display: inline; }
+.lang-fr span[data-lang="fr"] { display: inline; }
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  nav { padding: 1rem 1.5rem; }
+  main { padding: 7rem 1.25rem 3rem; }
+  .form-card { padding: 1.5rem; }
+  .modes-grid { grid-template-columns: repeat(2, 1fr); }
+  footer { flex-direction: column; text-align: center; gap: 0.75rem; }
+}
+</style>
+</head>
+<body class="lang-en">
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="nav-logo-icon">SITT</div>
+    <span class="nav-logo-name">SITT<span>.</span></span>
+  </a>
+  <div class="nav-right">
+    <a href="/" class="nav-back">
+      <span data-lang="en">← Home</span>
+      <span data-lang="fr">← Accueil</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('fr')">FR</button>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main>
+  <div class="form-wrap">
+
+    <!-- HEADER -->
+    <div class="form-header">
+      <div class="form-tag">
+        <span class="form-tag-dot"></span>
+        <span data-lang="en">OCR Report</span>
+        <span data-lang="fr">Signalement OCR</span>
+      </div>
+      <h1 data-lang="en">Found a <em>recognition</em> error?</h1>
+      <h1 data-lang="fr">Vous avez trouvé une <em>erreur</em> de reconnaissance ?</h1>
+      <p data-lang="en">Tell us exactly what went wrong. Every report helps us improve accuracy — especially on complex fonts and manga styles.</p>
+      <p data-lang="fr">Dites-nous exactement ce qui s'est mal passé. Chaque signalement nous aide à améliorer la précision — surtout sur les polices complexes et les styles manga.</p>
+    </div>
+
+    <!-- FORM CARD -->
+    <div class="form-card">
+
+      <!-- SUCCESS STATE -->
+      <div class="form-success" id="form-success">
+        <span class="success-icon">✓</span>
+        <div class="success-title" data-lang="en">Report received — thank you.</div>
+        <div class="success-title" data-lang="fr">Signalement reçu — merci.</div>
+        <div class="success-desc" data-lang="en">We'll look into this OCR issue and use it to improve the engine. No reply needed on your end.</div>
+        <div class="success-desc" data-lang="fr">Nous allons examiner ce problème OCR et l'utiliser pour améliorer le moteur. Aucune réponse nécessaire de votre part.</div>
+        <a href="/" class="success-back">
+          <span data-lang="en">← Back to SITT</span>
+          <span data-lang="fr">← Retour à SITT</span>
+        </a>
+      </div>
+
+      <!-- FORM -->
+      <div class="form-fields" id="form-fields">
+
+        <!-- Email -->
+        <div class="field">
+          <label class="field-label" for="f-email">
+            <span data-lang="en">Your email</span>
+            <span data-lang="fr">Votre email</span>
+            <span class="field-required">optional</span>
+          </label>
+          <input
+            type="email" id="f-email" class="field-input"
+            data-ph-en="you@example.com"
+            data-ph-fr="vous@exemple.com"
+            placeholder="you@example.com"
+          >
+          <span class="field-hint" data-lang="en">Only if you want a follow-up. We won't spam you.</span>
+          <span class="field-hint" data-lang="fr">Seulement si vous souhaitez un suivi. Pas de spam.</span>
+        </div>
+
+        <!-- Document mode -->
+        <div class="field">
+          <label class="field-label">
+            <span data-lang="en">Document mode used</span>
+            <span data-lang="fr">Mode document utilisé</span>
+            <span class="field-required">required</span>
+          </label>
+          <div class="modes-grid">
+            <label>
+              <input type="radio" name="mode" value="manga" class="mode-option">
+              <div class="mode-label">
+                <span class="mode-emoji">🎌</span>
+                <span class="mode-text">Manga</span>
+              </div>
+            </label>
+            <label>
+              <input type="radio" name="mode" value="pdf" class="mode-option">
+              <div class="mode-label">
+                <span class="mode-emoji">📄</span>
+                <span class="mode-text">PDF</span>
+              </div>
+            </label>
+            <label>
+              <input type="radio" name="mode" value="screenshot" class="mode-option">
+              <div class="mode-label">
+                <span class="mode-emoji">🖥️</span>
+                <span class="mode-text" data-lang="en">Screenshot</span>
+                <span class="mode-text" data-lang="fr">Capture</span>
+              </div>
+            </label>
+            <label>
+              <input type="radio" name="mode" value="photo" class="mode-option">
+              <div class="mode-label">
+                <span class="mode-emoji">📷</span>
+                <span class="mode-text" data-lang="en">Photo</span>
+                <span class="mode-text" data-lang="fr">Photo</span>
+              </div>
+            </label>
+            <label>
+              <input type="radio" name="mode" value="subtitle" class="mode-option">
+              <div class="mode-label">
+                <span class="mode-emoji">📺</span>
+                <span class="mode-text" data-lang="en">Subtitle</span>
+                <span class="mode-text" data-lang="fr">Sous-titre</span>
+              </div>
+            </label>
+            <label>
+              <input type="radio" name="mode" value="game" class="mode-option">
+              <div class="mode-label">
+                <span class="mode-emoji">🎮</span>
+                <span class="mode-text" data-lang="en">Game</span>
+                <span class="mode-text" data-lang="fr">Jeu vidéo</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- OCR engine -->
+        <div class="field">
+          <label class="field-label" for="f-engine">
+            <span data-lang="en">OCR engine used</span>
+            <span data-lang="fr">Moteur OCR utilisé</span>
+          </label>
+          <select id="f-engine" class="field-select">
+            <option value="" disabled selected>
+              <span data-lang="en">Select...</span>
+            </option>
+            <option value="gemini" data-lang="en">Gemini Vision AI (Quality mode)</option>
+            <option value="gemini" data-lang="fr">Gemini Vision IA (mode Qualité)</option>
+            <option value="tesseract" data-lang="en">Tesseract (Fast mode)</option>
+            <option value="tesseract" data-lang="fr">Tesseract (mode Rapide)</option>
+            <option value="unknown" data-lang="en">Not sure</option>
+            <option value="unknown" data-lang="fr">Je ne sais pas</option>
+          </select>
+        </div>
+
+        <!-- URL -->
+        <div class="field">
+          <label class="field-label" for="f-url">
+            <span data-lang="en">Page URL</span>
+            <span data-lang="fr">URL de la page</span>
+            <span class="field-required">optional</span>
+          </label>
+          <input
+            type="url" id="f-url" class="field-input"
+            placeholder="https://..."
+          >
+          <span class="field-hint" data-lang="en">The site where the OCR failed, if applicable.</span>
+          <span class="field-hint" data-lang="fr">Le site où l'OCR a échoué, si applicable.</span>
+        </div>
+
+        <!-- What was expected vs got -->
+        <div class="field">
+          <label class="field-label" for="f-expected">
+            <span data-lang="en">Expected text</span>
+            <span data-lang="fr">Texte attendu</span>
+            <span class="field-required">required</span>
+          </label>
+          <input
+            type="text" id="f-expected" class="field-input"
+            data-ph-en="What the text should say..."
+            data-ph-fr="Ce que le texte devrait dire..."
+            placeholder="What the text should say..."
+          >
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="f-got">
+            <span data-lang="en">What SITT returned</span>
+            <span data-lang="fr">Ce que SITT a retourné</span>
+            <span class="field-required">required</span>
+          </label>
+          <input
+            type="text" id="f-got" class="field-input"
+            data-ph-en="The wrong output SITT gave..."
+            data-ph-fr="La mauvaise sortie que SITT a donnée..."
+            placeholder="The wrong output SITT gave..."
+          >
+        </div>
+
+        <!-- Additional notes -->
+        <div class="field">
+          <label class="field-label" for="f-notes">
+            <span data-lang="en">Additional notes</span>
+            <span data-lang="fr">Notes supplémentaires</span>
+            <span class="field-required">optional</span>
+          </label>
+          <textarea
+            id="f-notes" class="field-textarea"
+            data-ph-en="Font style, language, unusual layout, anything that might help..."
+            data-ph-fr="Style de police, langue, mise en page inhabituelle, tout ce qui peut aider..."
+            placeholder="Font style, language, unusual layout, anything that might help..."
+          ></textarea>
+        </div>
+
+        <!-- Submit -->
+        <button class="form-submit" onclick="submitReport()">
+          <span data-lang="en">Send report →</span>
+          <span data-lang="fr">Envoyer le signalement →</span>
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <div class="footer-logo-icon">SITT</div>
+    Screen &amp; Image Text Tool<span>.</span>
+  </div>
+  <div class="footer-copy">© 2025 SITT · Rouff Design</div>
+</footer>
+
+<script>
+  function setLang(lang) {
+    document.body.className = 'lang-' + lang;
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === lang);
+    });
+    // Update placeholders
+    document.querySelectorAll('[data-ph-' + lang + ']').forEach(el => {
+      el.placeholder = el.getAttribute('data-ph-' + lang);
+    });
+  }
+
+  function submitReport() {
+    const isEn = !document.body.classList.contains('lang-fr');
+
+    // Validate required fields
+    const mode = document.querySelector('input[name="mode"]:checked');
+    const expected = document.getElementById('f-expected').value.trim();
+    const got = document.getElementById('f-got').value.trim();
+
+    if (!mode) {
+      alert(isEn ? 'Please select a document mode.' : 'Veuillez sélectionner un mode de document.');
+      return;
+    }
+    if (!expected || !got) {
+      alert(isEn
+        ? 'Please fill in both the expected text and what SITT returned.'
+        : 'Veuillez remplir le texte attendu et ce que SITT a retourné.'
+      );
+      return;
+    }
+
+    // Build mailto body
+    const email   = document.getElementById('f-email').value.trim();
+    const engine  = document.getElementById('f-engine').value;
+    const url     = document.getElementById('f-url').value.trim();
+    const notes   = document.getElementById('f-notes').value.trim();
+
+    // Ouvrir le Google Form dans un nouvel onglet
+    window.open(
+      'https://docs.google.com/forms/d/e/1FAIpQLSez9QkbMEKXDTwrIOrPTaG7fSIAdN30IEjjAbYWlFCwZenzsw/viewform',
+      '_blank'
+    );
+
+    // Show success
+    document.getElementById('form-fields').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  }
+
+  // Init placeholders
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-ph-en]').forEach(el => {
+      el.placeholder = el.getAttribute('data-ph-en');
+    });
+  });
+</script>
+</body>
+</html>

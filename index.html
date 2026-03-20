@@ -1090,7 +1090,7 @@ div[data-lang] { display: none; }
         <p class="section-sub" data-lang="en">We read every message and respond within 48 hours. Don't hesitate to report OCR errors — it helps us improve.</p>
         <p class="section-sub" data-lang="fr">Nous lisons chaque message et répondons sous 48 heures. Signalez les erreurs OCR — ça nous aide à nous améliorer.</p>
         <div class="contact-options">
-          <a href="https://sitt-landing.vercel.app/report" target="_blank" class="contact-option">
+          <a href="/report" class="contact-option">
             <span class="co-icon">🐛</span>
             <div>
               <div class="co-title" data-lang="en">Report an OCR issue</div>
@@ -1172,7 +1172,8 @@ div[data-lang] { display: none; }
   </div>
   <ul class="footer-links">
     <li><a href="/privacy" data-lang="en">Privacy</a><a href="/privacy" data-lang="fr">Confidentialité</a></li>
-    <li><a href="#contact" data-lang="en">Support</a><a href="#contact" data-lang="fr">Support</a></li>
+    <li><a href="/contact" data-lang="en">Contact</a><a href="/contact" data-lang="fr">Contact</a></li>
+    <li><a href="/report" data-lang="en">OCR Report</a><a href="/report" data-lang="fr">Signalement OCR</a></li>
     <li><a href="https://chromewebstore.google.com/detail/sitt/joenimodijoophmdlgpgblkjfgenplgg" target="_blank">Chrome Web Store</a></li>
   </ul>
   <div class="footer-copy">© 2025 SITT · Rouff Design</div>
@@ -1241,7 +1242,7 @@ div[data-lang] { display: none; }
       alert(isEn ? 'Please fill in your email and message.' : 'Veuillez remplir votre email et votre message.');
       return;
     }
-    window.open('https://sitt-landing.vercel.app/report', '_blank');
+    window.open('/contact', '_blank');
     document.getElementById('cf-success').style.display = 'block';
     document.getElementById('cf-email').value    = '';
     document.getElementById('cf-subject').value  = '';

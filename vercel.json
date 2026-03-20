@@ -1,5 +1,7 @@
 {
   "rewrites": [
-    { "source": "/privacy", "destination": "/privacy.html" }
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/report",  "destination": "/report.html" },
+    { "source": "/contact", "destination": "/contact.html" }
   ]
 }

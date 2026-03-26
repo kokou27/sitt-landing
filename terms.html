@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — SITT</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%238b7aff'/><stop offset='100%25' stop-color='%236fd3c8'/></linearGradient></defs><rect width='64' height='64' rx='14' fill='url(%23g)'/><text x='32' y='44' font-family='Georgia,serif' font-size='22' font-weight='bold' fill='white' text-anchor='middle' letter-spacing='1'>SITT</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a; --surface: #111111; --surface-2: #161616;
+  --border: rgba(255,255,255,0.07); --border-hover: rgba(255,255,255,0.16);
+  --text: #f0ede8; --muted: #888880; --accent: #c8b89a;
+  --accent-dim: rgba(200,184,154,0.10); --pro: #8b7aff; --pro-end: #6fd3c8;
+  --pro-dim: rgba(139,122,255,0.08); --pro-border: rgba(139,122,255,0.2);
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 3rem; border-bottom: 1px solid var(--border); background: rgba(10,10,10,0.9); backdrop-filter: blur(14px); }
+.nav-logo { display: flex; align-items: center; gap: 0.65rem; text-decoration: none; }
+.nav-logo-icon { width: 28px; height: 28px; border-radius: 7px; background: linear-gradient(135deg, var(--pro), var(--pro-end)); display: flex; align-items: center; justify-content: center; font-family: 'DM Serif Display', serif; font-size: 0.7rem; color: white; font-weight: bold; letter-spacing: 0.05em; }
+.nav-logo-name { font-family: 'DM Serif Display', serif; font-size: 1.05rem; color: var(--text); }
+.nav-logo-name span { color: var(--accent); }
+.nav-right { display: flex; align-items: center; gap: 1rem; }
+.lang-toggle { display: flex; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.lang-btn { background: none; border: none; cursor: pointer; padding: 0.3rem 0.7rem; font-family: 'DM Sans', sans-serif; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.05em; color: var(--muted); transition: all 0.18s; }
+.lang-btn.active { background: var(--accent-dim); color: var(--accent); }
+.nav-back { font-size: 0.82rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.nav-back:hover { color: var(--text); }
+.nav-cta { background: var(--text); color: var(--bg); border: none; padding: 0.48rem 1.2rem; border-radius: 6px; font-family: 'DM Sans', sans-serif; font-size: 0.83rem; font-weight: 500; cursor: pointer; transition: opacity 0.2s; text-decoration: none; display: inline-block; }
+.nav-cta:hover { opacity: 0.84; }
+.hero { padding: 8rem 3rem 0; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; max-width: 1200px; margin: 0 auto; min-height: 50vh; }
+.hero-left { padding-bottom: 4rem; }
+.hero-tag { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--pro-dim); border: 1px solid var(--pro-border); padding: 0.3rem 0.85rem; border-radius: 100px; font-size: 0.72rem; color: var(--pro); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; margin-bottom: 2rem; }
+.hero-tag-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--pro); }
+.hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.4rem, 4vw, 3.8rem); line-height: 1.05; letter-spacing: -0.025em; margin-bottom: 1.25rem; }
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero-desc { font-size: 1rem; color: var(--muted); font-weight: 300; line-height: 1.75; max-width: 420px; margin-bottom: 2.5rem; }
+.hero-meta { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+.meta-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; color: var(--muted); }
+.meta-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--pro-end); }
+.hero-right { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding-bottom: 4rem; }
+.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; transition: border-color 0.2s, transform 0.2s; position: relative; overflow: hidden; }
+.stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--pro), var(--pro-end)); opacity: 0; transition: opacity 0.2s; }
+.stat-card:hover { border-color: var(--pro-border); transform: translateY(-3px); }
+.stat-card:hover::before { opacity: 1; }
+.stat-icon { font-size: 1.4rem; margin-bottom: 0.75rem; display: block; }
+.stat-value { font-family: 'DM Serif Display', serif; font-size: 1.4rem; background: linear-gradient(135deg, var(--pro), var(--pro-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 0.35rem; }
+.stat-label { font-size: 0.8rem; color: var(--muted); font-weight: 300; line-height: 1.5; }
+.full-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+.terms-main { max-width: 1200px; margin: 0 auto; padding: 5rem 3rem 8rem; display: grid; grid-template-columns: 280px 1fr; gap: 5rem; align-items: start; }
+.terms-nav { position: sticky; top: 100px; }
+.pnav-title { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.25rem; }
+.pnav-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+.pnav-item a { display: flex; align-items: center; gap: 0.7rem; padding: 0.6rem 0.75rem; border-radius: 8px; font-size: 0.845rem; color: var(--muted); text-decoration: none; transition: all 0.2s; border-left: 2px solid transparent; }
+.pnav-item a:hover { color: var(--text); background: var(--surface); }
+.pnav-item a.active { color: var(--pro); border-left-color: var(--pro); background: var(--pro-dim); }
+.pnav-num { font-size: 0.65rem; color: rgba(255,255,255,0.2); font-family: 'DM Serif Display', serif; font-weight: normal; min-width: 1.2rem; }
+.pnav-contact { margin-top: 2rem; padding: 1.25rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
+.pnav-contact-title { font-size: 0.78rem; font-weight: 500; color: var(--text); margin-bottom: 0.4rem; }
+.pnav-contact-desc { font-size: 0.73rem; color: var(--muted); font-weight: 300; line-height: 1.5; margin-bottom: 0.9rem; }
+.pnav-contact-btn { display: block; text-align: center; padding: 0.55rem; background: linear-gradient(135deg, var(--pro), var(--pro-end)); color: white; text-decoration: none; border-radius: 7px; font-size: 0.78rem; font-weight: 500; transition: opacity 0.2s; }
+.pnav-contact-btn:hover { opacity: 0.88; }
+.pnav-email { margin-top: 0.6rem; text-align: center; font-size: 0.7rem; color: var(--muted); }
+.pnav-email a { color: var(--pro); text-decoration: none; }
+.terms-content { display: flex; flex-direction: column; }
+.tsec { padding: 3rem 0; border-bottom: 1px solid var(--border); }
+.tsec:last-child { border-bottom: none; }
+.tsec-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+.tsec-num { width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0; background: var(--pro-dim); border: 1px solid var(--pro-border); display: flex; align-items: center; justify-content: center; font-size: 0.68rem; font-weight: 600; color: var(--pro); letter-spacing: 0.05em; }
+.tsec h2 { font-family: 'DM Serif Display', serif; font-size: 1.4rem; letter-spacing: -0.015em; color: var(--text); }
+.tsec p { font-size: 0.9rem; color: var(--muted); font-weight: 300; line-height: 1.8; margin-bottom: 1rem; }
+.tsec p:last-child { margin-bottom: 0; }
+.tsec p a { color: var(--pro); text-decoration: none; }
+.tsec p a:hover { text-decoration: underline; }
+.tsec ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin: 1rem 0; }
+.tsec ul li { font-size: 0.9rem; color: var(--muted); font-weight: 300; line-height: 1.7; display: flex; align-items: flex-start; gap: 0.65rem; padding-left: 0.25rem; }
+.tsec ul li::before { content: '—'; color: var(--border-hover); flex-shrink: 0; margin-top: 0.05rem; }
+.callout { display: flex; gap: 0.9rem; align-items: flex-start; padding: 1.1rem 1.25rem; border-radius: 10px; margin: 1.25rem 0; font-size: 0.875rem; line-height: 1.7; }
+.callout.purple { background: var(--pro-dim); border: 1px solid var(--pro-border); color: rgba(240,237,232,0.8); }
+.callout.purple strong { color: var(--text); font-weight: 500; }
+.callout-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
+footer { border-top: 1px solid var(--border); padding: 2.5rem 3rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.footer-logo { display: flex; align-items: center; gap: 0.55rem; font-family: 'DM Serif Display', serif; font-size: 0.95rem; color: var(--muted); }
+.footer-logo-icon { width: 22px; height: 22px; border-radius: 5px; background: linear-gradient(135deg, var(--pro), var(--pro-end)); display: flex; align-items: center; justify-content: center; font-size: 0.52rem; font-weight: bold; color: white; font-family: 'DM Serif Display', serif; }
+.footer-logo span { color: var(--accent); }
+.footer-links { display: flex; gap: 1.75rem; list-style: none; }
+.footer-links a { font-size: 0.78rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text); }
+.footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.18); }
+[data-lang] { display: none; }
+.lang-en [data-lang="en"] { display: block; }
+.lang-fr [data-lang="fr"] { display: block; }
+span[data-lang] { display: none; }
+.lang-en span[data-lang="en"] { display: inline; }
+.lang-fr span[data-lang="fr"] { display: inline; }
+@media (max-width: 900px) { .hero { grid-template-columns: 1fr; gap: 3rem; } .hero-right { grid-template-columns: repeat(2, 1fr); } .terms-main { grid-template-columns: 1fr; } .terms-nav { position: static; } }
+@media (max-width: 768px) { nav { padding: 1rem 1.5rem; } .hero { padding: 7rem 1.5rem 0; } .terms-main { padding: 3rem 1.5rem 6rem; gap: 3rem; } footer { flex-direction: column; text-align: center; gap: 1.25rem; } }
+</style>
+</head>
+<body class="lang-en">
+
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="nav-logo-icon">SITT</div>
+    <span class="nav-logo-name">SITT<span>.</span></span>
+  </a>
+  <div class="nav-right">
+    <a href="/" class="nav-back"><span data-lang="en">← Back</span><span data-lang="fr">← Retour</span></a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('fr')">FR</button>
+    </div>
+    <a href="https://chromewebstore.google.com/detail/sitt/joenimodijoophmdlgpgblkjfgenplgg" target="_blank" class="nav-cta">
+      <span data-lang="en">Add to Chrome</span><span data-lang="fr">Ajouter à Chrome</span>
+    </a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-tag"><span class="hero-tag-dot"></span><span data-lang="en">Legal · Terms</span><span data-lang="fr">Légal · CGU</span></div>
+    <h1 data-lang="en">Terms of <em>Service.</em></h1>
+    <h1 data-lang="fr">Conditions générales <em>d'utilisation.</em></h1>
+    <p class="hero-desc" data-lang="en">Plain language. No traps. These terms govern your use of SITT and any credits you purchase.</p>
+    <p class="hero-desc" data-lang="fr">Un langage clair. Pas de pièges. Ces conditions régissent votre utilisation de SITT et les crédits que vous achetez.</p>
+    <div class="hero-meta">
+      <div class="meta-item"><span class="meta-dot"></span><span data-lang="en">Updated March 2025</span><span data-lang="fr">Mis à jour mars 2025</span></div>
+      <div class="meta-item"><span class="meta-dot"></span><span data-lang="en">8 sections</span><span data-lang="fr">8 sections</span></div>
+      <div class="meta-item"><span class="meta-dot"></span><span data-lang="en">~4 min read</span><span data-lang="fr">~4 min de lecture</span></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="stat-card">
+      <span class="stat-icon">🆓</span>
+      <div class="stat-value" data-lang="en">Free forever</div>
+      <div class="stat-value" data-lang="fr">Gratuit toujours</div>
+      <div class="stat-label" data-lang="en">Core OCR features require no payment.</div>
+      <div class="stat-label" data-lang="fr">Les fonctions OCR de base ne nécessitent aucun paiement.</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon">🔑</span>
+      <div class="stat-value" data-lang="en">No subscription</div>
+      <div class="stat-value" data-lang="fr">Sans abonnement</div>
+      <div class="stat-label" data-lang="en">Credits are one-time purchases. No recurring charges.</div>
+      <div class="stat-label" data-lang="fr">Les crédits sont des achats uniques. Pas de frais récurrents.</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon">♾️</span>
+      <div class="stat-value" data-lang="en">No expiry</div>
+      <div class="stat-value" data-lang="fr">Sans expiration</div>
+      <div class="stat-label" data-lang="en">Purchased credits never expire.</div>
+      <div class="stat-label" data-lang="fr">Les crédits achetés n'expirent jamais.</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon">🛡️</span>
+      <div class="stat-value" data-lang="en">Your rights</div>
+      <div class="stat-value" data-lang="fr">Vos droits</div>
+      <div class="stat-label" data-lang="en">You own your data. We don't sell it.</div>
+      <div class="stat-label" data-lang="fr">Vous possédez vos données. Nous ne les vendons pas.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="full-divider">
+
+<div class="terms-main">
+  <div class="terms-nav">
+    <div class="pnav-title"><span data-lang="en">Contents</span><span data-lang="fr">Sommaire</span></div>
+    <ul class="pnav-list">
+      <li class="pnav-item"><a href="#acceptance"><span class="pnav-num">01</span><span data-lang="en">Acceptance</span><span data-lang="fr">Acceptation</span></a></li>
+      <li class="pnav-item"><a href="#service"><span class="pnav-num">02</span><span data-lang="en">The service</span><span data-lang="fr">Le service</span></a></li>
+      <li class="pnav-item"><a href="#credits"><span class="pnav-num">03</span><span data-lang="en">AI credits</span><span data-lang="fr">Crédits IA</span></a></li>
+      <li class="pnav-item"><a href="#payments"><span class="pnav-num">04</span><span data-lang="en">Payments</span><span data-lang="fr">Paiements</span></a></li>
+      <li class="pnav-item"><a href="#acceptable-use"><span class="pnav-num">05</span><span data-lang="en">Acceptable use</span><span data-lang="fr">Utilisation acceptable</span></a></li>
+      <li class="pnav-item"><a href="#ip"><span class="pnav-num">06</span><span data-lang="en">Intellectual property</span><span data-lang="fr">Propriété intellectuelle</span></a></li>
+      <li class="pnav-item"><a href="#liability"><span class="pnav-num">07</span><span data-lang="en">Limitation of liability</span><span data-lang="fr">Limitation de responsabilité</span></a></li>
+      <li class="pnav-item"><a href="#contact"><span class="pnav-num">08</span><span data-lang="en">Contact</span><span data-lang="fr">Contact</span></a></li>
+    </ul>
+    <div class="pnav-contact">
+      <div class="pnav-contact-title" data-lang="en">Questions about these terms?</div>
+      <div class="pnav-contact-title" data-lang="fr">Questions sur ces conditions ?</div>
+      <div class="pnav-contact-desc" data-lang="en">We respond within 48 hours.</div>
+      <div class="pnav-contact-desc" data-lang="fr">Nous répondons sous 48 heures.</div>
+      <a href="/contact" class="pnav-contact-btn"><span data-lang="en">Contact us →</span><span data-lang="fr">Nous contacter →</span></a>
+      <div class="pnav-email"><a href="mailto:rouffdesign@gmail.com">rouffdesign@gmail.com</a></div>
+    </div>
+  </div>
+
+  <div class="terms-content">
+
+    <div class="tsec" id="acceptance">
+      <div class="tsec-header"><div class="tsec-num">01</div>
+        <h2 data-lang="en">Acceptance of terms</h2>
+        <h2 data-lang="fr">Acceptation des conditions</h2>
+      </div>
+      <p data-lang="en">By installing or using the SITT Chrome extension ("SITT", "the Service"), you agree to be bound by these Terms of Service. If you do not agree, please uninstall the extension and discontinue use.</p>
+      <p data-lang="fr">En installant ou utilisant l'extension Chrome SITT ("SITT", "le Service"), vous acceptez d'être lié par ces Conditions générales d'utilisation. Si vous n'êtes pas d'accord, veuillez désinstaller l'extension et cesser de l'utiliser.</p>
+      <p data-lang="en">SITT is developed and operated by Rouff Design. These terms apply to all users of the extension and the website at <strong>sitt-landing.vercel.app</strong>.</p>
+      <p data-lang="fr">SITT est développé et exploité par Rouff Design. Ces conditions s'appliquent à tous les utilisateurs de l'extension et du site web <strong>sitt-landing.vercel.app</strong>.</p>
+    </div>
+
+    <div class="tsec" id="service">
+      <div class="tsec-header"><div class="tsec-num">02</div>
+        <h2 data-lang="en">The service</h2>
+        <h2 data-lang="fr">Le service</h2>
+      </div>
+      <p data-lang="en">SITT is a Chrome browser extension that extracts text from images and screen areas using OCR technology (Tesseract.js and/or Google Gemini Vision AI) and provides optional translation.</p>
+      <p data-lang="fr">SITT est une extension Chrome qui extrait du texte d'images et de zones d'écran via OCR (Tesseract.js et/ou Google Gemini Vision IA) et propose une traduction optionnelle.</p>
+      <div class="callout purple">
+        <span class="callout-icon">ℹ️</span>
+        <div>
+          <span data-lang="en"><strong>Free tier:</strong> Core OCR features are available for free with no account required. Free users get unlimited Tesseract OCR captures and 2 Gemini Vision AI trial scans per day.</span>
+          <span data-lang="fr"><strong>Tier gratuit :</strong> Les fonctions OCR de base sont disponibles gratuitement sans compte requis. Les utilisateurs gratuits bénéficient de captures Tesseract OCR illimitées et de 2 scans d'essai Gemini Vision IA par jour.</span>
+        </div>
+      </div>
+      <p data-lang="en">We reserve the right to modify, suspend, or discontinue any part of the Service at any time with reasonable notice where possible.</p>
+      <p data-lang="fr">Nous nous réservons le droit de modifier, suspendre ou interrompre toute partie du Service à tout moment avec un préavis raisonnable dans la mesure du possible.</p>
+    </div>
+
+    <div class="tsec" id="credits">
+      <div class="tsec-header"><div class="tsec-num">03</div>
+        <h2 data-lang="en">AI credits</h2>
+        <h2 data-lang="fr">Crédits IA</h2>
+      </div>
+      <p data-lang="en">AI credits are virtual units used to access Gemini Vision AI-powered OCR. One credit = one AI scan.</p>
+      <p data-lang="fr">Les crédits IA sont des unités virtuelles utilisées pour accéder à l'OCR Gemini Vision IA. Un crédit = un scan IA.</p>
+      <ul>
+        <li data-lang="en">Credits are non-transferable and linked to your account</li>
+        <li data-lang="fr">Les crédits sont non transférables et liés à votre compte</li>
+        <li data-lang="en">Credits never expire as long as your account remains active</li>
+        <li data-lang="fr">Les crédits n'expirent jamais tant que votre compte reste actif</li>
+        <li data-lang="en">Credits are consumed only when a scan is successfully completed</li>
+        <li data-lang="fr">Les crédits ne sont consommés que lorsqu'un scan est complété avec succès</li>
+        <li data-lang="en">Failed scans due to server errors are automatically refunded</li>
+        <li data-lang="fr">Les scans échoués en raison d'erreurs serveur sont automatiquement remboursés</li>
+        <li data-lang="en">We reserve the right to adjust credit pricing for future purchases — existing credits are not affected</li>
+        <li data-lang="fr">Nous nous réservons le droit d'ajuster le prix des crédits pour les futurs achats — les crédits existants ne sont pas affectés</li>
+      </ul>
+    </div>
+
+    <div class="tsec" id="payments">
+      <div class="tsec-header"><div class="tsec-num">04</div>
+        <h2 data-lang="en">Payments & refunds</h2>
+        <h2 data-lang="fr">Paiements & remboursements</h2>
+      </div>
+      <p data-lang="en">All purchases are processed by LemonSqueezy. By making a purchase, you also agree to <a href="https://www.lemonsqueezy.com/terms" target="_blank">LemonSqueezy's Terms of Service</a>.</p>
+      <p data-lang="fr">Tous les achats sont traités par LemonSqueezy. En effectuant un achat, vous acceptez également les <a href="https://www.lemonsqueezy.com/terms" target="_blank">CGU de LemonSqueezy</a>.</p>
+      <ul>
+        <li data-lang="en">All prices are in USD. Credit packs are one-time purchases — no recurring charges</li>
+        <li data-lang="fr">Tous les prix sont en USD. Les packs de crédits sont des achats uniques — pas de frais récurrents</li>
+        <li data-lang="en">Refund requests can be submitted within 14 days of purchase by contacting <a href="mailto:rouffdesign@gmail.com">rouffdesign@gmail.com</a></li>
+        <li data-lang="fr">Les demandes de remboursement peuvent être soumises dans les 14 jours suivant l'achat à <a href="mailto:rouffdesign@gmail.com">rouffdesign@gmail.com</a></li>
+        <li data-lang="en">Refunds are granted at our discretion if credits have not been substantially used</li>
+        <li data-lang="fr">Les remboursements sont accordés à notre discrétion si les crédits n'ont pas été substantiellement utilisés</li>
+      </ul>
+    </div>
+
+    <div class="tsec" id="acceptable-use">
+      <div class="tsec-header"><div class="tsec-num">05</div>
+        <h2 data-lang="en">Acceptable use</h2>
+        <h2 data-lang="fr">Utilisation acceptable</h2>
+      </div>
+      <p data-lang="en">You agree to use SITT only for lawful purposes. You must not use the Service to:</p>
+      <p data-lang="fr">Vous acceptez d'utiliser SITT uniquement à des fins légales. Vous ne devez pas utiliser le Service pour :</p>
+      <ul>
+        <li data-lang="en">Extract text from content you do not have the right to access</li>
+        <li data-lang="fr">Extraire du texte de contenus auxquels vous n'avez pas le droit d'accéder</li>
+        <li data-lang="en">Circumvent any access controls or DRM protections</li>
+        <li data-lang="fr">Contourner des contrôles d'accès ou des protections DRM</li>
+        <li data-lang="en">Automate bulk OCR operations in ways that abuse our infrastructure</li>
+        <li data-lang="fr">Automatiser des opérations OCR en masse de manière abusive</li>
+        <li data-lang="en">Resell or redistribute the Service without our written consent</li>
+        <li data-lang="fr">Revendre ou redistribuer le Service sans notre consentement écrit</li>
+      </ul>
+      <p data-lang="en">We reserve the right to suspend or terminate access for violations without prior notice.</p>
+      <p data-lang="fr">Nous nous réservons le droit de suspendre ou de résilier l'accès en cas de violation sans préavis.</p>
+    </div>
+
+    <div class="tsec" id="ip">
+      <div class="tsec-header"><div class="tsec-num">06</div>
+        <h2 data-lang="en">Intellectual property</h2>
+        <h2 data-lang="fr">Propriété intellectuelle</h2>
+      </div>
+      <p data-lang="en">SITT, including its code, design, branding, and documentation, is the property of Rouff Design. All rights reserved.</p>
+      <p data-lang="fr">SITT, y compris son code, son design, sa marque et sa documentation, est la propriété de Rouff Design. Tous droits réservés.</p>
+      <p data-lang="en">The text extracted by SITT belongs to you and/or the original content owners. SITT makes no claim over the content you process.</p>
+      <p data-lang="fr">Le texte extrait par SITT vous appartient et/ou appartient aux propriétaires du contenu original. SITT ne revendique aucun droit sur le contenu que vous traitez.</p>
+    </div>
+
+    <div class="tsec" id="liability">
+      <div class="tsec-header"><div class="tsec-num">07</div>
+        <h2 data-lang="en">Limitation of liability</h2>
+        <h2 data-lang="fr">Limitation de responsabilité</h2>
+      </div>
+      <p data-lang="en">SITT is provided "as is" without warranties of any kind. OCR accuracy is not guaranteed — results depend on image quality, font style, and document type.</p>
+      <p data-lang="fr">SITT est fourni "tel quel" sans garantie d'aucune sorte. La précision de l'OCR n'est pas garantie — les résultats dépendent de la qualité de l'image, du style de police et du type de document.</p>
+      <p data-lang="en">To the fullest extent permitted by law, Rouff Design shall not be liable for any indirect, incidental, or consequential damages arising from your use of SITT. Our total liability shall not exceed the amount you paid for the credits involved in the claim.</p>
+      <p data-lang="fr">Dans toute la mesure permise par la loi, Rouff Design ne sera pas responsable des dommages indirects ou consécutifs découlant de votre utilisation de SITT. Notre responsabilité totale ne dépassera pas le montant que vous avez payé pour les crédits impliqués dans la réclamation.</p>
+    </div>
+
+    <div class="tsec" id="contact">
+      <div class="tsec-header"><div class="tsec-num">08</div>
+        <h2 data-lang="en">Contact & governing law</h2>
+        <h2 data-lang="fr">Contact & droit applicable</h2>
+      </div>
+      <p data-lang="en">For any questions, disputes, or requests related to these terms, contact us at <a href="mailto:rouffdesign@gmail.com">rouffdesign@gmail.com</a> or via our <a href="/contact">contact form</a>.</p>
+      <p data-lang="fr">Pour toute question, litige ou demande relative à ces conditions, contactez-nous à <a href="mailto:rouffdesign@gmail.com">rouffdesign@gmail.com</a> ou via notre <a href="/contact">formulaire de contact</a>.</p>
+      <p data-lang="en">We also recommend reading our <a href="/privacy">Privacy Policy</a> for information on how we handle your data.</p>
+      <p data-lang="fr">Nous vous recommandons également de lire notre <a href="/privacy">Politique de confidentialité</a> pour savoir comment nous traitons vos données.</p>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">
+    <div class="footer-logo-icon">SITT</div>
+    Screen &amp; Image Text Tool<span>.</span>
+  </div>
+  <ul class="footer-links">
+    <li><a href="/" data-lang="en">Home</a><a href="/" data-lang="fr">Accueil</a></li>
+    <li><a href="/privacy" data-lang="en">Privacy</a><a href="/privacy" data-lang="fr">Confidentialité</a></li>
+    <li><a href="/terms" data-lang="en">Terms</a><a href="/terms" data-lang="fr">CGU</a></li>
+    <li><a href="/contact" data-lang="en">Contact</a><a href="/contact" data-lang="fr">Contact</a></li>
+    <li><a href="https://chromewebstore.google.com/detail/sitt/joenimodijoophmdlgpgblkjfgenplgg" target="_blank">Chrome Web Store</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 SITT · Rouff Design</div>
+</footer>
+
+<script>
+  function setLang(lang) {
+    document.body.className = 'lang-' + lang;
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === lang);
+    });
+  }
+  const sections = document.querySelectorAll('.tsec[id]');
+  const navLinks = document.querySelectorAll('.pnav-item a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(sec => { if (window.scrollY >= sec.offsetTop - 160) current = sec.id; });
+    navLinks.forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

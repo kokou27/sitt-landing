@@ -1,0 +1,18 @@
+Place your landing videos here:
+
+1) Hero teaser (loop, muted)
+   File name: sitt-tour-teaser.mp4
+   Recommended: 8-12 seconds, 1280x720, <= 8 MB
+
+2) Full tutorial video
+   File name: sitt-tour-50s.mp4
+   Recommended: around 50 seconds, 1280x720, <= 20 MB
+
+3) Poster image (optional)
+   File name: sitt-tour-poster.jpg
+   Recommended: 1280x720
+
+Current landing references:
+- /media/sitt-tour-teaser.mp4
+- /media/sitt-tour-50s.mp4
+- /media/sitt-tour-poster.jpg

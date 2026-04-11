@@ -5,8 +5,8 @@ Place your landing videos here:
    Recommended: 8-12 seconds, 1280x720, <= 8 MB
 
 2) Full tutorial video
-   File name: sitt-tour-50s.mp4
-   Recommended: around 50 seconds, 1280x720, <= 20 MB
+   File name: sitt-tour-39s.mp4
+   Recommended: around 39 seconds, 1280x720, <= 20 MB
 
 3) Poster image (optional)
    File name: sitt-tour-poster.jpg
@@ -14,5 +14,5 @@ Place your landing videos here:
 
 Current landing references:
 - /media/sitt-tour-teaser.mp4
-- /media/sitt-tour-50s.mp4
+- https://drive.google.com/uc?export=download&id=1Iqj6gN4nJaMwd-aqUS-TqzxrWeaDuMdL
 - /media/sitt-tour-poster.jpg

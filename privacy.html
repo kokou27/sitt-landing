@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — SITT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    .priv-header { padding: 100px 40px 48px; border-bottom: 1px solid var(--border); margin-bottom: 0; }
+    .priv-label { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; }
+    .priv-title { font-size: clamp(26px,4vw,38px); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 10px; }
+    .priv-title em { font-style: normal; background: linear-gradient(135deg,#3B82F6,#8B5CF6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .priv-meta { font-size: 13px; color: var(--muted); margin-top: 8px; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: var(--muted); text-decoration: none; margin-bottom: 20px; transition: color .15s; }
+    .back-link:hover { color: var(--text); }
+    @media(max-width:768px) { .priv-header { padding: 90px 20px 36px; } }
+  </style>
+</head>
+<body class="lang-en">
+
+<nav>
+  <a href="/" class="nav-logo">SITT<span>.</span></a>
+  <div class="nav-links">
+    <a href="/#features"><span data-lang="en">Features</span><span data-lang="fr">Fonctionnalités</span></a>
+    <a href="/#pricing"><span data-lang="en">Pricing</span><span data-lang="fr">Tarifs</span></a>
+    <a href="/contact.html">Contact</a>
+  </div>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button type="button" class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button type="button" class="lang-btn" onclick="setLang('fr')">FR</button>
+    </div>
+    <a href="https://chromewebstore.google.com/detail/sitt/joenimodijoophmdlgpgblkjfgenplgg" target="_blank" rel="noopener" class="nav-cta">
+      <span data-lang="en">Add to Chrome</span><span data-lang="fr">Ajouter à Chrome</span>
+    </a>
+  </div>
+</nav>
+
+<div class="priv-header">
+  <a href="/" class="back-link">← <span data-lang="en">Back to SITT</span><span data-lang="fr">Retour à SITT</span></a>
+  <p class="priv-label">Privacy Policy</p>
+  <h1 class="priv-title">
+    <span data-lang="en">Your data, <em>explained</em> honestly.</span>
+    <span data-lang="fr">Vos données, <em>expliquées</em> honnêtement.</span>
+  </h1>
+  <p class="priv-meta"><span data-lang="en">Last updated: January 2025</span><span data-lang="fr">Dernière mise à jour : Janvier 2025</span></p>
+</div>
+
+<div class="doc">
+
+  <h2><span data-lang="en">Overview</span><span data-lang="fr">Vue d'ensemble</span></h2>
+  <p><span data-lang="en">SITT is a Chrome extension for OCR and translation. We are committed to protecting your privacy. This policy explains what data we collect, why, and how we protect it.</span><span data-lang="fr">SITT est une extension Chrome pour l'OCR et la traduction. Nous nous engageons à protéger votre vie privée. Cette politique explique les données que nous collectons, pourquoi, et comment nous les protégeons.</span></p>
+
+  <h2><span data-lang="en">Data we collect</span><span data-lang="fr">Données que nous collectons</span></h2>
+  <p><span data-lang="en"><strong>Locally stored only:</strong> Your OCR history, settings, and preferences are stored in your browser's local storage. They never leave your device unless you explicitly use AI features.</span><span data-lang="fr"><strong>Stocké localement uniquement :</strong> Votre historique OCR, paramètres et préférences sont stockés dans le stockage local de votre navigateur. Ils ne quittent jamais votre appareil sauf si vous utilisez les fonctions IA.</span></p>
+  <p><span data-lang="en"><strong>Extension ID:</strong> A unique identifier for your browser installation. Used to link your credit balance. Never used for tracking.</span><span data-lang="fr"><strong>ID Extension :</strong> Un identifiant unique pour votre installation de navigateur. Utilisé pour associer votre solde de crédits. Jamais utilisé pour le suivi.</span></p>
+  <p><span data-lang="en"><strong>Email address:</strong> Only collected if you purchase credits. Used to send your receipt and manage your account.</span><span data-lang="fr"><strong>Adresse email :</strong> Collectée uniquement si vous achetez des crédits. Utilisée pour envoyer votre reçu et gérer votre compte.</span></p>
+
+  <h2><span data-lang="en">OCR processing</span><span data-lang="fr">Traitement OCR</span></h2>
+  <p><span data-lang="en">When you use AI features (Gemini Vision), a screenshot of the selected area is sent to Google's Gemini API for processing. This image is processed and immediately discarded — Google does not retain it for training purposes under the API terms.</span><span data-lang="fr">Lorsque vous utilisez les fonctions IA (Gemini Vision), une capture de la zone sélectionnée est envoyée à l'API Gemini de Google. Cette image est traitée et immédiatement supprimée — Google ne la conserve pas pour l'entraînement selon les conditions d'utilisation de l'API.</span></p>
+  <p><span data-lang="en">Tesseract OCR runs entirely locally in your browser. No data is sent anywhere.</span><span data-lang="fr">Tesseract OCR tourne entièrement localement dans votre navigateur. Aucune donnée n'est envoyée nulle part.</span></p>
+
+  <h2><span data-lang="en">Third-party services</span><span data-lang="fr">Services tiers</span></h2>
+  <ul>
+    <li><span data-lang="en"><strong>Google Gemini API</strong> — AI OCR processing. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a></span><span data-lang="fr"><strong>API Google Gemini</strong> — Traitement OCR IA. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Politique de confidentialité Google</a></span></li>
+    <li><span data-lang="en"><strong>Supabase</strong> — Credit balance storage. Data stored in EU servers.</span><span data-lang="fr"><strong>Supabase</strong> — Stockage du solde de crédits. Données stockées sur des serveurs en UE.</span></li>
+    <li><span data-lang="en"><strong>Lemon Squeezy</strong> — Payment processing. We never store your card details.</span><span data-lang="fr"><strong>Lemon Squeezy</strong> — Traitement des paiements. Nous ne stockons jamais vos coordonnées bancaires.</span></li>
+    <li><span data-lang="en"><strong>Cloudflare Workers</strong> — API backend hosting.</span><span data-lang="fr"><strong>Cloudflare Workers</strong> — Hébergement du backend API.</span></li>
+  </ul>
+
+  <h2><span data-lang="en">Data retention</span><span data-lang="fr">Conservation des données</span></h2>
+  <p><span data-lang="en">Local data (history, settings) is stored indefinitely on your device until you delete it. Account data (email, credit balance) is retained as long as your account is active. You can request deletion at any time.</span><span data-lang="fr">Les données locales (historique, paramètres) sont stockées indéfiniment sur votre appareil jusqu'à ce que vous les supprimiez. Les données de compte (email, solde) sont conservées tant que votre compte est actif. Vous pouvez demander la suppression à tout moment.</span></p>
+
+  <h2><span data-lang="en">Your rights</span><span data-lang="fr">Vos droits</span></h2>
+  <p><span data-lang="en">You have the right to access, correct, or delete your personal data at any time. Contact us at <a href="mailto:rouffdesign@gmail.com">rouffdesign@gmail.com</a> for any data request.</span><span data-lang="fr">Vous avez le droit d'accéder, de corriger ou de supprimer vos données personnelles à tout moment. Contactez-nous à <a href="mailto:rouffdesign@gmail.com">rouffdesign@gmail.com</a> pour toute demande.</span></p>
+
+  <h2><span data-lang="en">Children's privacy</span><span data-lang="fr">Confidentialité des enfants</span></h2>
+  <p><span data-lang="en">SITT is not directed at children under 13. We do not knowingly collect data from minors.</span><span data-lang="fr">SITT n'est pas destiné aux enfants de moins de 13 ans. Nous ne collectons pas sciemment de données auprès de mineurs.</span></p>
+
+  <h2><span data-lang="en">Contact</span><span data-lang="fr">Contact</span></h2>
+  <p><span data-lang="en">For any privacy questions: <a href="mailto:rouffdesign@gmail.com">rouffdesign@gmail.com</a></span><span data-lang="fr">Pour toute question de confidentialité : <a href="mailto:rouffdesign@gmail.com">rouffdesign@gmail.com</a></span></p>
+
+</div>
+
+<footer>
+  <div class="footer-logo">SITT<span>.</span> &nbsp;© 2025</div>
+  <ul class="footer-links">
+    <li><a href="/privacy.html">Privacy</a></li>
+    <li><a href="/terms.html">Terms</a></li>
+    <li><a href="/contact.html">Contact</a></li>
+  </ul>
+</footer>
+
+<script>
+function setLang(l) { document.body.className='lang-'+l; document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase()===l)); localStorage.setItem('sitt_lang',l); }
+(function(){ const s=localStorage.getItem('sitt_lang'); if(s){setLang(s);return;} setLang((navigator.language||'en').toLowerCase().startsWith('fr')?'fr':'en'); })();
+</script>
+</body>
+</html>

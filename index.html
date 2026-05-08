@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SITT — Translate Any Manga Panel Instantly</title>
+  <meta name="description" content="Chrome extension that reads and translates text in any image using Gemini Vision AI. Perfect for manga, PDFs, screenshots and more. Free forever.">
+  <meta property="og:title" content="SITT — Translate Any Manga Panel Instantly">
+  <meta property="og:description" content="AI-powered OCR + translation directly in your browser. Free forever, no account needed.">
+  <meta property="og:image" content="https://sitt-landing.pages.dev/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%233B82F6'/><text x='32' y='44' font-family='Georgia,serif' font-size='20' font-weight='bold' fill='white' text-anchor='middle'>SITT</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:       #0D1117;
+      --surface:  #161B22;
+      --surface2: #1C2128;
+      --border:   rgba(255,255,255,0.07);
+      --border2:  rgba(255,255,255,0.13);
+      --text:     #F0F6FC;
+      --muted:    #8B949E;
+      --blue:     #3B82F6;
+      --purple:   #8B5CF6;
+      --green:    #34D399;
+      --r:        12px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Space Grotesk', sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── NAV ── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 60px; background: rgba(13,17,23,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-size: 18px; font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; }
+    .nav-logo span { color: var(--blue); }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a { font-size: 14px; color: var(--muted); text-decoration: none; transition: color .15s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle { display: flex; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+    .lang-btn { background: none; border: none; padding: 4px 10px; font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; font-family: inherit; transition: all .15s; }
+    .lang-btn.active { background: var(--blue); color: #fff; }
+    .nav-cta { background: var(--blue); color: #fff; padding: 8px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; text-decoration: none; transition: opacity .15s; white-space: nowrap; }
+    .nav-cta:hover { opacity: .88; }
+
+    /* ── HERO ── */
+    .hero { padding: 160px 40px 100px; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 800px; height: 500px; background: radial-gradient(ellipse at 50% 0%, rgba(59,130,246,0.12) 0%, transparent 70%); pointer-events: none; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border2); border-radius: 999px; padding: 6px 14px; font-size: 12px; color: var(--muted); margin-bottom: 28px; }
+    .badge-dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    .hero h1 { font-size: clamp(32px, 6vw, 58px); font-weight: 700; letter-spacing: -0.04em; line-height: 1.08; margin-bottom: 20px; }
+    .hero h1 em { font-style: normal; background: linear-gradient(135deg, #3B82F6, #8B5CF6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub { font-size: 18px; color: var(--muted); max-width: 540px; margin: 0 auto 36px; line-height: 1.6; }
+    .hero-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--blue); color: #fff; padding: 13px 24px; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none; transition: all .2s; font-family: inherit; border: none; cursor: pointer; }
+    .btn-primary:hover { background: #2563EB; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(59,130,246,0.3); }
+    .btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: var(--surface); color: var(--text); padding: 13px 24px; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none; border: 1px solid var(--border2); transition: all .2s; }
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.25); transform: translateY(-1px); }
+    .hero-trust { display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .trust-item { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+    .trust-item::before { content: '✓'; color: var(--green); font-weight: 700; }
+    .trust-sep { color: var(--border2); }
+
+    /* ── SECTION BASE ── */
+    section { padding: 90px 40px; }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
+    .section-title { font-size: clamp(24px, 4vw, 36px); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 14px; }
+    .section-sub { font-size: 16px; color: var(--muted); max-width: 520px; line-height: 1.6; }
+
+    /* ── HOW IT WORKS ── */
+    .how { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .how .container { text-align: center; }
+    .how-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-top: 48px; }
+    .how-step { background: var(--surface2); padding: 36px 28px; text-align: center; }
+    .how-num { width: 36px; height: 36px; background: linear-gradient(135deg,#3B82F6,#8B5CF6); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: #fff; margin: 0 auto 16px; }
+    .how-step h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+    .how-step p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* ── FEATURES ── */
+    .features-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 48px; }
+    .feature-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 24px; transition: border-color .2s; }
+    .feature-card:hover { border-color: var(--border2); }
+    .feature-icon { font-size: 24px; margin-bottom: 12px; }
+    .feature-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+    .feature-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* ── MODES ── */
+    .modes { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .modes-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 36px; }
+    .mode-pill { display: flex; align-items: center; gap: 8px; background: var(--surface2); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; font-size: 14px; }
+    .mode-pill span:first-child { font-size: 18px; }
+
+    /* ── PRICING ── */
+    .pricing { text-align: center; }
+    .pricing-free { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px 32px; max-width: 480px; margin: 0 auto 24px; text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .pricing-free-info h3 { font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+    .pricing-free-info p { font-size: 13px; color: var(--muted); }
+    .pricing-packs { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; max-width: 860px; margin: 0 auto; }
+    .pack { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px 24px; position: relative; transition: all .2s; }
+    .pack:hover { border-color: var(--border2); transform: translateY(-2px); }
+    .pack-featured { border-color: rgba(139,92,246,0.45); background: linear-gradient(135deg,rgba(139,92,246,0.06),rgba(168,85,247,0.02)); }
+    .pack-popular { position: absolute; top: -1px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg,#8B5CF6,#A855F7); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 4px 14px; border-radius: 0 0 8px 8px; white-space: nowrap; }
+    .pack-icon { font-size: 24px; margin-bottom: 10px; }
+    .pack-name { font-size: 16px; font-weight: 600; margin-bottom: 10px; }
+    .pack-amount { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+    .pack-price { font-size: 32px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 4px; }
+    .pack-price span { font-size: 16px; color: var(--muted); font-weight: 400; }
+    .pack-save { font-size: 12px; color: var(--green); font-weight: 600; margin-bottom: 20px; }
+    .pack-btn { width: 100%; padding: 12px; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; border: 1px solid var(--border2); background: var(--surface2); color: var(--text); transition: all .18s; }
+    .pack-btn:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,.2); }
+    .pack-btn-featured { background: linear-gradient(135deg,#8B5CF6,#A855F7); border-color: transparent; color: #fff; }
+    .pack-btn-featured:hover { background: linear-gradient(135deg,#7C3AED,#9333EA); border-color: transparent; }
+    .pricing-note { margin-top: 24px; font-size: 13px; color: var(--muted); }
+
+    /* ── FAQ ── */
+    .faq-list { max-width: 680px; margin: 48px auto 0; display: flex; flex-direction: column; gap: 0; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-q { width: 100%; background: none; border: none; color: var(--text); font-family: inherit; font-size: 15px; font-weight: 500; text-align: left; padding: 20px 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .faq-q:hover { color: var(--blue); }
+    .faq-arrow { color: var(--muted); font-size: 18px; transition: transform .2s; flex-shrink: 0; }
+    .faq-item.open .faq-arrow { transform: rotate(45deg); }
+    .faq-a { font-size: 14px; color: var(--muted); line-height: 1.7; padding-bottom: 20px; display: none; }
+    .faq-item.open .faq-a { display: block; }
+
+    /* ── CTA FINAL ── */
+    .cta-final { text-align: center; background: var(--surface); border-top: 1px solid var(--border); }
+    .cta-final h2 { font-size: clamp(24px,4vw,36px); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 14px; }
+    .cta-final p { font-size: 16px; color: var(--muted); max-width: 440px; margin: 0 auto 32px; }
+
+    /* ── FOOTER ── */
+    footer { border-top: 1px solid var(--border); padding: 28px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-logo { font-size: 15px; font-weight: 700; color: var(--muted); }
+    .footer-logo span { color: var(--blue); }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .15s; }
+    .footer-links a:hover { color: var(--text); }
+
+    /* ── I18N ── */
+    [data-lang] { display: none; }
+    .lang-en [data-lang="en"] { display: inline; }
+    .lang-fr [data-lang="fr"] { display: inline; }
+    /* Block-level elements must stay block, not inline */
+    h1[data-lang], h2[data-lang], p[data-lang], div[data-lang] { display: none; }
+    .lang-en h1[data-lang="en"], .lang-en h2[data-lang="en"],
+    .lang-en p[data-lang="en"], .lang-en div[data-lang="en"] { display: block; }
+    .lang-fr h1[data-lang="fr"], .lang-fr h2[data-lang="fr"],
+    .lang-fr p[data-lang="fr"], .lang-fr div[data-lang="fr"] { display: block; }
+    .lang-en .block-en { display: block; }
+    .lang-fr .block-fr { display: block; }
+    .block-en, .block-fr { display: none; }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:768px) {
+      nav { padding: 0 16px; }
+      .nav-links { display: none; }
+      .nav-cta { padding: 7px 14px; font-size: 13px; }
+      .hero { padding: 110px 20px 72px; }
+      .hero-badge { font-size: 11px; padding: 5px 12px; }
+      .hero-sub { font-size: 16px; }
+      .hero-actions { flex-direction: column; align-items: center; }
+      .hero-actions a { width: 100%; max-width: 320px; justify-content: center; }
+      .hero-trust { gap: 8px; }
+      section { padding: 56px 20px; }
+      .how-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr 1fr; }
+      .pricing-packs { grid-template-columns: 1fr; max-width: 340px; }
+      .pricing-free { flex-direction: column; text-align: center; gap: 16px; }
+      .pricing-free .btn-secondary { width: 100%; justify-content: center; }
+      footer { flex-direction: column; align-items: center; text-align: center; }
+      .footer-links { gap: 16px; flex-wrap: wrap; justify-content: center; }
+    }
+    @media(max-width:480px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 30px; letter-spacing: -0.03em; }
+      .hero-trust { flex-direction: column; gap: 6px; }
+      .trust-sep { display: none; }
+      .modes-grid { gap: 8px; }
+      .section-title { font-size: 22px; }
+    }
+  </style>
+</head>
+<body class="lang-en">
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">SITT<span>.</span></a>
+  <div class="nav-links">
+    <a href="#how"><span data-lang="en">How it works</span><span data-lang="fr">Comment ça marche</span></a>
+    <a href="#features"><span data-lang="en">Features</span><span data-lang="fr">Fonctionnalités</span></a>
+    <a href="#pricing"><span data-lang="en">Pricing</span><span data-lang="fr">Tarifs</span></a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('fr')">FR</button>
+    </div>
+    <a href="https://chromewebstore.google.com/detail/sitt/joenimodijoophmdlgpgblkjfgenplgg" target="_blank" class="nav-cta">
+      <span data-lang="en">Add to Chrome</span>
+      <span data-lang="fr">Ajouter à Chrome</span>
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    <span data-lang="en">Powered by Gemini Vision AI</span>
+    <span data-lang="fr">Propulsé par Gemini Vision IA</span>
+  </div>
+  <h1 data-lang="en">Translate any manga panel.<br><em>Instantly.</em></h1>
+  <h1 data-lang="fr">Traduisez n'importe quel panel manga.<br><em>Instantanément.</em></h1>
+  <p class="hero-sub" data-lang="en">Chrome extension that reads and translates text in any image — manga, PDFs, screenshots, games and more. One click. No copy-paste.</p>
+  <p class="hero-sub" data-lang="fr">Extension Chrome qui lit et traduit le texte dans n'importe quelle image — manga, PDFs, captures d'écran, jeux et plus. Un clic. Zéro copier-coller.</p>
+  <div class="hero-actions">
+    <a href="https://chromewebstore.google.com/detail/sitt/joenimodijoophmdlgpgblkjfgenplgg" target="_blank" class="btn-primary">
+      <span data-lang="en">Add to Chrome — Free</span>
+      <span data-lang="fr">Ajouter à Chrome — Gratuit</span>
+    </a>
+    <a href="#how" class="btn-secondary">
+      <span data-lang="en">See how it works</span>
+      <span data-lang="fr">Voir comment ça marche</span>
+    </a>
+  </div>
+  <div class="hero-trust">
+    <span class="trust-item"><span data-lang="en">Free forever</span><span data-lang="fr">Gratuit pour toujours</span></span>
+    <span class="trust-sep">·</span>
+    <span class="trust-item"><span data-lang="en">No account needed</span><span data-lang="fr">Aucun compte requis</span></span>
+    <span class="trust-sep">·</span>
+    <span class="trust-item"><span data-lang="en">40+ languages</span><span data-lang="fr">40+ langues</span></span>
+    <span class="trust-sep">·</span>
+    <span class="trust-item"><span data-lang="en">Works offline</span><span data-lang="fr">Fonctionne hors ligne</span></span>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="container">
+    <p class="section-label" style="text-align:center"><span data-lang="en">How it works</span><span data-lang="fr">Comment ça marche</span></p>
+    <h2 class="section-title" style="text-align:center;margin:0 auto">
+      <span data-lang="en">Three steps. Zero friction.</span>
+      <span data-lang="fr">Trois étapes. Zéro friction.</span>
+    </h2>
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <h3><span data-lang="en">Select a zone</span><span data-lang="fr">Sélectionner une zone</span></h3>
+        <p><span data-lang="en">Draw a selection over any text in an image — manga bubble, subtitle, sign or document.</span><span data-lang="fr">Tracez une sélection sur n'importe quel texte dans une image — bulle manga, sous-titre, panneau ou document.</span></p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <h3><span data-lang="en">AI scans it</span><span data-lang="fr">L'IA le scanne</span></h3>
+        <p><span data-lang="en">Gemini Vision AI reads the text with 95%+ accuracy, even vertical Japanese or stylized fonts.</span><span data-lang="fr">Gemini Vision IA lit le texte avec 95%+ de précision, même le japonais vertical ou les polices stylisées.</span></p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <h3><span data-lang="en">Read in your language</span><span data-lang="fr">Lisez dans votre langue</span></h3>
+        <p><span data-lang="en">The translated text appears instantly, overlaid directly on the page. No new tabs. No waiting.</span><span data-lang="fr">Le texte traduit s'affiche instantanément, superposé directement sur la page. Aucun nouvel onglet.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <p class="section-label"><span data-lang="en">Features</span><span data-lang="fr">Fonctionnalités</span></p>
+    <h2 class="section-title"><span data-lang="en">Everything you need to read anything.</span><span data-lang="fr">Tout ce qu'il faut pour tout lire.</span></h2>
+    <p class="section-sub"><span data-lang="en">Built for manga readers, but powerful enough for any image containing text.</span><span data-lang="fr">Conçu pour les lecteurs de manga, mais assez puissant pour toute image contenant du texte.</span></p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🔮</div>
+        <h3><span data-lang="en">Gemini Vision AI</span><span data-lang="fr">IA Gemini Vision</span></h3>
+        <p><span data-lang="en">Google's latest AI model reads stylized text, vertical writing, and complex layouts with 95%+ precision.</span><span data-lang="fr">Le dernier modèle IA de Google lit les textes stylisés, l'écriture verticale et les mises en page complexes.</span></p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3><span data-lang="en">Offline OCR fallback</span><span data-lang="fr">OCR hors ligne</span></h3>
+        <p><span data-lang="en">Tesseract runs locally in your browser. No internet? No problem — basic OCR always works.</span><span data-lang="fr">Tesseract tourne localement dans votre navigateur. Pas d'internet ? Pas de problème.</span></p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌍</div>
+        <h3><span data-lang="en">40+ languages</span><span data-lang="fr">40+ langues</span></h3>
+        <p><span data-lang="en">Japanese, Korean, Chinese, Arabic, Russian and more. Source auto-detected, translate to any language.</span><span data-lang="fr">Japonais, coréen, chinois, arabe, russe et plus. Source auto-détectée, traduction vers n'importe quelle langue.</span></p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📄</div>
+        <h3><span data-lang="en">Full page translate</span><span data-lang="fr">Traduction page entière</span></h3>
+        <p><span data-lang="en">Translate an entire manga page in one click — all speech bubbles detected and translated automatically.</span><span data-lang="fr">Traduisez une page manga entière en un clic — toutes les bulles détectées et traduites automatiquement.</span></p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📂</div>
+        <h3><span data-lang="en">Permanent history</span><span data-lang="fr">Historique permanent</span></h3>
+        <p><span data-lang="en">All your scans are saved locally. Search, re-read, and export your translation history anytime.</span><span data-lang="fr">Tous vos scans sont sauvegardés localement. Recherchez et relisez votre historique de traductions.</span></p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔊</div>
+        <h3><span data-lang="en">Text-to-speech</span><span data-lang="fr">Synthèse vocale</span></h3>
+        <p><span data-lang="en">Listen to the original or translated text with natural AI voices. Great for learning pronunciation.</span><span data-lang="fr">Écoutez le texte original ou traduit avec des voix IA naturelles. Idéal pour apprendre la prononciation.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODES -->
+<section class="modes">
+  <div class="container">
+    <p class="section-label"><span data-lang="en">Supported content</span><span data-lang="fr">Contenus supportés</span></p>
+    <h2 class="section-title"><span data-lang="en">Works on any page, any image.</span><span data-lang="fr">Fonctionne sur toutes les pages et images.</span></h2>
+    <div class="modes-grid">
+      <div class="mode-pill"><span>🎌</span><span>Manga</span></div>
+      <div class="mode-pill"><span>📺</span><span><span data-lang="en">Subtitles</span><span data-lang="fr">Sous-titres</span></span></div>
+      <div class="mode-pill"><span>📄</span><span>PDF</span></div>
+      <div class="mode-pill"><span>🖥️</span><span>Screenshot</span></div>
+      <div class="mode-pill"><span>📷</span><span><span data-lang="en">Photo</span><span data-lang="fr">Photo</span></span></div>
+      <div class="mode-pill"><span>🎮</span><span><span data-lang="en">Video game</span><span data-lang="fr">Jeu vidéo</span></span></div>
+      <div class="mode-pill"><span>📚</span><span><span data-lang="en">Webtoon</span><span data-lang="fr">Webtoon</span></span></div>
+      <div class="mode-pill"><span>🗺️</span><span><span data-lang="en">Any image</span><span data-lang="fr">Toute image</span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="pricing">
+  <div class="container">
+    <p class="section-label"><span data-lang="en">Pricing</span><span data-lang="fr">Tarifs</span></p>
+    <h2 class="section-title"><span data-lang="en">Start free. Scale when you need.</span><span data-lang="fr">Commencez gratuitement. Évoluez quand vous voulez.</span></h2>
+    <p class="section-sub" style="margin:0 auto 40px"><span data-lang="en">2 free AI scans per day, forever. Need more? Top up with credits — no subscription, no expiry.</span><span data-lang="fr">2 scans IA gratuits par jour, pour toujours. Besoin de plus ? Rechargez avec des crédits — sans abonnement, sans expiration.</span></p>
+
+    <div class="pricing-free">
+      <div class="pricing-free-info">
+        <h3><span data-lang="en">Free plan</span><span data-lang="fr">Plan gratuit</span></h3>
+        <p><span data-lang="en">2 AI scans/day · Offline OCR · 40+ languages · No account needed</span><span data-lang="fr">2 scans IA/jour · OCR hors ligne · 40+ langues · Aucun compte requis</span></p>
+      </div>
+      <a href="https://chromewebstore.google.com/detail/sitt/joenimodijoophmdlgpgblkjfgenplgg" target="_blank" class="btn-secondary" style="white-space:nowrap">
+        <span data-lang="en">Get started free</span>
+        <span data-lang="fr">Commencer gratuitement</span>
+      </a>
+    </div>
+
+    <div class="pricing-packs">
+      <div class="pack">
+        <div class="pack-icon">🌱</div>
+        <div class="pack-name"><span data-lang="en">Starter</span><span data-lang="fr">Découverte</span></div>
+        <div class="pack-amount">1 000 <span data-lang="en">credits</span><span data-lang="fr">crédits</span></div>
+        <div class="pack-price">$4.99<span>/once</span></div>
+        <div class="pack-save">~$0.005 / <span data-lang="en">credit</span><span data-lang="fr">crédit</span></div>
+        <button class="pack-btn" data-pack="starter"><span data-lang="en">Buy pack</span><span data-lang="fr">Acheter</span></button>
+      </div>
+      <div class="pack pack-featured">
+        <div class="pack-popular"><span data-lang="en">Most popular</span><span data-lang="fr">Populaire</span></div>
+        <div class="pack-icon">⚡</div>
+        <div class="pack-name">Standard</div>
+        <div class="pack-amount">3 000 <span data-lang="en">credits</span><span data-lang="fr">crédits</span></div>
+        <div class="pack-price">$9.99<span>/once</span></div>
+        <div class="pack-save"><span data-lang="en">Save 33%</span><span data-lang="fr">Économisez 33%</span></div>
+        <button class="pack-btn pack-btn-featured" data-pack="standard"><span data-lang="en">Buy pack</span><span data-lang="fr">Acheter</span></button>
+      </div>
+      <div class="pack">
+        <div class="pack-icon">👑</div>
+        <div class="pack-name">Pro</div>
+        <div class="pack-amount">10 000 <span data-lang="en">credits</span><span data-lang="fr">crédits</span></div>
+        <div class="pack-price">$19.99<span>/once</span></div>
+        <div class="pack-save"><span data-lang="en">Save 60%</span><span data-lang="fr">Économisez 60%</span></div>
+        <button class="pack-btn" data-pack="pro"><span data-lang="en">Buy pack</span><span data-lang="fr">Acheter</span></button>
+      </div>
+    </div>
+    <p class="pricing-note"><span data-lang="en">Credits never expire. Secure payment via Lemon Squeezy. Added instantly after purchase.</span><span data-lang="fr">Crédits sans expiration. Paiement sécurisé via Lemon Squeezy. Ajoutés instantanément après achat.</span></p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container" style="text-align:center">
+    <p class="section-label">FAQ</p>
+    <h2 class="section-title"><span data-lang="en">Common questions</span><span data-lang="fr">Questions fréquentes</span></h2>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span data-lang="en">What permissions does SITT need?</span>
+          <span data-lang="fr">Quelles permissions SITT demande-t-il ?</span>
+          <span class="faq-arrow">+</span>
+        </button>
+        <div class="faq-a">
+          <span data-lang="en">SITT needs access to the active tab to capture screenshots for OCR, and storage to save your history locally. It does not read your browsing history, passwords or any personal data.</span>
+          <span data-lang="fr">SITT a besoin d'accéder à l'onglet actif pour capturer des captures d'écran pour l'OCR, et du stockage pour sauvegarder votre historique localement. Il ne lit pas votre historique de navigation, vos mots de passe ni aucune donnée personnelle.</span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span data-lang="en">How accurate is the AI translation?</span>
+          <span data-lang="fr">Quelle est la précision de la traduction IA ?</span>
+          <span class="faq-arrow">+</span>
+        </button>
+        <div class="faq-a">
+          <span data-lang="en">Gemini Vision AI achieves 95%+ accuracy on most manga and stylized text. It handles vertical Japanese, stylized fonts, and complex layouts far better than traditional OCR tools.</span>
+          <span data-lang="fr">Gemini Vision IA atteint 95%+ de précision sur la plupart des mangas et textes stylisés. Il gère beaucoup mieux le japonais vertical, les polices stylisées et les mises en page complexes que les outils OCR traditionnels.</span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span data-lang="en">What are AI credits used for?</span>
+          <span data-lang="fr">À quoi servent les crédits IA ?</span>
+          <span class="faq-arrow">+</span>
+        </button>
+        <div class="faq-a">
+          <span data-lang="en">Credits power the AI features: Gemini Vision OCR, Zone AI translation, and full-page translation. Basic OCR with Tesseract is always free and offline. Credits never expire.</span>
+          <span data-lang="fr">Les crédits alimentent les fonctions IA : OCR Gemini Vision, traduction Zone IA et traduction page entière. L'OCR de base avec Tesseract est toujours gratuit et hors ligne. Les crédits n'expirent jamais.</span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span data-lang="en">Does it work without internet?</span>
+          <span data-lang="fr">Fonctionne-t-il sans internet ?</span>
+          <span class="faq-arrow">+</span>
+        </button>
+        <div class="faq-a">
+          <span data-lang="en">The Tesseract OCR engine runs locally and works offline. AI-powered features (Gemini Vision, translation) require internet. The extension automatically falls back to offline mode when needed.</span>
+          <span data-lang="fr">Le moteur OCR Tesseract tourne localement et fonctionne hors ligne. Les fonctions IA (Gemini Vision, traduction) nécessitent internet. L'extension bascule automatiquement en mode hors ligne si nécessaire.</span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span data-lang="en">Can I get a refund?</span>
+          <span data-lang="fr">Puis-je obtenir un remboursement ?</span>
+          <span class="faq-arrow">+</span>
+        </button>
+        <div class="faq-a">
+          <span data-lang="en">Yes. If you're not satisfied within 7 days of purchase, contact us and we'll process a full refund — no questions asked.</span>
+          <span data-lang="fr">Oui. Si vous n'êtes pas satisfait dans les 7 jours suivant l'achat, contactez-nous et nous vous rembourserons intégralement — sans questions.</span>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span data-lang="en">Which languages are supported?</span>
+          <span data-lang="fr">Quelles langues sont supportées ?</span>
+          <span class="faq-arrow">+</span>
+        </button>
+        <div class="faq-a">
+          <span data-lang="en">Japanese, Korean, Chinese (Simplified & Traditional), Arabic, Russian, English, French, Spanish, German, Portuguese, Italian and 30+ more. Source language is auto-detected.</span>
+          <span data-lang="fr">Japonais, coréen, chinois (simplifié et traditionnel), arabe, russe, anglais, français, espagnol, allemand, portugais, italien et 30+ autres. La langue source est auto-détectée.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-final">
+  <div class="container">
+    <h2><span data-lang="en">Start reading everything, now.</span><span data-lang="fr">Commencez à tout lire, maintenant.</span></h2>
+    <p><span data-lang="en">Free forever. 2 AI scans per day. No account. Install in 10 seconds.</span><span data-lang="fr">Gratuit pour toujours. 2 scans IA par jour. Aucun compte. Installation en 10 secondes.</span></p>
+    <a href="https://chromewebstore.google.com/detail/sitt/joenimodijoophmdlgpgblkjfgenplgg" target="_blank" class="btn-primary" style="font-size:16px;padding:15px 32px">
+      <span data-lang="en">Add to Chrome — It's free</span>
+      <span data-lang="fr">Ajouter à Chrome — C'est gratuit</span>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">SITT<span>.</span> &nbsp;© 2025</div>
+  <ul class="footer-links">
+    <li><a href="https://chromewebstore.google.com/detail/sitt/joenimodijoophmdlgpgblkjfgenplgg" target="_blank">Chrome Web Store</a></li>
+    <li><a href="mailto:rouffdesign@gmail.com"><span data-lang="en">Contact</span><span data-lang="fr">Contact</span></a></li>
+    <li><a href="#pricing"><span data-lang="en">Pricing</span><span data-lang="fr">Tarifs</span></a></li>
+  </ul>
+</footer>
+
+<script>
+(function () {
+  const PACK_URLS = {
+    starter:  'https://rouffdesign.lemonsqueezy.com/checkout/buy/215b0afa-5d6e-4951-93c0-c0771ed5593d',
+    standard: 'https://rouffdesign.lemonsqueezy.com/checkout/buy/e9c0fbd9-6b7a-47a4-9f14-4038083e570f',
+    pro:      'https://rouffdesign.lemonsqueezy.com/checkout/buy/df6c585d-bea3-4576-a629-4ca38c934c19',
+  };
+
+  // Pack buttons
+  document.querySelectorAll('.pack-btn[data-pack]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const url = PACK_URLS[btn.dataset.pack];
+      if (url) window.open(url, '_blank');
+    });
+  });
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+})();
+
+function setLang(lang) {
+  document.body.className = 'lang-' + lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.toLowerCase() === lang));
+  localStorage.setItem('sitt_lang', lang);
+}
+
+// Auto-detect language
+(function () {
+  const saved = localStorage.getItem('sitt_lang');
+  if (saved) { setLang(saved); return; }
+  const nav = (navigator.language || 'en').toLowerCase();
+  setLang(nav.startsWith('fr') ? 'fr' : 'en');
+})();
+</script>
+</body>
+</html>

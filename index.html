@@ -4,19 +4,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SITT — Extract Text from Any Image, Instantly</title>
+  <title>SITT — Translate Any Manga Panel Instantly</title>
   <meta name="description"
-    content="A Chrome extension that reads manga, PDFs, screenshots and more with Gemini Vision AI. Free forever, AI credits available.">
+    content="Chrome extension to read and translate text in manga, webtoon and image bubbles with Gemini Vision AI. 2 free AI scans/day. Pay-as-you-go credits, no subscription.">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="SITT — Extract Text from Any Image, Instantly">
+  <meta property="og:title" content="SITT — Translate Any Manga Panel Instantly">
   <meta property="og:description"
-    content="A Chrome extension that reads manga, PDFs, screenshots and more with Gemini Vision AI. Free forever, AI credits available.">
+    content="Translate manga and webtoon bubbles in one click. Gemini Vision AI + offline OCR. Free tier, credits without subscription.">
   <meta property="og:url" content="https://sitt-landing.vercel.app/">
   <meta property="og:image" content="https://sitt-landing.vercel.app/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="SITT — Extract Text from Any Image, Instantly">
+  <meta name="twitter:title" content="SITT — Translate Any Manga Panel Instantly">
   <meta name="twitter:description"
-    content="A Chrome extension that reads manga, PDFs, screenshots and more with Gemini Vision AI. Free forever, AI credits available.">
+    content="Translate manga and webtoon bubbles in one click. 2 free AI scans/day. Credits never expire.">
   <meta name="twitter:image" content="https://sitt-landing.vercel.app/og-image.png">
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%238b7aff'/><stop offset='100%25' stop-color='%236fd3c8'/></linearGradient></defs><rect width='64' height='64' rx='14' fill='url(%23g)'/><text x='32' y='44' font-family='Georgia,serif' font-size='22' font-weight='bold' fill='white' text-anchor='middle' letter-spacing='1'>SITT</text></svg>">
@@ -823,6 +823,23 @@
       border-radius: 100px;
       letter-spacing: 0.06em;
       border: 1px solid var(--pro-border);
+    }
+
+    .feature-soon-tag {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      background: rgba(200, 184, 154, 0.12);
+      color: var(--accent);
+      font-size: 0.63rem;
+      padding: 0.18rem 0.55rem;
+      border-radius: 100px;
+      letter-spacing: 0.06em;
+      border: 1px solid rgba(200, 184, 154, 0.35);
+    }
+
+    .feature-card.is-muted {
+      opacity: 0.72;
     }
 
     /* ── HOW IT WORKS ── */
@@ -1701,17 +1718,17 @@
 
     <div class="hero-badge">
       <span class="dot-gemini"></span>
-      <span data-lang="en">v2.1 — Now powered by Gemini Vision AI</span>
-      <span data-lang="fr">v2.1 — Désormais propulsé par Gemini Vision IA</span>
+      <span data-lang="en">v2.4.6 — Powered by Gemini Vision AI</span>
+      <span data-lang="fr">v2.4.6 — Propulsé par Gemini Vision IA</span>
     </div>
 
-    <h1 data-lang="en">Extract text from <em>any image,</em> instantly.</h1>
-    <h1 data-lang="fr">Extrayez le texte de <em>n'importe quelle image,</em> instantanément.</h1>
+    <h1 data-lang="en">Translate any manga panel. <em>Instantly.</em></h1>
+    <h1 data-lang="fr">Traduisez n'importe quel panel manga. <em>Instantanément.</em></h1>
 
-    <p data-lang="en">A Chrome extension that reads manga, PDFs, screenshots, photos and more — with AI precision and a
-      Tesseract fallback that works offline.</p>
-    <p data-lang="fr">Une extension Chrome qui lit les mangas, PDFs, captures d'écran, photos et plus — avec une
-      précision IA et un fallback Tesseract qui fonctionne hors ligne.</p>
+    <p data-lang="en">Chrome extension that reads and translates text inside images — manga, webtoon, PDFs, screenshots
+      and more. One click on a bubble. No copy-paste.</p>
+    <p data-lang="fr">Extension Chrome qui lit et traduit le texte dans les images — manga, webtoon, PDF, captures et
+      plus. Un clic sur une bulle. Zéro copier-coller.</p>
 
     <div class="hero-actions">
       <a href="https://chromewebstore.google.com/detail/sitt/joenimodijoophmdlgpgblkjfgenplgg" target="_blank"
@@ -1729,6 +1746,8 @@
       <span data-lang="en">Free forever</span><span data-lang="fr">Gratuit pour toujours</span>
       <span class="trust-sep">·</span>
       <span data-lang="en">No account needed</span><span data-lang="fr">Aucun compte requis</span>
+      <span class="trust-sep">·</span>
+      <span data-lang="en">40+ languages</span><span data-lang="fr">40+ langues</span>
       <span class="trust-sep">·</span>
       <span data-lang="en">Works offline</span><span data-lang="fr">Fonctionne hors ligne</span>
     </div>
@@ -1762,16 +1781,16 @@
 
   <!-- WHAT'S NEW -->
   <div class="whats-new">
-    <span class="whats-new-pill">What's new in v2.1</span>
+    <span class="whats-new-pill">What's new in v2.4.6</span>
     <div class="whats-new-items">
-      <div class="whats-new-item" data-lang="en">Gemini Vision replaces basic OCR</div>
-      <div class="whats-new-item" data-lang="fr">Gemini Vision remplace l'OCR basique</div>
-      <div class="whats-new-item" data-lang="en">6 document-specific modes</div>
-      <div class="whats-new-item" data-lang="fr">6 modes spécifiques par document</div>
-      <div class="whats-new-item" data-lang="en">Markdown + LaTeX rendering</div>
-      <div class="whats-new-item" data-lang="fr">Rendu Markdown + LaTeX</div>
-      <div class="whats-new-item" data-lang="en">Re-translate from history</div>
-      <div class="whats-new-item" data-lang="fr">Re-traduire depuis l'historique</div>
+      <div class="whats-new-item" data-lang="en">Smart Click on any bubble</div>
+      <div class="whats-new-item" data-lang="fr">Smart Click sur n'importe quelle bulle</div>
+      <div class="whats-new-item" data-lang="en">Zone AI selection translate</div>
+      <div class="whats-new-item" data-lang="fr">Traduction Zone IA</div>
+      <div class="whats-new-item" data-lang="en">Server-side free/pro enforcement</div>
+      <div class="whats-new-item" data-lang="fr">Contrôle free/pro côté serveur</div>
+      <div class="whats-new-item" data-lang="en">Page Translate — coming soon</div>
+      <div class="whats-new-item" data-lang="fr">Page Translate — bientôt</div>
     </div>
   </div>
 
@@ -1779,67 +1798,87 @@
   <section id="features">
     <div class="container">
       <div class="section-label"><span data-lang="en">Features</span><span data-lang="fr">Fonctionnalités</span></div>
-      <h2 class="section-title" data-lang="en">Everything you need to read any image.</h2>
-      <h2 class="section-title" data-lang="fr">Tout ce qu'il faut pour lire n'importe quelle image.</h2>
-      <p class="section-sub" data-lang="en">Built for manga readers, researchers, students, and anyone who needs to
-        extract text fast — with or without internet.</p>
-      <p class="section-sub" data-lang="fr">Conçu pour les lecteurs de manga, chercheurs, étudiants — avec ou sans
-        connexion internet.</p>
+      <h2 class="section-title" data-lang="en">Everything you need to read anything.</h2>
+      <h2 class="section-title" data-lang="fr">Tout ce qu'il faut pour tout lire.</h2>
+      <p class="section-sub" data-lang="en">Built for manga and webtoon readers — powerful enough for any image with text
+        inside.</p>
+      <p class="section-sub" data-lang="fr">Conçu pour les lecteurs de manga et webtoon — assez puissant pour toute image
+        contenant du texte.</p>
 
       <div class="features-grid">
         <div class="feature-card">
-          <span class="feature-icon">🤖</span>
+          <span class="feature-icon">👆</span>
+          <div class="feature-title" data-lang="en">Smart Click</div>
+          <div class="feature-title" data-lang="fr">Smart Click</div>
+          <div class="feature-desc" data-lang="en">Click any speech bubble — translation appears instantly on the page.
+            Perfect for manga and webtoon reading flow.</div>
+          <div class="feature-desc" data-lang="fr">Cliquez sur une bulle — la traduction s'affiche instantanément sur la
+            page. Idéal pour lire manga et webtoon.</div>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🎯</span>
+          <div class="feature-title" data-lang="en">Zone AI</div>
+          <div class="feature-title" data-lang="fr">Zone IA</div>
+          <div class="feature-desc" data-lang="en">Draw a selection over any text region. Gemini reads and translates
+            even vertical Japanese or stylized fonts.</div>
+          <div class="feature-desc" data-lang="fr">Tracez une zone sur l'image. Gemini lit et traduit même le japonais
+            vertical et les polices stylisées.</div>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🔮</span>
           <div class="feature-title" data-lang="en">Gemini Vision AI</div>
           <div class="feature-title" data-lang="fr">Gemini Vision IA</div>
-          <div class="feature-desc" data-lang="en">Google's vision model reads even the most stylized manga fonts with
-            near-perfect accuracy. Results in ~1 second.</div>
-          <div class="feature-desc" data-lang="fr">Le modèle de vision de Google lit même les polices manga les plus
-            stylisées avec une précision quasi-parfaite. Résultat en ~1 seconde.</div>
-          <div class="feature-pro-tag">Pro</div>
-        </div>
-        <div class="feature-card">
-          <span class="feature-icon">📡</span>
-          <div class="feature-title" data-lang="en">Offline Tesseract fallback</div>
-          <div class="feature-title" data-lang="fr">Fallback Tesseract hors ligne</div>
-          <div class="feature-desc" data-lang="en">No internet? No problem. Tesseract.js runs locally in the browser
-            with advanced preprocessing pipelines for every document type.</div>
-          <div class="feature-desc" data-lang="fr">Pas d'internet ? Tesseract.js tourne localement dans le navigateur
-            avec des pipelines de preprocessing avancés pour chaque type de document.</div>
-        </div>
-        <div class="feature-card">
-          <span class="feature-icon">🌍</span>
-          <div class="feature-title" data-lang="en">Auto Translation</div>
-          <div class="feature-title" data-lang="fr">Traduction automatique</div>
-          <div class="feature-desc" data-lang="en">Translate extracted text in one click via Google Translate, MyMemory
-            or LibreTranslate. 20+ languages. Edit and re-translate anytime.</div>
-          <div class="feature-desc" data-lang="fr">Traduisez en un clic via Google Translate, MyMemory ou
-            LibreTranslate. 20+ langues. Éditez et re-traduisez à tout moment.</div>
+          <div class="feature-desc" data-lang="en">95%+ accuracy on manga text. Translation overlaid on the page — no new
+            tabs, no waiting.</div>
+          <div class="feature-desc" data-lang="fr">95%+ de précision sur le texte manga. Traduction superposée sur la page
+            — aucun nouvel onglet.</div>
         </div>
         <div class="feature-card">
           <span class="feature-icon">⚡</span>
-          <div class="feature-title" data-lang="en">Instant Selection</div>
-          <div class="feature-title" data-lang="fr">Sélection instantanée</div>
-          <div class="feature-desc" data-lang="en">Press Alt+R, draw a box around any text on screen. The sidebar opens
-            automatically with extracted text and translation.</div>
-          <div class="feature-desc" data-lang="fr">Appuyez sur Alt+R, dessinez un cadre. La sidebar s'ouvre
-            automatiquement avec le texte extrait et la traduction.</div>
+          <div class="feature-title" data-lang="en">Offline OCR fallback</div>
+          <div class="feature-title" data-lang="fr">OCR hors ligne</div>
+          <div class="feature-desc" data-lang="en">Tesseract runs locally in your browser. Basic OCR always works without
+            internet.</div>
+          <div class="feature-desc" data-lang="fr">Tesseract tourne localement. L'OCR de base fonctionne toujours sans
+            internet.</div>
         </div>
         <div class="feature-card">
-          <span class="feature-icon">📐</span>
-          <div class="feature-title">Markdown + LaTeX</div>
-          <div class="feature-desc" data-lang="en">OCR results are rendered with full Markdown and KaTeX support.
-            Tables, code blocks, and mathematical formulas display correctly.</div>
-          <div class="feature-desc" data-lang="fr">Les résultats OCR sont rendus avec Markdown complet et support KaTeX.
-            Tableaux, blocs de code et formules mathématiques s'affichent correctement.</div>
+          <span class="feature-icon">🌍</span>
+          <div class="feature-title" data-lang="en">40+ languages</div>
+          <div class="feature-title" data-lang="fr">40+ langues</div>
+          <div class="feature-desc" data-lang="en">Japanese, Korean, Chinese, Arabic, Russian and more. Source
+            auto-detected, translate to your language.</div>
+          <div class="feature-desc" data-lang="fr">Japonais, coréen, chinois, arabe, russe et plus. Source
+            auto-détectée, traduction vers votre langue.</div>
+        </div>
+        <div class="feature-card is-muted">
+          <span class="feature-icon">📄</span>
+          <div class="feature-title" data-lang="en">Full page translate</div>
+          <div class="feature-title" data-lang="fr">Traduction page entière</div>
+          <div class="feature-desc" data-lang="en">Translate an entire manga page in one click — all bubbles at once.
+            Coming in a future update (v2.5).</div>
+          <div class="feature-desc" data-lang="fr">Traduisez une page manga entière en un clic. Disponible dans une
+            prochaine mise à jour (v2.5).</div>
+          <div class="feature-soon-tag" data-lang="en">Coming soon</div>
+          <div class="feature-soon-tag" data-lang="fr">Bientôt</div>
         </div>
         <div class="feature-card">
-          <span class="feature-icon">🕓</span>
-          <div class="feature-title" data-lang="en">Editable History</div>
-          <div class="feature-title" data-lang="fr">Historique éditable</div>
-          <div class="feature-desc" data-lang="en">Every capture is saved with word count and source info. Edit the OCR
-            text, re-translate it, or copy it — anytime.</div>
-          <div class="feature-desc" data-lang="fr">Chaque capture est sauvegardée avec comptage de mots. Éditez le texte
-            OCR, re-traduisez-le, ou copiez-le — à tout moment.</div>
+          <span class="feature-icon">📂</span>
+          <div class="feature-title" data-lang="en">Local history</div>
+          <div class="feature-title" data-lang="fr">Historique local</div>
+          <div class="feature-desc" data-lang="en">All your scans are saved locally on your device. Search and re-read
+            anytime.</div>
+          <div class="feature-desc" data-lang="fr">Tous vos scans sont sauvegardés localement. Recherchez et relisez à
+            tout moment.</div>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🔊</span>
+          <div class="feature-title" data-lang="en">Text-to-speech</div>
+          <div class="feature-title" data-lang="fr">Synthèse vocale</div>
+          <div class="feature-desc" data-lang="en">Listen to original or translated text with natural AI voices. Great
+            for pronunciation practice.</div>
+          <div class="feature-desc" data-lang="fr">Écoutez le texte original ou traduit avec des voix IA naturelles.
+            Idéal pour la prononciation.</div>
         </div>
       </div>
     </div>
@@ -1851,35 +1890,35 @@
     <div class="container">
       <div class="section-label"><span data-lang="en">How it works</span><span data-lang="fr">Comment ça marche</span>
       </div>
-      <h2 class="section-title" data-lang="en">Three steps to extract any text.</h2>
-      <h2 class="section-title" data-lang="fr">Trois étapes pour extraire n'importe quel texte.</h2>
+      <h2 class="section-title" data-lang="en">Three steps. Zero friction.</h2>
+      <h2 class="section-title" data-lang="fr">Trois étapes. Zéro friction.</h2>
       <div class="how-grid">
         <div class="how-step">
           <div class="how-num">01</div>
-          <div class="how-title" data-lang="en">Press Alt+R</div>
-          <div class="how-title" data-lang="fr">Appuyez sur Alt+R</div>
-          <div class="how-desc" data-lang="en">Activate selection mode on any webpage or application. A subtle overlay
-            appears with a crosshair cursor.</div>
-          <div class="how-desc" data-lang="fr">Activez le mode de sélection sur n'importe quelle page ou application. Un
-            overlay subtil apparaît avec un curseur en croix.</div>
+          <div class="how-title" data-lang="en">Select a zone</div>
+          <div class="how-title" data-lang="fr">Sélectionner une zone</div>
+          <div class="how-desc" data-lang="en">Smart Click on a bubble, or draw a selection with Zone AI — manga, subtitle,
+            sign or document.</div>
+          <div class="how-desc" data-lang="fr">Smart Click sur une bulle, ou tracez une zone avec Zone IA — bulle manga,
+            sous-titre, panneau ou document.</div>
         </div>
         <div class="how-step">
           <div class="how-num">02</div>
-          <div class="how-title" data-lang="en">Draw a selection</div>
-          <div class="how-title" data-lang="fr">Dessinez une sélection</div>
-          <div class="how-desc" data-lang="en">Click and drag to select the area containing the text. The selection box
-            highlights in blue.</div>
-          <div class="how-desc" data-lang="fr">Cliquez et glissez pour sélectionner la zone. Le cadre de sélection
-            s'affiche en bleu.</div>
+          <div class="how-title" data-lang="en">AI scans it</div>
+          <div class="how-title" data-lang="fr">L'IA le scanne</div>
+          <div class="how-desc" data-lang="en">Gemini Vision reads the text with 95%+ accuracy, even vertical Japanese or
+            stylized fonts.</div>
+          <div class="how-desc" data-lang="fr">Gemini Vision lit le texte avec 95%+ de précision, même le japonais vertical
+            ou les polices stylisées.</div>
         </div>
         <div class="how-step">
           <div class="how-num">03</div>
-          <div class="how-title" data-lang="en">Read & translate</div>
-          <div class="how-title" data-lang="fr">Lisez et traduisez</div>
-          <div class="how-desc" data-lang="en">The sidebar opens with the extracted text. Translate, copy, edit, or
-            re-translate in one click. Your history is always there.</div>
-          <div class="how-desc" data-lang="fr">La sidebar s'ouvre avec le texte extrait. Traduisez, copiez, éditez ou
-            re-traduisez en un clic. Votre historique est toujours là.</div>
+          <div class="how-title" data-lang="en">Read in your language</div>
+          <div class="how-title" data-lang="fr">Lisez dans votre langue</div>
+          <div class="how-desc" data-lang="en">Translation appears instantly, overlaid on the page. No new tabs. No
+            copy-paste.</div>
+          <div class="how-desc" data-lang="fr">La traduction s'affiche instantanément sur la page. Aucun nouvel onglet.
+            Zéro copier-coller.</div>
         </div>
       </div>
     </div>
@@ -1917,36 +1956,33 @@
   <!-- MODES -->
   <section>
     <div class="container">
-      <div class="section-label"><span data-lang="en">Document modes</span><span data-lang="fr">Modes de document</span>
+      <div class="section-label"><span data-lang="en">Built for readers</span><span data-lang="fr">Pensé pour les lecteurs</span>
       </div>
-      <h2 class="section-title" data-lang="en">Optimized for every format.</h2>
-      <h2 class="section-title" data-lang="fr">Optimisé pour chaque format.</h2>
-      <p class="section-sub" data-lang="en">Each mode uses a dedicated OCR strategy — different preprocessing, PSM
-        passes, and confidence thresholds tuned per content type.</p>
-      <p class="section-sub" data-lang="fr">Chaque mode utilise une stratégie OCR dédiée — preprocessing, passes PSM et
-        seuils de confiance ajustés par type de contenu.</p>
+      <h2 class="section-title" data-lang="en">Manga, webtoon, and any image with text.</h2>
+      <h2 class="section-title" data-lang="fr">Manga, webtoon, et tout texte dans une image.</h2>
+      <p class="section-sub" data-lang="en">Smart Click targets a speech bubble in one tap. Zone AI lets you draw a rectangle on tricky panels. Offline OCR still works when you only need raw text.</p>
+      <p class="section-sub" data-lang="fr">Smart Click cible une bulle en un clic. Zone IA permet de dessiner un rectangle sur les cases difficiles. L'OCR hors ligne reste dispo quand tu veux juste le texte brut.</p>
       <div class="modes-grid">
-        <div class="mode-card"><span class="mode-icon">🎌</span>
+        <div class="mode-card"><span class="mode-icon">📖</span>
           <div class="mode-name">Manga</div>
         </div>
-        <div class="mode-card"><span class="mode-icon">📄</span>
-          <div class="mode-name">PDF</div>
+        <div class="mode-card"><span class="mode-icon">📱</span>
+          <div class="mode-name">Webtoon</div>
         </div>
-        <div class="mode-card"><span class="mode-icon">🖥️</span>
-          <div class="mode-name" data-lang="en">Screenshot</div>
-          <div class="mode-name" data-lang="fr">Capture</div>
+        <div class="mode-card"><span class="mode-icon">🖱️</span>
+          <div class="mode-name">Smart Click</div>
         </div>
-        <div class="mode-card"><span class="mode-icon">📷</span>
-          <div class="mode-name" data-lang="en">Photo</div>
-          <div class="mode-name" data-lang="fr">Photo</div>
+        <div class="mode-card"><span class="mode-icon">⬜</span>
+          <div class="mode-name" data-lang="en">Zone AI</div>
+          <div class="mode-name" data-lang="fr">Zone IA</div>
         </div>
-        <div class="mode-card"><span class="mode-icon">📺</span>
-          <div class="mode-name" data-lang="en">Subtitle</div>
-          <div class="mode-name" data-lang="fr">Sous-titre</div>
+        <div class="mode-card"><span class="mode-icon">🔤</span>
+          <div class="mode-name" data-lang="en">Offline OCR</div>
+          <div class="mode-name" data-lang="fr">OCR hors ligne</div>
         </div>
-        <div class="mode-card"><span class="mode-icon">🎮</span>
-          <div class="mode-name" data-lang="en">Game</div>
-          <div class="mode-name" data-lang="fr">Jeu vidéo</div>
+        <div class="mode-card"><span class="mode-icon">🌐</span>
+          <div class="mode-name" data-lang="en">40+ languages</div>
+          <div class="mode-name" data-lang="fr">40+ langues</div>
         </div>
       </div>
     </div>
@@ -1956,14 +1992,10 @@
   <section
     style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
     <div class="container" style="display:flex; flex-direction:column; align-items:center;">
-      <div class="section-label" style="text-align:center;"><span data-lang="en">Free vs Pro</span><span
-          data-lang="fr">Gratuit vs Pro</span></div>
-      <h2 class="section-title" style="text-align:center; max-width:100%;" data-lang="en">What do you get?</h2>
-      <h2 class="section-title" style="text-align:center; max-width:100%;" data-lang="en">Free vs Pro: what really
-        changes?</h2>
-      <h2 class="section-title" style="text-align:center; max-width:100%;" data-lang="fr">Gratuit vs Pro: ce qui change
-        vraiment
-      </h2>
+      <div class="section-label" style="text-align:center;"><span data-lang="en">Free vs credits</span><span
+          data-lang="fr">Gratuit vs crédits</span></div>
+      <h2 class="section-title" style="text-align:center; max-width:100%;" data-lang="en">Free vs credits: what changes?</h2>
+      <h2 class="section-title" style="text-align:center; max-width:100%;" data-lang="fr">Gratuit vs crédits : ce qui change</h2>
       <p class="section-sub" style="text-align:center; max-width:100%; margin-bottom:3rem;" data-lang="en">Full
         transparency on limits — no surprises.</p>
       <p class="section-sub" style="text-align:center; max-width:100%; margin-bottom:3rem;" data-lang="fr">Limites en
@@ -1976,8 +2008,8 @@
               <th data-lang="fr">Fonctionnalité</th>
               <th data-lang="en">Free</th>
               <th data-lang="fr">Gratuit</th>
-              <th data-lang="en">Pro</th>
-              <th data-lang="fr">Pro</th>
+              <th data-lang="en">With credits</th>
+              <th data-lang="fr">Avec crédits</th>
             </tr>
           </thead>
           <tbody>
@@ -1990,50 +2022,26 @@
               <td data-lang="fr"><span class="check">✓</span></td>
             </tr>
             <tr>
-              <td data-lang="en">Gemini Vision AI</td>
-              <td data-lang="fr">IA Gemini Vision</td>
-              <td data-lang="en"><span class="limited">2 / day trial</span></td>
-              <td data-lang="fr"><span class="limited">2 / jour essai</span></td>
-              <td data-lang="en"><span class="check">✓ Credits</span></td>
-              <td data-lang="fr"><span class="check">✓ Crédits</span></td>
+              <td data-lang="en">Smart Click + Zone AI</td>
+              <td data-lang="fr">Smart Click + Zone IA</td>
+              <td data-lang="en"><span class="limited">2 AI scans / day</span></td>
+              <td data-lang="fr"><span class="limited">2 scans IA / jour</span></td>
+              <td data-lang="en"><span class="check">✓ With credits</span></td>
+              <td data-lang="fr"><span class="check">✓ Avec crédits</span></td>
             </tr>
             <tr>
-              <td data-lang="en">Daily capture limit</td>
-              <td data-lang="fr">Limite captures / jour</td>
-              <td data-lang="en"><span class="limited">Unlimited</span></td>
-              <td data-lang="fr"><span class="limited">Illimité</span></td>
-              <td data-lang="en"><span class="check">Unlimited</span></td>
-              <td data-lang="fr"><span class="check">Illimité</span></td>
+              <td data-lang="en">Full page translate</td>
+              <td data-lang="fr">Traduction page entière</td>
+              <td data-lang="en"><span class="cross">Coming soon</span></td>
+              <td data-lang="fr"><span class="cross">Bientôt</span></td>
+              <td data-lang="en"><span class="cross">Coming soon</span></td>
+              <td data-lang="fr"><span class="cross">Bientôt</span></td>
             </tr>
             <tr>
-              <td data-lang="en">All 6 document modes</td>
-              <td data-lang="fr">Les 6 modes de document</td>
+              <td data-lang="en">Local history</td>
+              <td data-lang="fr">Historique local</td>
               <td data-lang="en"><span class="check">✓</span></td>
               <td data-lang="fr"><span class="check">✓</span></td>
-              <td data-lang="en"><span class="check">✓</span></td>
-              <td data-lang="fr"><span class="check">✓</span></td>
-            </tr>
-            <tr>
-              <td data-lang="en">Auto translation</td>
-              <td data-lang="fr">Traduction automatique</td>
-              <td data-lang="en"><span class="check">✓</span></td>
-              <td data-lang="fr"><span class="check">✓</span></td>
-              <td data-lang="en"><span class="check">✓</span></td>
-              <td data-lang="fr"><span class="check">✓ Illimitée</span></td>
-            </tr>
-            <tr>
-              <td data-lang="en">Editable history</td>
-              <td data-lang="fr">Historique éditable</td>
-              <td data-lang="en"><span class="check">✓</span></td>
-              <td data-lang="fr"><span class="check">✓</span></td>
-              <td data-lang="en"><span class="check">✓</span></td>
-              <td data-lang="fr"><span class="check">✓</span></td>
-            </tr>
-            <tr>
-              <td data-lang="en">Quality OCR mode</td>
-              <td data-lang="fr">Mode OCR Qualité</td>
-              <td data-lang="en"><span class="cross">—</span></td>
-              <td data-lang="fr"><span class="cross">—</span></td>
               <td data-lang="en"><span class="check">✓</span></td>
               <td data-lang="fr"><span class="check">✓</span></td>
             </tr>
@@ -2061,9 +2069,9 @@
       <h2 class="section-title" style="text-align:center; max-width:100%; margin-bottom:0.5rem;" data-lang="fr">Achetez
         des crédits, utilisez-les pour toujours.</h2>
       <p style="text-align:center; color:var(--muted); font-weight:300; margin-bottom:4rem;" data-lang="en">No
-        subscription. No expiry. One credit = one AI scan.</p>
+        subscription. No expiry. 1 credit = 1 Smart Click or 1 Zone AI scan.</p>
       <p style="text-align:center; color:var(--muted); font-weight:300; margin-bottom:4rem;" data-lang="fr">Pas
-        d'abonnement. Pas d'expiration. Un crédit = un scan IA.</p>
+        d'abonnement. Pas d'expiration. 1 crédit = 1 Smart Click ou 1 scan Zone IA.</p>
 
       <div class="pricing-layout">
         <div class="pricing-card">
@@ -2075,12 +2083,10 @@
           <ul class="pricing-features">
             <li><span data-lang="en">Tesseract OCR — offline</span><span data-lang="fr">OCR Tesseract — hors
                 ligne</span></li>
-            <li><span data-lang="en">Unlimited captures / day</span><span data-lang="fr">Captures illimitées /
-                jour</span></li>
-            <li><span data-lang="en">All 6 document modes</span><span data-lang="fr">6 modes de document</span></li>
-            <li><span data-lang="en">Auto translation</span><span data-lang="fr">Traduction automatique</span></li>
-            <li><span data-lang="en">Editable history</span><span data-lang="fr">Historique éditable</span></li>
-            <li><span data-lang="en">2 AI scans/day trial</span><span data-lang="fr">2 scans IA/jour essai</span></li>
+            <li><span data-lang="en">Smart Click + Zone AI (2/day)</span><span data-lang="fr">Smart Click + Zone IA (2/jour)</span></li>
+            <li><span data-lang="en">40+ languages</span><span data-lang="fr">40+ langues</span></li>
+            <li><span data-lang="en">Local history</span><span data-lang="fr">Historique local</span></li>
+            <li><span data-lang="en">2 AI scans / day</span><span data-lang="fr">2 scans IA / jour</span></li>
           </ul>
           <a href="https://chromewebstore.google.com/detail/sitt/joenimodijoophmdlgpgblkjfgenplgg" target="_blank"
             class="pricing-btn pricing-btn-free">
@@ -2096,8 +2102,8 @@
               <div class="pack-name" data-lang="fr">Pack Découverte</div>
               <div class="pack-credits" data-lang="en">1 000 AI credits</div>
               <div class="pack-credits" data-lang="fr">1 000 crédits IA</div>
-              <div class="pack-desc" data-lang="en">Great to get started — ~100 days of heavy use</div>
-              <div class="pack-desc" data-lang="fr">Idéal pour commencer — ~100 jours d'usage intensif</div>
+              <div class="pack-desc" data-lang="en">~500 Smart Clicks if you read daily</div>
+              <div class="pack-desc" data-lang="fr">~500 Smart Clicks si tu lis souvent</div>
             </div>
             <div class="pack-price-col">
               <div class="pack-price">$4.99</div>
@@ -2132,8 +2138,8 @@
               <div class="pack-name" data-lang="fr">Pack Pro</div>
               <div class="pack-credits" data-lang="en">10 000 AI credits</div>
               <div class="pack-credits" data-lang="fr">10 000 crédits IA</div>
-              <div class="pack-desc" data-lang="en">For power users — years of unlimited AI OCR</div>
-              <div class="pack-desc" data-lang="fr">Pour les utilisateurs intensifs — des années de scans IA</div>
+              <div class="pack-desc" data-lang="en">For daily manga/webtoon readers</div>
+              <div class="pack-desc" data-lang="fr">Pour les lecteurs manga/webtoon quotidiens</div>
             </div>
             <div class="pack-price-col">
               <div class="pack-price">$19.99</div>
@@ -2147,8 +2153,8 @@
 
       <div class="credit-explainer">
         ℹ️&nbsp;
-        <span data-lang="en"><strong>1 credit = 1 Gemini Vision AI scan.</strong> Credits never expire. After purchase, you receive an activation code by email — enter it in the extension settings to activate your credits on any device.</span>
-        <span data-lang="fr"><strong>1 crédit = 1 scan IA Gemini Vision.</strong> Les crédits n'expirent jamais. Après l'achat, vous recevez un code d'activation par email — entrez-le dans les paramètres de l'extension pour activer vos crédits sur n'importe quel appareil.</span>
+        <span data-lang="en"><strong>1 credit = 1 Smart Click or 1 Zone AI scan.</strong> Credits never expire. Pay-as-you-go packs via Lemon Squeezy — activation code by email after purchase.</span>
+        <span data-lang="fr"><strong>1 crédit = 1 Smart Click ou 1 scan Zone IA.</strong> Les crédits n'expirent jamais. Packs pay-as-you-go via Lemon Squeezy — code d'activation par email après achat.</span>
       </div>
       <div class="buy-status" id="buy-status" style="display:none;"></div>
     </div>
@@ -2183,10 +2189,10 @@
             <span data-lang="fr">C'est quoi un "crédit" exactement ?</span>
             <span class="faq-arrow">▾</span>
           </button>
-          <div class="faq-a" data-lang="en">One credit = one AI-powered OCR scan using Gemini Vision. Credits never
-            expire. Free users get 2 AI scans per day as a trial. Buy a pack to get more.</div>
-          <div class="faq-a" data-lang="fr">Un crédit = un scan OCR alimenté par Gemini Vision. Les crédits n'expirent
-            jamais. Les utilisateurs gratuits ont 2 scans IA par jour en essai. Achetez un pack pour en obtenir plus.
+          <div class="faq-a" data-lang="en">One credit = one Smart Click or one Zone AI scan (Gemini Vision). Credits never
+            expire. Free users get 2 AI scans per day. Buy a pack when you need more.</div>
+          <div class="faq-a" data-lang="fr">Un crédit = un Smart Click ou un scan Zone IA (Gemini Vision). Les crédits
+            n'expirent jamais. Les utilisateurs gratuits ont 2 scans IA par jour. Achetez un pack pour en obtenir plus.
           </div>
         </div>
         <div class="faq-item">
@@ -2217,16 +2223,12 @@
         </div>
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)">
-            <span data-lang="en">What's the difference between Fast and Quality mode?</span>
-            <span data-lang="fr">Quelle différence entre mode Rapide et Qualité ?</span>
+            <span data-lang="en">Smart Click vs Zone AI — what's the difference?</span>
+            <span data-lang="fr">Smart Click vs Zone IA — quelle différence ?</span>
             <span class="faq-arrow">▾</span>
           </button>
-          <div class="faq-a" data-lang="en">Fast mode uses Tesseract with optimized preprocessing — quick and offline.
-            Quality mode sends the image to Gemini Vision AI, which delivers near-perfect accuracy on complex fonts and
-            stylized text. Quality mode requires credits.</div>
-          <div class="faq-a" data-lang="fr">Le mode Rapide utilise Tesseract avec preprocessing optimisé — rapide et
-            hors ligne. Le mode Qualité envoie l'image à Gemini Vision IA, qui offre une précision quasi-parfaite sur
-            les polices complexes. Le mode Qualité nécessite des crédits.</div>
+          <div class="faq-a" data-lang="en">Smart Click: click a bubble, get translation overlay instantly. Zone AI: draw a rectangle on any panel (useful for vertical webtoon or messy layouts). Both use Gemini Vision and cost 1 credit each after your 2 free daily scans.</div>
+          <div class="faq-a" data-lang="fr">Smart Click : clic sur une bulle, overlay de traduction instantané. Zone IA : tu dessines un rectangle sur une case (pratique en webtoon vertical ou layouts complexes). Les deux utilisent Gemini Vision et coûtent 1 crédit chacun après tes 2 scans gratuits du jour.</div>
         </div>
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)">
@@ -2234,10 +2236,8 @@
             <span data-lang="fr">Ça fonctionne sur n'importe quel site ?</span>
             <span class="faq-arrow">▾</span>
           </button>
-          <div class="faq-a" data-lang="en">It works on virtually all websites and web applications. It cannot run on
-            special Chrome pages (chrome://, about://) — this is a standard browser restriction.</div>
-          <div class="faq-a" data-lang="fr">Ça fonctionne sur quasiment tous les sites web. Ça ne peut pas fonctionner
-            sur les pages spéciales de Chrome (chrome://, about://) — c'est une restriction standard du navigateur.
+          <div class="faq-a" data-lang="en">Yes — manga readers, webtoon platforms, and most sites with images. It does not run on chrome:// or the Chrome Web Store page itself. Full-page translate is planned for a future update.</div>
+          <div class="faq-a" data-lang="fr">Oui — lecteurs manga, plateformes webtoon, et la plupart des sites avec images. Ça ne tourne pas sur chrome:// ni sur la page du Chrome Web Store. La traduction page entière arrive dans une prochaine version.
           </div>
         </div>
       </div>

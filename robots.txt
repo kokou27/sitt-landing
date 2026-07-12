@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sitt-landing.vercel.app/sitemap.xml
+Sitemap: https://sitt-landing.pages.dev/sitemap.xml
